@@ -32,7 +32,7 @@ export const hero = {
 export const logos = {
   bosch: { src: "/logos/bosch.png", name: "Bosch", url: "https://www.bosch.com" },
   daimler: { src: "/logos/daimler.png", name: "Daimler", url: "https://group.mercedes-benz.com" },
-  protics: { src: "/logos/daimler-protics.png", name: "Daimler Protics" }, /* no live website found */
+  protics: { src: "/logos/daimler-protics.png", name: "Daimler Protics", url: "https://www.mercedes-benz-techinnovation.com" },
   tss: { src: "/logos/daimler-tss.png", name: "Daimler TSS", url: "https://www.mercedes-benz-techinnovation.com" }, /* today: Mercedes-Benz Tech Innovation */
   trumpf: { src: "/logos/trumpf.png", name: "TRUMPF", url: "https://www.trumpf.com" },
   akzonobel: { src: "/logos/akzonobel.png", name: "AkzoNobel", url: "https://www.akzonobel.com/en/de" },
