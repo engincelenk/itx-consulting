@@ -30,16 +30,16 @@ export const hero = {
 
 /* Logos cropped from the original CV. `text` = wordmark tile when no logo file exists. */
 export const logos = {
-  bosch: { src: "/logos/bosch.png", name: "Bosch" },
-  daimler: { src: "/logos/daimler.png", name: "Daimler" },
-  protics: { src: "/logos/daimler-protics.png", name: "Daimler Protics" },
-  tss: { src: "/logos/daimler-tss.png", name: "Daimler TSS" },
-  trumpf: { src: "/logos/trumpf.png", name: "TRUMPF" },
-  akzonobel: { src: "/logos/akzonobel.png", name: "AkzoNobel" },
-  apsolut: { src: "/logos/apsolut.png", name: "apsolut" },
-  enbw: { text: "EnBW", name: "EnBW" },
-  reutlingen: { src: "/logos/hs-reutlingen.png", name: "Reutlingen University" },
-  heilbronn: { src: "/logos/hs-heilbronn.png", name: "Heilbronn University" }
+  bosch: { src: "/logos/bosch.png", name: "Bosch", url: "https://www.bosch.com" },
+  daimler: { src: "/logos/daimler.png", name: "Daimler", url: "https://group.mercedes-benz.com" },
+  protics: { src: "/logos/daimler-protics.png", name: "Daimler Protics", url: "https://www.mercedes-benz-techinnovation.com" },
+  tss: { src: "/logos/daimler-tss.png", name: "Daimler TSS", url: "https://www.mercedes-benz-techinnovation.com" }, /* today: Mercedes-Benz Tech Innovation */
+  trumpf: { src: "/logos/trumpf.png", name: "TRUMPF", url: "https://www.trumpf.com" },
+  akzonobel: { src: "/logos/akzonobel.png", name: "AkzoNobel", url: "https://www.akzonobel.com/en/de" },
+  apsolut: { src: "/logos/apsolut.png", name: "apsolut", url: "https://www.ap-solut.com" },
+  enbw: { text: "EnBW", name: "EnBW", url: "https://www.enbw.com" },
+  reutlingen: { src: "/logos/hs-reutlingen.png", name: "Reutlingen University", url: "https://www.reutlingen-university.de" },
+  heilbronn: { src: "/logos/hs-heilbronn.png", name: "Heilbronn University", url: "https://www.hs-heilbronn.de" }
 };
 export const logoStrip = ["bosch", "daimler", "trumpf", "protics", "tss", "apsolut", "enbw", "reutlingen", "heilbronn", "akzonobel"];
 
