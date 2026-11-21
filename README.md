@@ -14,7 +14,7 @@ German and English. Switch in the header or with `?lang=de` / `?lang=en`. Conten
 `/freelance.html`: general service portfolio with three equal pillars (architecture, cyber security, project/program & solution management) and AI as the vertical across all three, shown as an interactive matrix; way of working, industries and a request configurator that writes a ready-made email. Content in `src/data/services.js`. Linked from the main navigation, hidden on personal application links.
 
 ## Kleingewerbe / Firmen-Domain
-Alles Firmenspezifische steckt in `src/site.js`. Nach der Anmeldung nur `company` eintragen (optional `domain`, sonst wird `<firmenname>.de` abgeleitet), dann `npm run build`.
+Alles Firmenspezifische steckt in `src/site.js`. Nach der Anmeldung `company` eintragen und, sobald die Domain steht, `live = true` setzen (vorher bleiben alle Links auf der bisherigen Adresse) (optional `domain`, sonst wird `<firmenname>.de` abgeleitet), dann `npm run build`.
 
 Danach gilt automatisch:
 - Freelance-Seite tritt unter dem Firmennamen auf (Titel, Kopfzeile, Footer, Impressum/Datenschutz mit Inhaber, Social-Image-URL)

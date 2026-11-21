@@ -10,7 +10,7 @@ $TO      = 'engincelenk@web.de';          // where messages go
 $FROM    = 'kontakt@immofuchs.info';      // sender: an address on YOUR domain (IONOS only sends reliably from its own domains)
 $FROM2   = 'engincelenk@web.de';          // fallback sender if the first one is refused
 $COMPANY = 'Aventiq';                     // company name once registered (used in mails), empty = personal name
-$SITE    = 'aventiq.de';                  // domain named in the mails (freelance domain once live)
+$SITE    = 'ec.immofuchs.info';                // domain named in the mails (freelance domain once live)
 $ORIGINS = ['https://ec.immofuchs.info', 'https://aventiq.de', 'https://www.aventiq.de', 'https://cv.aventiq.de']; // sites allowed to use this form
 $SIGN    = $COMPANY !== '' ? $COMPANY : 'Engin Celenk';
 $LIMIT   = 5;                             // max messages per IP per hour
