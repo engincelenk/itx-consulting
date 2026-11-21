@@ -3,6 +3,8 @@
    Keep it short: every line is read by a recruiter in a few seconds.
 ------------------------------------------------------------------- */
 
+import { site } from "../site.js";
+
 export const person = {
   name: "Engin Celenk",
   degree: "M.Sc.",
@@ -11,7 +13,7 @@ export const person = {
   location: { en: "Stuttgart region, Germany", de: "Region Stuttgart" },
   // Contact form target (FormSubmit). After activation, put the random alias from FormSubmit into `alias` to hide the address completely.
   linkedin: "https://de.linkedin.com/in/engin-celenk",
-  site: "https://ec.immofuchs.info",
+  site: site.cvOrigin,
   careerStart: "2012-03",
   languages: [
     { name: { en: "German", de: "Deutsch" }, level: { en: "Native", de: "Muttersprache" } },
@@ -108,10 +110,8 @@ export const education = [
   { id: "werkreal", year: "", icon: "School", short: { en: "Vocational secondary", de: "Werkrealschule" }, title: { en: "Vocational secondary school", de: "Werkrealschule" }, text: { en: "Werkrealschule", de: "Nächste Stufe." } },
   { id: "wg", year: "", icon: "School", short: { en: "Business high school", de: "Wirtschafts­gymnasium" }, title: { en: "Business high school", de: "Wirtschaftsgymnasium" }, text: { en: "Wirtschaftsgymnasium", de: "Schwerpunkt Wirtschaft." } },
   { id: "azubi", year: "2003", logo: "akzonobel", short: { en: "Apprenticeship", de: "Ausbildung" }, title: { en: "Apprenticeship · office administrator", de: "Ausbildung zum Bürokaufmann" }, text: { en: "Akzo Nobel AG, Ludwigsburg · 2003–2005", de: "Akzo Nobel AG, Ludwigsburg · 2003–2005" } },
-  { id: "hhn", year: "2005", logo: "heilbronn", short: { en: "Software Engineering", de: "Software Engineering" }, title: { en: "Software Engineering studies", de: "Studium Software Engineering" }, text: { en: "Heilbronn University · 2005–2008", de: "Hochschule Heilbronn · 2005–2008" },
+  { id: "hhn", year: "2005", logo: "heilbronn", short: { en: "B.Sc.", de: "B.Sc." }, title: { en: "B.Sc. Software Engineering", de: "B.Sc. Software Engineering" }, text: { en: "Heilbronn University · 2005–2008", de: "Hochschule Heilbronn · 2005–2008" },
     extra: { logo: "bosch", text: { en: "Internship Bosch Gasoline Systems: two C# tools for LabCar test systems", de: "Praktikum Bosch Gasoline Systems: zwei C#-Tools für LabCar-Testsysteme" } } },
-  { id: "bsc", year: "2009", logo: "reutlingen", short: { en: "B.Sc.", de: "B.Sc." }, title: { en: "B.Sc. Computer Science", de: "B.Sc. Informatik" }, text: { en: "Reutlingen University · 2008–2009 · Wirtschaftsinformatik · focus SAP SRM & BI", de: "Hochschule Reutlingen · 2008–2009 · Wirtschaftsinformatik · Schwerpunkt SAP SRM & BI" },
-    extra: { logo: "apsolut", text: { en: "Thesis at apsolut: procurement KPIs in SAP NetWeaver BI 7.0", de: "Abschlussarbeit bei apsolut: Einkaufskennzahlen in SAP NetWeaver BI 7.0" } } },
   { id: "msc", year: "2012", logo: "reutlingen", short: { en: "M.Sc.", de: "M.Sc." }, title: { en: "M.Sc. Computer Science", de: "M.Sc. Informatik" }, grade: { en: "grade 1.7", de: "Note 1,7" }, text: { en: "Reutlingen University · 2010–2012 · Wirtschaftsinformatik · faculty award · publication on SOA monitoring", de: "Hochschule Reutlingen · 2010–2012 · Wirtschaftsinformatik · Fakultätspreis · Publikation zu SOA-Monitoring" },
     extra: { logo: "tss", text: { en: "Thesis at Daimler TSS: iOS app on Sybase Unwired Platform", de: "Masterarbeit bei Daimler TSS: iOS-App auf Sybase Unwired Platform" } } }
 ];

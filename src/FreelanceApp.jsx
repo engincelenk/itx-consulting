@@ -11,7 +11,8 @@ import ServiceMatrix from "./components/ServiceMatrix.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
-import { person, logoStrip } from "./data/profile.js";
+import { person } from "./data/profile.js";
+import { site, cvUrl } from "./site.js";
 import { pillars as rawPillars, aiVertical as rawAi, process as rawProcess, industries, timing as rawTiming, formats as rawFormats, fl } from "./data/services.js";
 
 function Page() {
@@ -42,7 +43,7 @@ function Page() {
       <ScrollProgress />
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-ink/85 backdrop-blur-xl" style={{ paddingTop: "env(safe-area-inset-top)" }}>
         <div className="wrap flex h-16 items-center justify-between gap-3">
-          <a href={`/?lang=${lang}`} className="inline-flex min-w-0 items-center gap-2 text-sm text-mist hover:text-snow"><ArrowLeft size={16} /><span className="truncate"><span className="text-snow">{person.name}</span>, {person.degree} · {T.back}</span></a>
+          <a href={cvUrl(lang)} className="inline-flex min-w-0 items-center gap-2 text-sm text-mist hover:text-snow"><ArrowLeft size={16} /><span className="truncate">{site.hasCompany ? <><span className="text-snow">{site.company}</span> · {T.back}: {person.name}</> : <><span className="text-snow">{person.name}</span>, {person.degree} · {T.back}</>}</span></a>
           <LangSwitch />
         </div>
       </header>
@@ -52,14 +53,14 @@ function Page() {
           <div className="absolute inset-0 -z-10 opacity-40 md:opacity-80 md:[mask-image:linear-gradient(to_right,rgba(0,0,0,.2),black_60%)]"><NetworkCanvas /></div>
           <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-ink" />
           <div className="wrap">
-            <p className="label flex items-center gap-3"><span className="h-px w-8 bg-signal" />{T.kicker}</p>
+            <p className="label flex items-center gap-3"><span className="h-px w-8 bg-signal" />{site.hasCompany ? `${site.company} · ${T.kicker}` : T.kicker}</p>
             <h1 className="mt-5 max-w-[20ch] text-[2.3rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-6xl">{T.h1a} <span className="text-signal">{T.h1b}</span></h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{T.lead}</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a href="#request" className="btn-primary">{T.cta} <ArrowUpRight size={16} /></a>
               <div className="flex items-center gap-3 rounded-full border border-white/10 bg-ink/60 py-1.5 pl-1.5 pr-4 backdrop-blur">
                 <img src="/engin.jpg" alt="" className="h-9 w-9 rounded-full object-cover" />
-                <span className="text-sm">{person.name}, {person.degree}</span>
+                <span className="text-sm">{site.hasCompany ? <>{person.name}, {person.degree} <span className="text-mist">· {T.owner}</span></> : <>{person.name}, {person.degree}</>}</span>
               </div>
             </div>
           </div>
@@ -127,7 +128,7 @@ function Page() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer company={site.company} />
     </>
   );
 }

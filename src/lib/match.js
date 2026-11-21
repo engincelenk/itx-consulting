@@ -1,4 +1,5 @@
 import { skills, gaps, facts } from "../data/knowledge.js";
+import { site } from "../site.js";
 
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const B = "[^\\p{L}\\p{N}]";
@@ -56,7 +57,7 @@ export function shortProfile(text, result, { years, company, contact, lang = "en
   ];
   lines.push(...top.map(s => `• ${pick(s.n, lang)}: ${pick(s.ev, lang)}`), "");
   if (result.gaps.length) lines.push(de ? `Offen gesagt: ${gapsTxt} gehört nicht zu meinen Schwerpunkten. Ich arbeite mich schnell ein.` : `To be open: ${gapsTxt} is not one of my focus areas. I learn fast.`, "");
-  lines.push(de ? "Ich freue mich auf ein Gespräch." : "I look forward to talking.", "", "Engin Celenk, M.Sc.", "ec.immofuchs.info");
+  lines.push(de ? "Ich freue mich auf ein Gespräch." : "I look forward to talking.", "", "Engin Celenk, M.Sc.", site.cvOrigin.replace("https://", ""));
   return lines.join("\n");
 }
 

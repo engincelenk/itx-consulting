@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { person } from "../data/profile.js";
 import { useLang } from "../i18n.jsx";
+import { freelanceUrl } from "../site.js";
 import LangSwitch from "./LangSwitch.jsx";
 
 const ids = ["home", "journey", "education", "expertise", "lab", "about", "contact"];
@@ -38,7 +39,7 @@ export default function Nav({ showFreelance = true }) {
                   </a>
                 </li>
               ))}
-              {showFreelance && <li><a href={`/freelance.html?lang=${lang}`} className="ml-1 rounded-full border border-signal/50 px-3 py-1.5 text-sm text-signal transition-colors hover:bg-signal hover:text-ink">Freelance</a></li>}
+              {showFreelance && <li><a href={freelanceUrl(lang)} className="ml-1 rounded-full border border-signal/50 px-3 py-1.5 text-sm text-signal transition-colors hover:bg-signal hover:text-ink">Freelance</a></li>}
             </ul>
           </nav>
           <LangSwitch />
@@ -59,7 +60,7 @@ export default function Nav({ showFreelance = true }) {
               </li>
             ))}
             {showFreelance && (
-              <li><a href={`/freelance.html?lang=${lang}`} className="flex items-baseline gap-4 border-b border-white/[0.06] py-4 text-2xl font-medium tracking-tight text-signal">
+              <li><a href={freelanceUrl(lang)} className="flex items-baseline gap-4 border-b border-white/[0.06] py-4 text-2xl font-medium tracking-tight text-signal">
                 <span className="font-mono text-xs">→</span>Freelance</a></li>
             )}
           </ul>

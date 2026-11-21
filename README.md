@@ -13,6 +13,16 @@ German and English. Switch in the header or with `?lang=de` / `?lang=en`. Conten
 ## Freelance page
 `/freelance.html`: general service portfolio with three equal pillars (architecture, cyber security, project/program & solution management) and AI as the vertical across all three, shown as an interactive matrix; way of working, industries and a request configurator that writes a ready-made email. Content in `src/data/services.js`. Linked from the main navigation, hidden on personal application links.
 
+## Kleingewerbe / Firmen-Domain
+Alles Firmenspezifische steckt in `src/site.js`. Nach der Anmeldung nur `company` eintragen (optional `domain`, sonst wird `<firmenname>.de` abgeleitet), dann `npm run build`.
+
+Danach gilt automatisch:
+- Freelance-Seite tritt unter dem Firmennamen auf (Titel, Kopfzeile, Footer, Impressum/Datenschutz mit Inhaber, Social-Image-URL)
+- `https://<domain>/` zeigt die Freelance-Seite, `https://cv.<domain>/` den Lebenslauf (gleiche Auslieferung, die Seite erkennt den Host; lokal testen mit `?as=freelance`)
+- Links zwischen beiden Seiten und die Signatur in Anschreiben zeigen auf die neuen Adressen
+
+Von Hand bleiben: DNS und Hosting für beide Domains (GitHub Pages erlaubt nur eine Domain pro Site, daher Cloudflare Pages, Netlify oder IONOS), `public/CNAME`, `server/ionos/contact.php` (`$COMPANY`, `$SITE`, `$ORIGINS`) und im Impressum Steuerhinweise (Kleinunternehmer, ggf. USt-IdNr.).
+
 ## Edit content
 - `src/data/profile.js` – person, journey, expertise, case studies, values, CV focuses
 - `src/data/knowledge.js` – answers for “Ask my portfolio”, skill terms for “Challenge me”

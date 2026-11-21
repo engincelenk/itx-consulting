@@ -65,7 +65,7 @@ document.getElementById("cv").innerHTML = `
       <h2>${T.certs}</h2>
       <ul class="plain">${[...certificates, ...trainings].map(c => `<li>${c.year ? `<b>${c.year}</b> ` : ""}${esc(c.name)}</li>`).join("")}</ul>
       <h2>${T.edu}</h2>
-      ${studies.map(e => `<div class="edu ${e.id === "msc" ? "key" : ""}"><h3>${esc(e.title)}${e.grade ? ` · ${esc(e.grade)}` : ""}</h3><p>${esc(e.text)}</p>${e.extra && !["bsc", "msc"].includes(e.id) ? `<p>${esc(e.extra.text)}</p>` : ""}</div>`).join("")}
+      ${studies.map(e => `<div class="edu ${e.id === "msc" ? "key" : ""}"><h3>${esc(e.title)}${e.grade ? ` · ${esc(e.grade)}` : ""}</h3><p>${esc(e.text)}</p>${e.extra && !["msc"].includes(e.id) ? `<p>${esc(e.extra.text)}</p>` : ""}</div>`).join("")}
       <div class="edu"><h3>${T.school}</h3><p>${schools.map(s => `${s.year ? `${esc(s.year)} ` : ""}${esc(s.title)}`).join(" → ")}</p></div>
       <h2>${T.langs}</h2>
       <ul class="plain">${person.languages.map(l => `<li>${esc(l.name)} · ${esc(l.level)}</li>`).join("")}</ul>

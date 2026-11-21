@@ -14,13 +14,13 @@ const T = {
     tech: "Technical note",
     activate: "The contact form is being set up right now. Please try again in a few hours or write via LinkedIn.",
     consent: "I agree that my details are used to answer my request.", privacy: "Privacy", required: "Please fill in name, email and message and confirm the consent.",
-    subject: "New message via ec.immofuchs.info" },
+    subject: `New message via ${location.hostname}` },
   de: { name: "Name", email: "Ihre E-Mail", company: "Unternehmen (optional)", message: "Nachricht", send: "Nachricht senden", sending: "Wird gesendet…",
     ok: "Vielen Dank. Ihre Nachricht ist angekommen, ich melde mich zeitnah.", confirmSent: "Sie erhalten eine Bestätigung per E-Mail.", err: "Senden fehlgeschlagen. Bitte später erneut versuchen oder über LinkedIn schreiben.",
     tech: "Technischer Hinweis",
     activate: "Das Kontaktformular wird gerade eingerichtet. Bitte in einigen Stunden erneut versuchen oder über LinkedIn schreiben.",
     consent: "Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden.", privacy: "Datenschutz", required: "Bitte Name, E-Mail und Nachricht ausfüllen und die Einwilligung bestätigen.",
-    subject: "Neue Nachricht über ec.immofuchs.info" }
+    subject: `Neue Nachricht über ${location.hostname}` }
 };
 
 export default function ContactForm({ initialMessage = "", subject, source = "portfolio" }) {

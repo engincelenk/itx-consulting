@@ -1,6 +1,6 @@
 <?php
 /* ---------------------------------------------------------------
-   Contact form endpoint for ec.immofuchs.info, hosted on IONOS.
+   Contact form endpoint for the portfolio / freelance site, hosted on IONOS.
    Upload to your IONOS webspace, e.g. /api/contact.php.
    PHP 7.4+ (IONOS default is fine).
 ---------------------------------------------------------------- */
@@ -9,7 +9,10 @@
 $TO      = 'engincelenk@web.de';          // where messages go
 $FROM    = 'kontakt@immofuchs.info';      // sender: an address on YOUR domain (IONOS only sends reliably from its own domains)
 $FROM2   = 'engincelenk@web.de';          // fallback sender if the first one is refused
-$ORIGINS = ['https://ec.immofuchs.info']; // sites allowed to use this form
+$COMPANY = 'Aventiq';                     // company name once registered (used in mails), empty = personal name
+$SITE    = 'aventiq.de';                  // domain named in the mails (freelance domain once live)
+$ORIGINS = ['https://ec.immofuchs.info', 'https://aventiq.de', 'https://www.aventiq.de', 'https://cv.aventiq.de']; // sites allowed to use this form
+$SIGN    = $COMPANY !== '' ? $COMPANY : 'Engin Celenk';
 $LIMIT   = 5;                             // max messages per IP per hour
 $CONFIRM = ['freelance'];                 // form sources whose sender gets a confirmation email
 // ---------------------------------------------------------------
@@ -34,7 +37,7 @@ $email   = $clean($in['email'] ?? '', 200);
 $company = $clean($in['company'] ?? '', 160);
 $message = $clean($in['message'] ?? '', 5000);
 $source  = $clean($in['source'] ?? 'portfolio', 40);
-$subject = $clean($in['_subject'] ?? 'Neue Nachricht über ec.immofuchs.info', 160);
+$subject = $clean($in['_subject'] ?? 'Neue Nachricht über ' . $SITE, 160);
 $lang    = ($in['lang'] ?? 'de') === 'en' ? 'en' : 'de';
 
 // Honeypot: bots fill hidden fields. Pretend success.
@@ -53,8 +56,8 @@ if ($hits >= $LIMIT) { http_response_code(429); echo json_encode(['success' => '
 
 $body = "Name: $name\nE-Mail: $email\n" . ($company !== '' ? "Unternehmen: $company\n" : '') . "Quelle: $source\n\n$message\n";
 /* Send with fallbacks: sender on the own domain first, then the second sender; with and without -f. */
-$send = function ($to, $subj, $text, $from, $replyTo = null) {
-  $h = ['From: ec.immofuchs.info <' . $from . '>', 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Content-Transfer-Encoding: 8bit'];
+$send = function ($to, $subj, $text, $from, $replyTo = null) use ($SITE) {
+  $h = ['From: ' . $SITE . ' <' . $from . '>', 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Content-Transfer-Encoding: 8bit'];
   if ($replyTo) $h[] = 'Reply-To: ' . $replyTo;
   $s = '=?UTF-8?B?' . base64_encode($subj) . '?=';
   return @mail($to, $s, $text, implode("\r\n", $h), '-f' . $from) || @mail($to, $s, $text, implode("\r\n", $h));
@@ -69,10 +72,10 @@ if (!$ok && $FROM2 && $FROM2 !== $FROM) { $usedFrom = $FROM2; $ok = $send($TO, $
    requests coming from the site itself (Origin header present and allowed). */
 if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true)) {
   $c = $lang === 'en'
-    ? ['Your request via ec.immofuchs.info',
-       "Hello,\n\nthank you for your request. Your message has reached me and I will get back to you shortly.\n\nKind regards\nEngin Celenk\nhttps://ec.immofuchs.info/freelance.html\n\nThis is an automatic confirmation. If you did not send a request, please ignore this email."]
-    : ['Ihre Anfrage über ec.immofuchs.info',
-       "Guten Tag,\n\nvielen Dank für Ihre Anfrage. Ihre Nachricht ist bei mir angekommen, ich melde mich zeitnah bei Ihnen.\n\nViele Grüße\nEngin Celenk\nhttps://ec.immofuchs.info/freelance.html\n\nDies ist eine automatische Bestätigung. Falls Sie keine Anfrage gesendet haben, ignorieren Sie diese E-Mail bitte."];
+    ? ['Your request via ' . $SITE,
+       "Hello,\n\nthank you for your request. Your message has reached me and I will get back to you shortly.\n\nKind regards\n" . $SIGN . "\nhttps://" . $SITE . "/\n\nThis is an automatic confirmation. If you did not send a request, please ignore this email."]
+    : ['Ihre Anfrage über ' . $SITE,
+       "Guten Tag,\n\nvielen Dank für Ihre Anfrage. Ihre Nachricht ist bei mir angekommen, ich melde mich zeitnah bei Ihnen.\n\nViele Grüße\n" . $SIGN . "\nhttps://" . $SITE . "/\n\nDies ist eine automatische Bestätigung. Falls Sie keine Anfrage gesendet haben, ignorieren Sie diese E-Mail bitte."];
   $send($email, $c[0], $c[1], $usedFrom);
 }
 
