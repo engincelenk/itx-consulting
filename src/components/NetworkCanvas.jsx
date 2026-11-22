@@ -59,6 +59,8 @@ export default function NetworkCanvas() {
       });
 
       ctx.clearRect(0, 0, w, h);
+      const light = document.documentElement.dataset.theme === "light";
+      const SIG = light ? "192,80,0" : "232,101,10", MIST = light ? "74,88,108" : "169,180,194", DOT = light ? "30,58,95" : "248,249,250";
       const maxD = scale * 0.42;
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
@@ -68,7 +70,7 @@ export default function NetworkCanvas() {
             const depth = (a.p + b.p) / 2;
             const sig = a.n.sig || b.n.sig;
             const alpha = (1 - d / maxD) * 0.28 * depth * (sig ? 1.5 : 1);
-            ctx.strokeStyle = sig ? `rgba(232,101,10,${alpha})` : `rgba(169,180,194,${alpha})`;
+            ctx.strokeStyle = sig ? `rgba(${SIG},${alpha})` : `rgba(${MIST},${alpha})`;
             ctx.lineWidth = 0.8 * depth;
             ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke();
           }
@@ -78,15 +80,15 @@ export default function NetworkCanvas() {
         const pulse = n.sig && !reduce ? 0.5 + 0.5 * Math.sin(t * 1.6 + n.ph) : 0.6;
         const r = (n.sig ? 2.6 : 1.6) * p;
         if (n.sig) {
-          ctx.fillStyle = `rgba(232,101,10,${0.12 * pulse})`;
+          ctx.fillStyle = `rgba(${SIG},${0.12 * pulse})`;
           ctx.beginPath(); ctx.arc(sx, sy, r * 5, 0, 6.283); ctx.fill();
         }
-        ctx.fillStyle = n.sig ? `rgba(232,101,10,${0.6 + 0.4 * pulse})` : `rgba(248,249,250,${0.25 + 0.45 * (p - 0.6)})`;
+        ctx.fillStyle = n.sig ? `rgba(${SIG},${0.6 + 0.4 * pulse})` : `rgba(${DOT},${0.25 + 0.45 * (p - 0.6)})`;
         ctx.beginPath(); ctx.arc(sx, sy, r, 0, 6.283); ctx.fill();
         if (n.label && w > 640) {
           ctx.font = "500 10px 'Geist Mono Variable', ui-monospace, monospace";
           const al = 0.2 + 0.4 * (p - 0.6);
-          ctx.fillStyle = n.label[1] ? `rgba(232,101,10,${al + 0.1})` : `rgba(169,180,194,${al})`;
+          ctx.fillStyle = n.label[1] ? `rgba(${SIG},${al + 0.1})` : `rgba(${MIST},${al})`;
           const txt = typeof n.label[0] === "string" ? n.label[0] : n.label[0][document.documentElement.lang === "de" ? "de" : "en"];
           ctx.fillText(txt, sx + 7, sy + 3);
         }

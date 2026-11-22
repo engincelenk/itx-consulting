@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  :root { color-scheme: dark; }
+  /* Dunkles Theme (Standard) und helles Theme. Werte als "R G B" für Tailwind-Deckkraft. */
+  :root { color-scheme: dark; --c-ink: 16 24 39; --c-deep: 11 17 29; --c-navy: 30 58 95; --c-signal: 232 101 10; --c-snow: 248 249 250; --c-mist: 169 180 194; --c-white: 255 255 255; }
+  :root[data-theme="light"] { color-scheme: light; --c-ink: 246 248 251; --c-deep: 232 237 244; --c-navy: 196 209 228; --c-signal: 192 80 0; --c-snow: 16 24 39; --c-mist: 74 88 108; --c-white: 16 24 39; }
   html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
   body { @apply bg-ink text-snow font-sans antialiased; font-feature-settings: "ss01", "cv11"; }
   h1, h2, h3 { text-wrap: balance; }
   ::selection { background: #E8650A; color: #101827; }
+  :root[data-theme="light"] .btn-primary:hover { background: #a94600; }
   :focus-visible { outline: 2px solid #E8650A; outline-offset: 3px; border-radius: 6px; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -43,7 +46,7 @@ main > .section::after {
   content: ""; position: absolute; top: 0; left: 50%; width: min(720px, 70%); height: 1px; transform: translateX(-50%);
   background: linear-gradient(90deg, transparent, rgba(232,101,10,.45), transparent); pointer-events: none;
 }
-main > .section:nth-of-type(even) { background: linear-gradient(180deg, transparent, rgba(30,58,95,.20) 35%, rgba(30,58,95,.20) 65%, transparent); }
+main > .section:nth-of-type(even) { background: linear-gradient(180deg, transparent, rgb(var(--c-navy) / .20) 35%, rgb(var(--c-navy) / .20) 65%, transparent); }
 main > .section:nth-of-type(3n)::before {
   content: ""; position: absolute; z-index: -1; right: -10%; top: 10%; width: 520px; height: 520px; max-width: 80vw; border-radius: 50%;
   background: radial-gradient(circle, rgba(232,101,10,.09), transparent 65%); pointer-events: none;

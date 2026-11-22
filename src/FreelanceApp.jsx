@@ -9,6 +9,7 @@ import Logo from "./components/Logo.jsx";
 import NetworkCanvas from "./components/NetworkCanvas.jsx";
 import ServiceMatrix from "./components/ServiceMatrix.jsx";
 import Footer from "./components/Footer.jsx";
+import ThemeToggle from "./components/ThemeToggle.jsx";
 import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
 import { person } from "./data/profile.js";
@@ -43,9 +44,10 @@ function Page() {
       <ScrollProgress />
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-ink/85 backdrop-blur-xl" style={{ paddingTop: "env(safe-area-inset-top)" }}>
         <div className="wrap flex h-16 items-center justify-between gap-3">
-          <a href={`/?lang=${lang}`} className="flex h-9 min-w-0 items-center" aria-label={site.company}><span className="flex h-12 items-center rounded-lg bg-white px-3"><img src="/solvexa-logo.png" alt={site.company} className="h-8 w-auto sm:h-9" /></span></a>
+          <a href={`/?lang=${lang}`} className="flex h-9 min-w-0 items-center" aria-label={site.company}><span className="flex h-12 items-center rounded-lg border border-white/10 bg-[#fff] px-3"><img src="/solvexa-logo.png" alt={site.company} className="h-8 w-auto sm:h-9" /></span></a>
           <div className="flex items-center gap-4">
             <a href={cvUrl(lang)} className="hidden items-center gap-1.5 text-sm text-mist hover:text-snow sm:inline-flex"><ArrowLeft size={16} />{T.back}: {person.name}</a>
+            <ThemeToggle />
             <LangSwitch />
           </div>
         </div>

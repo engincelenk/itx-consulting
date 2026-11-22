@@ -4,12 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#101827",      // page ground
-        deep: "#0B111D",     // deeper wells
-        navy: "#1E3A5F",     // panels, lines
-        signal: "#E8650A",   // interaction + key statements
-        snow: "#F8F9FA",     // primary text
-        mist: "#A9B4C2"      // secondary text
+        // Farben als CSS-Variablen (src/index.css), damit das helle Theme nur Werte tauscht.
+        ink: "rgb(var(--c-ink) / <alpha-value>)",       // page ground
+        deep: "rgb(var(--c-deep) / <alpha-value>)",     // deeper wells
+        navy: "rgb(var(--c-navy) / <alpha-value>)",     // panels, lines
+        signal: "rgb(var(--c-signal) / <alpha-value>)", // interaction + key statements
+        snow: "rgb(var(--c-snow) / <alpha-value>)",     // primary text
+        mist: "rgb(var(--c-mist) / <alpha-value>)",     // secondary text
+        white: "rgb(var(--c-white) / <alpha-value>)"    // Linien/Flächen-Tönung (im hellen Theme dunkel); echtes Weiß: bg-[#fff]
       },
       fontFamily: {
         sans: ["Geist Variable", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
