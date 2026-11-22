@@ -5,7 +5,7 @@
 @layer base {
   /* Dunkles Theme (Standard) und helles Theme. Werte als "R G B" für Tailwind-Deckkraft. */
   :root { color-scheme: dark; --c-ink: 16 24 39; --c-deep: 11 17 29; --c-navy: 30 58 95; --c-signal: 232 101 10; --c-snow: 248 249 250; --c-mist: 169 180 194; --c-white: 255 255 255; }
-  :root[data-theme="light"] { color-scheme: light; --c-ink: 246 248 251; --c-deep: 232 237 244; --c-navy: 196 209 228; --c-signal: 192 80 0; --c-snow: 16 24 39; --c-mist: 74 88 108; --c-white: 16 24 39; }
+  :root[data-theme="light"] { color-scheme: light; --c-ink: 246 248 251; --c-deep: 232 237 244; --c-navy: 196 209 228; --c-signal: 176 70 0; --c-snow: 16 24 39; --c-mist: 74 88 108; --c-white: 16 24 39; }
   html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
   body { @apply bg-ink text-snow font-sans antialiased; font-feature-settings: "ss01", "cv11"; }
   h1, h2, h3 { text-wrap: balance; }
@@ -32,7 +32,7 @@
   .btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-colors duration-200; }
   .btn-primary { @apply btn bg-signal text-ink hover:bg-[#ff7a1f]; }
   .btn-ghost { @apply btn border border-white/15 text-snow hover:border-signal hover:text-signal; }
-  .chip { @apply inline-flex min-h-[36px] items-center rounded-full border border-white/10 px-3.5 text-sm text-mist transition-colors hover:border-signal/60 hover:text-snow; }
+  .chip { @apply inline-flex min-h-[44px] items-center rounded-full border border-mist/40 px-3.5 text-sm text-mist transition-colors hover:border-signal/60 hover:text-snow; }
   .grid-bg { background-image: linear-gradient(rgba(169,180,194,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(169,180,194,.05) 1px, transparent 1px); background-size: 56px 56px; }
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, Loader2, Send } from "lucide-react";
 import { contactForm } from "../data/profile.js";
 import { useLang } from "../i18n.jsx";
@@ -13,13 +13,13 @@ const T = {
     ok: "Thank you. Your message has been sent, I will get back to you soon.", confirmSent: "You will receive a confirmation by email.", err: "Sending failed. Please try again later or write via LinkedIn.",
     tech: "Technical note",
     activate: "The contact form is being set up right now. Please try again in a few hours or write via LinkedIn.",
-    consent: "I agree that my details are used to answer my request.", privacy: "Privacy", required: "Please fill in name, email and message and confirm the consent.",
+    consent: "I agree that my details are used to answer my request.", privacy: "Privacy", required: "Please fill in the marked fields and confirm the consent.", fName: "Please enter your name.", fEmail: "Please enter a valid email address.", fMessage: "Please enter a message.", fConsent: "Please confirm the consent.",
     subject: `New message via ${location.hostname}` },
   de: { name: "Name", email: "Ihre E-Mail", company: "Unternehmen (optional)", message: "Nachricht", send: "Nachricht senden", sending: "Wird gesendet…",
     ok: "Vielen Dank. Ihre Nachricht ist angekommen, ich melde mich zeitnah.", confirmSent: "Sie erhalten eine Bestätigung per E-Mail.", err: "Senden fehlgeschlagen. Bitte später erneut versuchen oder über LinkedIn schreiben.",
     tech: "Technischer Hinweis",
     activate: "Das Kontaktformular wird gerade eingerichtet. Bitte in einigen Stunden erneut versuchen oder über LinkedIn schreiben.",
-    consent: "Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden.", privacy: "Datenschutz", required: "Bitte Name, E-Mail und Nachricht ausfüllen und die Einwilligung bestätigen.",
+    consent: "Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden.", privacy: "Datenschutz", required: "Bitte die markierten Felder ausfüllen und die Einwilligung bestätigen.", fName: "Bitte Namen angeben.", fEmail: "Bitte eine gültige E-Mail-Adresse angeben.", fMessage: "Bitte eine Nachricht eingeben.", fConsent: "Bitte die Einwilligung bestätigen.",
     subject: `Neue Nachricht über ${location.hostname}` }
 };
 
@@ -30,14 +30,23 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
   const [state, setState] = useState("idle");
   const [hint, setHint] = useState("");
   const [detail, setDetail] = useState("");
-  useEffect(() => { if (initialMessage) setF(x => ({ ...x, message: initialMessage })); }, [initialMessage]);
-  const set = k => e => setF(x => ({ ...x, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value }));
+  const [errs, setErrs] = useState({});
+  const dirty = useRef(false);   // Nachricht von Hand geändert: Vorschlag aus dem Konfigurator überschreibt sie nicht mehr
+  const okRef = useRef(null), formRef = useRef(null);
+  useEffect(() => { if (!dirty.current) setF(x => ({ ...x, message: initialMessage })); }, [initialMessage]);
+  useEffect(() => { if (state === "ok") okRef.current?.focus(); }, [state]);
+  const set = k => e => { if (k === "message") dirty.current = true; setF(x => ({ ...x, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value })); setErrs(x => ({ ...x, [k]: undefined })); };
 
   const submit = async e => {
     e.preventDefault();
     if (f.hp) return;
-    if (!f.name.trim() || !/^\S+@\S+\.\S+$/.test(f.email) || !f.message.trim() || !f.consent) { setHint(t.required); return; }
-    setHint(""); setState("sending");
+    const er = {};
+    if (!f.name.trim()) er.name = t.fName;
+    if (!/^\S+@\S+\.\S+$/.test(f.email)) er.email = t.fEmail;
+    if (!f.message.trim()) er.message = t.fMessage;
+    if (!f.consent) er.consent = t.fConsent;
+    if (Object.keys(er).length) { setErrs(er); setHint(t.required); formRef.current?.querySelector(`[name="${Object.keys(er)[0]}"]`)?.focus(); return; }
+    setErrs({}); setHint(""); setState("sending");
     try {
       // Try each location in order. A 404 or a network/CORS error means the script is not there, so nothing was delivered yet.
       const payload = JSON.stringify({ name: f.name, email: f.email, company: f.company, message: f.message, source, lang, _subject: subject || t.subject, _template: "table", _captcha: "false", _replyto: f.email, _honey: f.hp });
@@ -51,31 +60,31 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
       }
       if (!r) { console.warn("Contact form:", lastErr); setDetail(lastErr); setState("err"); return; }
       const j = await r.json().catch(() => ({}));
-      if (r.ok && String(j.success) === "true") { setState("ok"); setF(x => ({ ...x, message: "", consent: false })); return; }
+      if (r.ok && String(j.success) === "true") { setState("ok"); dirty.current = false; setF(x => ({ ...x, message: "", consent: false })); return; }
       console.warn("Contact form:", r.status, j.message);
       setDetail([`HTTP ${r.status}`, j.message, j.detail].filter(Boolean).join(" · "));
       setState(/activat/i.test(j.message || "") ? "activate" : "err");
     } catch (err) { console.warn("Contact form:", err); setDetail(String(err && err.message || err)); setState("err"); }
   };
 
-  const field = "mt-2 min-h-[48px] w-full rounded-xl border border-white/10 bg-ink px-4 text-[16px] text-snow placeholder:text-mist/60 focus:border-signal focus:outline-none";
-  if (state === "ok") return <p className="flex items-start gap-3 rounded-xl border border-signal/40 bg-signal/10 p-5" role="status"><Check size={20} className="mt-0.5 flex-none text-signal" />{t.ok}{source === "freelance" && contactForm.endpoints ? ` ${t.confirmSent}` : ""}</p>;
+  const field = "mt-2 min-h-[48px] w-full rounded-xl border border-mist/40 bg-ink px-4 text-[16px] text-snow placeholder:text-mist/80 focus:border-signal focus:outline-none";
+  if (state === "ok") return <p ref={okRef} tabIndex={-1} className="flex items-start gap-3 rounded-xl border border-signal/40 bg-signal/10 p-5 focus:outline-none" role="status"><Check size={20} className="mt-0.5 flex-none text-signal" />{t.ok}{source === "freelance" && contactForm.endpoints ? ` ${t.confirmSent}` : ""}</p>;
 
   return (
-    <form onSubmit={submit} noValidate className="space-y-4">
+    <form ref={formRef} onSubmit={submit} noValidate className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="block"><span className="label">{t.name}</span><input autoComplete="name" value={f.name} onChange={set("name")} className={field} /></label>
-        <label className="block"><span className="label">{t.email}</span><input type="email" autoComplete="email" value={f.email} onChange={set("email")} className={field} /></label>
+        <label className="block"><span className="label">{t.name} *</span><input name="name" required aria-required="true" aria-invalid={!!errs.name} aria-describedby={errs.name ? "err-name" : undefined} autoComplete="name" value={f.name} onChange={set("name")} className={field} />{errs.name && <span id="err-name" className="mt-1 block text-sm text-signal">{errs.name}</span>}</label>
+        <label className="block"><span className="label">{t.email} *</span><input name="email" required aria-required="true" aria-invalid={!!errs.email} aria-describedby={errs.email ? "err-email" : undefined} type="email" autoComplete="email" value={f.email} onChange={set("email")} className={field} />{errs.email && <span id="err-email" className="mt-1 block text-sm text-signal">{errs.email}</span>}</label>
       </div>
       <label className="block"><span className="label">{t.company}</span><input autoComplete="organization" value={f.company} onChange={set("company")} className={field} /></label>
-      <label className="block"><span className="label">{t.message}</span><textarea rows={6} value={f.message} onChange={set("message")} className={`${field} py-3 leading-relaxed`} /></label>
+      <label className="block"><span className="label">{t.message} *</span><textarea name="message" required aria-required="true" aria-invalid={!!errs.message} aria-describedby={errs.message ? "err-message" : undefined} rows={6} value={f.message} onChange={set("message")} className={`${field} py-3 leading-relaxed`} />{errs.message && <span id="err-message" className="mt-1 block text-sm text-signal">{errs.message}</span>}</label>
       <input type="text" tabIndex={-1} autoComplete="off" value={f.hp} onChange={set("hp")} className="hidden" aria-hidden="true" />
-      <label className="flex items-start gap-3 text-sm text-mist">
-        <input type="checkbox" checked={f.consent} onChange={set("consent")} className="mt-1 h-5 w-5 flex-none accent-[#E8650A]" />
-        <span>{t.consent} <a className="text-snow underline decoration-signal" href={`/legal.html?lang=${lang}#privacy`}>{t.privacy}</a></span>
+      <label className="flex min-h-[44px] items-start gap-3 py-1 text-sm text-mist">
+        <input name="consent" type="checkbox" required aria-required="true" aria-invalid={!!errs.consent} checked={f.consent} onChange={set("consent")} className="mt-0.5 h-6 w-6 flex-none accent-[#E8650A]" />
+        <span>{t.consent} *{errs.consent && <span className="block text-signal">{errs.consent}</span>} <a className="text-snow underline decoration-signal" href={`/legal.html?lang=${lang}#privacy`}>{t.privacy}</a></span>
       </label>
       {hint && <p className="text-sm text-signal" role="alert">{hint}</p>}
-      {state === "err" && <div role="alert"><p className="text-sm text-signal">{t.err}</p>{detail && <p className="mt-1 break-words font-mono text-[11px] text-mist">{t.tech}: {detail}</p>}</div>}
+      {state === "err" && <div role="alert"><p className="text-sm text-signal">{t.err}</p>{import.meta.env.DEV && detail && <p className="mt-1 break-words font-mono text-[11px] text-mist">{t.tech}: {detail}</p>}</div>}
       {state === "activate" && <p className="text-sm text-signal" role="alert">{t.activate}</p>}
       <button type="submit" disabled={state === "sending"} className="btn-primary disabled:opacity-60">
         {state === "sending" ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}{state === "sending" ? t.sending : t.send}

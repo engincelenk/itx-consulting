@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import Icon from "./Icon.jsx";
 import SuccessStory from "./SuccessStory.jsx";
 import { pillars as rawPillars, aiVertical as rawAi } from "../data/services.js";
@@ -17,20 +17,24 @@ export default function ServiceMatrix({ T }) {
   const toggle = id => setSel(s => (s === id ? null : id));
   const dimCol = id => sel && sel !== "ai" && sel !== id;
   const cur = pillars.find(p => p.id === sel);
+  const detailRef = useRef(null);
+  // Das Detail liegt unter der Matrix: nach dem Auswählen in Sicht bringen (v. a. auf dem Handy)
+  useEffect(() => { if (sel) detailRef.current?.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" }); }, [sel]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
       {/* Pillars */}
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {pillars.map(p => (
-          <div key={p.id} className={`flex min-w-0 flex-col rounded-2xl border transition-all duration-300 ${sel === p.id ? "border-signal/70 bg-navy/50" : "border-white/[0.08] bg-navy/20"} ${dimCol(p.id) ? "opacity-40" : ""}`}>
+          <div key={p.id} className={`flex min-w-0 flex-col rounded-2xl border transition-all duration-300 ${sel === p.id ? "border-signal/70 bg-navy/50" : "border-white/[0.08] bg-navy/20"} ${dimCol(p.id) ? "opacity-60" : ""}`}>
             <button type="button" onClick={() => toggle(p.id)} aria-pressed={sel === p.id} className="flex items-start gap-3 p-5 text-left">
               <span className={`grid h-11 w-11 flex-none place-items-center rounded-xl ${sel === p.id ? "bg-signal text-ink" : "bg-white/[0.06] text-signal"}`}><Icon name={p.icon} size={20} /></span>
-              <span className="min-w-0">
+              <span className="min-w-0 flex-1">
                 <span className="block text-lg font-semibold leading-tight tracking-tight">{p.title}</span>
                 {p.subtitle && <span className="mt-0.5 block text-xs text-mist">{p.subtitle}</span>}
                 <span className="mt-1 block text-sm text-mist">{p.claim}</span>
               </span>
+              <ChevronDown size={18} aria-hidden="true" className={`mt-1 flex-none text-mist transition-transform ${sel === p.id ? "rotate-180 text-signal" : ""}`} />
             </button>
             <ul className={`space-y-1.5 px-5 pb-5 transition-opacity ${sel === "ai" ? "opacity-40" : ""}`}>
               {p.offers.map(o => (
@@ -53,9 +57,9 @@ export default function ServiceMatrix({ T }) {
         </span>
         <span className="relative mt-3 grid grid-cols-1 gap-2 md:grid-cols-3">
           {pillars.map(p => (
-            <span key={p.id} className={`rounded-xl border px-4 py-3 transition-all ${sel === "ai" || sel === p.id ? "border-signal/60 bg-ink/80" : "border-white/10 bg-ink/50"} ${dimCol(p.id) ? "opacity-40" : ""}`}>
+            <span key={p.id} className={`rounded-xl border px-4 py-3 transition-all ${sel === "ai" || sel === p.id ? "border-signal/60 bg-ink/80" : "border-mist/30 bg-ink/50"} ${dimCol(p.id) ? "opacity-60" : ""}`}>
               <span className="block text-sm font-semibold">{p.ai.title}</span>
-              <span className="block font-mono text-[10px] uppercase tracking-wider text-mist">{T.inArea} {p.title}</span>
+              <span className="block font-mono text-[11px] uppercase tracking-wider text-mist">{T.inArea} {p.title}</span>
             </span>
           ))}
         </span>
@@ -65,7 +69,7 @@ export default function ServiceMatrix({ T }) {
       <AnimatePresence mode="wait">
         {sel && (
           <motion.div key={sel + lang} initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={reduce ? undefined : { opacity: 0 }} transition={{ duration: 0.25 }}
-            className="panel mt-4 p-5 sm:p-7" aria-live="polite">
+            ref={detailRef} className="panel mt-4 scroll-mb-6 p-5 sm:p-7" aria-live="polite">
             {sel === "ai" ? (
               <>
                 <p className="text-lg font-semibold">{ai.title}</p>

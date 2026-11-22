@@ -24,7 +24,6 @@ function Page() {
   const [picked, setPicked] = useState([]);
   const [format, setFormat] = useState("advisory");
   const [when, setWhen] = useState("q");
-  const [company, setCompany] = useState("");
   const [note, setNote] = useState("");
   const [step, setStep] = useState(steps[0].id);
 
@@ -34,17 +33,18 @@ function Page() {
   const mail = useMemo(() => {
     const names = areas.filter(a => picked.includes(a.id)).map(a => a.title);
     const subject = T.subject(names.join(", "));
-    const body = T.body(names.map(n => `• ${n}`).join("\n"), formats[format], timing.find(t => t.id === when).label, company.trim(), note.trim());
+    const body = T.body(names.map(n => `• ${n}`).join("\n"), formats[format], timing.find(t => t.id === when).label, "", note.trim());
     return { names, subject, body };
-  }, [picked, format, when, company, note, lang]); // eslint-disable-line react-hooks/exhaustive-deps
-  const chip = on => `min-h-[44px] rounded-xl border px-3 text-sm font-medium transition-colors ${on ? "border-signal bg-signal/10 text-snow" : "border-white/10 text-mist hover:text-snow"}`;
+  }, [picked, format, when, note, lang]); // eslint-disable-line react-hooks/exhaustive-deps
+  const chip = on => `min-h-[44px] rounded-xl border px-3 text-sm font-medium transition-colors ${on ? "border-signal bg-signal/10 text-snow" : "border-mist/40 text-mist hover:text-snow"}`;
 
   return (
     <>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-snow focus:px-4 focus:py-3 focus:text-ink">{T.skip}</a>
       <ScrollProgress />
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-ink/85 backdrop-blur-xl" style={{ paddingTop: "env(safe-area-inset-top)" }}>
         <div className="wrap flex h-16 items-center justify-between gap-3">
-          <a href={`/?lang=${lang}`} className="flex h-9 min-w-0 items-center" aria-label={site.company}><><img src="/solvexa-logo-dark.png" alt={site.company} width="2337" height="420" className="brand-dark h-8 w-auto sm:h-10" /><img src="/solvexa-logo-light.png" alt={site.company} width="2338" height="414" className="brand-light h-8 w-auto sm:h-10" /></></a>
+          <a href={`/?lang=${lang}`} className="flex h-11 min-w-0 items-center" aria-label={site.company}><><img src="/solvexa-logo-dark.png" alt={site.company} width="900" height="162" loading="lazy" className="brand-dark h-8 w-auto sm:h-10" /><img src="/solvexa-logo-light.png" alt={site.company} width="900" height="159" loading="lazy" className="brand-light h-8 w-auto sm:h-10" /></></a>
           <div className="flex items-center gap-4">
             <a href={cvUrl(lang)} className="hidden items-center gap-1.5 text-sm text-mist hover:text-snow sm:inline-flex"><ArrowLeft size={16} />{T.back}: {person.name}</a>
             <ThemeToggle />
@@ -53,7 +53,7 @@ function Page() {
         </div>
       </header>
 
-      <main>
+      <main id="main">
         <section className="relative isolate overflow-hidden pb-10 pt-28 md:pt-36">
           <div className="absolute inset-0 -z-10 opacity-40 md:opacity-80 md:[mask-image:linear-gradient(to_right,rgba(0,0,0,.2),black_60%)]"><NetworkCanvas /></div>
           <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-ink" />
@@ -69,7 +69,7 @@ function Page() {
                 <span className="text-sm">{site.hasCompany ? <>{person.name}, {person.degree} <span className="text-mist">· {T.owner}</span></> : <>{person.name}, {person.degree}</>}</span>
               </div>
             </div>
-            {site.hasCompany && <p className="mt-6 flex max-w-2xl items-start gap-3 text-sm text-mist"><span className="mt-2 h-px w-6 flex-none bg-signal" />{T.proof}</p>}
+            {site.hasCompany && <p className="mt-6 flex max-w-2xl items-start gap-3 text-[15px] text-snow/80"><span className="mt-2 h-px w-6 flex-none bg-signal" />{T.proof}</p>}
           </div>
         </section>
 
@@ -91,7 +91,7 @@ function Page() {
         <section className="section">
           <div className="wrap">
             <SectionHead no="03" kicker={T.expKicker} title={T.expTitle} />
-            <ul className="flex flex-wrap gap-2">{L(industries).map(i => <li key={i} className="rounded-full border border-white/10 px-4 py-2 text-sm">{i}</li>)}</ul>
+            <ul aria-label={T.expTitle} className="flex flex-wrap gap-2">{L(industries).map(i => <li key={i} className="rounded-full border border-white/10 px-4 py-2 text-sm">{i}</li>)}</ul>
 <div className="mt-2"><LogoWall /></div>
           </div>
         </section>
@@ -119,16 +119,12 @@ function Page() {
                     {timing.map(t => <button key={t.id} type="button" aria-pressed={when === t.id} onClick={() => setWhen(t.id)} className={chip(when === t.id)}>{t.label}</button>)}
                   </div>
                 </fieldset>
-                <label className="block"><span className="label">{T.cfgCompany}</span>
-                  <input value={company} onChange={e => setCompany(e.target.value)} className="mt-2 min-h-[48px] w-full rounded-xl border border-white/10 bg-ink px-4 text-[16px] focus:border-signal focus:outline-none" /></label>
                 <label className="block"><span className="label">{T.cfgNote}</span>
-                  <textarea rows={3} value={note} onChange={e => setNote(e.target.value)} placeholder={T.cfgNotePh} className="mt-2 w-full rounded-xl border border-white/10 bg-ink p-4 text-[16px] placeholder:text-mist/60 focus:border-signal focus:outline-none" /></label>
+                  <textarea rows={3} value={note} onChange={e => setNote(e.target.value)} placeholder={T.cfgNotePh} className="mt-2 w-full rounded-xl border border-mist/40 bg-ink p-4 text-[16px] placeholder:text-mist/80 focus:border-signal focus:outline-none" /></label>
               </div>
               <div className="panel flex min-w-0 flex-col p-5 sm:p-7 lg:sticky lg:top-24 lg:self-start">
                 <p className="label">{T.preview}</p>
-                {mail.names.length
-                  ? <div className="mt-4"><ContactForm key={mail.subject} initialMessage={mail.body} subject={mail.subject} source="freelance" /></div>
-                  : <p className="mt-3 rounded-xl border border-dashed border-white/15 p-6 text-center text-mist">{T.none}</p>}
+                <div className="mt-4"><ContactForm initialMessage={mail.names.length ? mail.body : ""} subject={mail.names.length ? mail.subject : undefined} source="freelance" /></div>
                 <p className="mt-5 text-xs text-mist">{T.note}</p>
               </div>
             </div>

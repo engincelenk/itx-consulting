@@ -14,8 +14,8 @@ export default function ThemeToggle() {
   }, [light]);
   const label = light ? (lang === "de" ? "Dunkles Design" : "Dark theme") : (lang === "de" ? "Helles Design" : "Light theme");
   return (
-    <button type="button" onClick={() => setLight(v => !v)} aria-label={label} title={label}
-      className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-mist transition-colors hover:border-signal hover:text-signal">
+    <button type="button" onClick={() => setLight(v => !v)} aria-pressed={light} aria-label={lang === "de" ? "Helles Design" : "Light theme"} title={label}
+      className="grid h-11 w-11 place-items-center rounded-full border border-mist/40 text-mist transition-colors hover:border-signal hover:text-signal">
       {light ? <Moon size={16} /> : <Sun size={16} />}
     </button>
   );
