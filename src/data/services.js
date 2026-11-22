@@ -75,7 +75,6 @@ export const fl = {
   en: {
     title: `${brand} · Freelance`, desc: "Freelance: IT architecture, cyber security and IT management, with AI as the vertical.",
     back: "Portfolio", owner: "Owner", kicker: "Freelance", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
-    lead: "Three service areas of equal weight, connected by AI. Experience from more than a decade of corporate IT at Bosch, Daimler and TRUMPF.",
     cta: "Start a request",
     mapKicker: "Service portfolio", mapTitle: "Three pillars, one vertical.", mapLead: "Tap a pillar or the AI band.",
     aiAcross: "across all three pillars", inArea: "in",
@@ -91,7 +90,6 @@ export const fl = {
   de: {
     title: `${brand} · Freelance`, desc: "Freelance: IT-Architektur, Cyber Security und IT Management, mit KI als Vertikale.",
     back: "Portfolio", owner: "Inhaber", kicker: "Freelance", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
-    lead: "Drei gleichwertige Leistungsbereiche, verbunden durch KI. Erfahrung aus über zehn Jahren Konzern-IT bei Bosch, Daimler und TRUMPF.",
     cta: "Anfrage starten",
     mapKicker: "Leistungsportfolio", mapTitle: "Drei Säulen, eine Vertikale.", mapLead: "Säule oder KI-Band antippen.",
     aiAcross: "quer über alle drei Säulen", inArea: "in",
