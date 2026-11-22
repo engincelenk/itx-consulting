@@ -14,14 +14,13 @@ import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
 import { person } from "./data/profile.js";
 import { site, slogan, cvUrl } from "./site.js";
-import { pillars as rawPillars, aiVertical as rawAi, process as rawProcess, industries, expertise as rawExpertise, timing as rawTiming, formats as rawFormats, fl } from "./data/services.js";
+import { pillars as rawPillars, aiVertical as rawAi, process as rawProcess, industries, timing as rawTiming, formats as rawFormats, fl } from "./data/services.js";
 
 function Page() {
   const { lang, L } = useLang();
   const T = L(fl);
   const pillars = L(rawPillars), ai = L(rawAi), steps = L(rawProcess), timing = L(rawTiming), formats = L(rawFormats);
   const areas = [...pillars.map(p => ({ id: p.id, title: p.title })), { id: "ai", title: ai.title }];
-  const groups = rawExpertise.map(g => ({ id: g.id, title: L(g.title), items: g.items.map(i => (typeof i === "string" ? i : L(i))) }));
   const [picked, setPicked] = useState([]);
   const [format, setFormat] = useState("advisory");
   const [when, setWhen] = useState("q");
@@ -93,19 +92,8 @@ function Page() {
             </div>
             <h3 className="label mt-12">{T.expTitle}</h3>
             <div className="mt-4">
-            <ul aria-label={T.expTitle} className="flex flex-wrap gap-2">{L(industries).map(i => <li key={i} className="rounded-full border border-white/10 px-4 py-2 text-sm">{i}</li>)}</ul>
-<div className="mt-2"><LogoWall /></div>
-            <h3 className="label mt-12">{T.expGroups}</h3>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {groups.map(g => (
-                <div key={g.id} className="rounded-2xl border border-white/[0.08] bg-navy/20 p-5">
-                  <p className="font-semibold">{g.title}</p>
-                  <ul className="mt-3 flex flex-wrap gap-2" aria-label={g.title}>
-                    {g.items.map(it => <li key={it} className="rounded-lg bg-white/[0.06] px-2.5 py-1 text-sm text-snow/90">{it}</li>)}
-                  </ul>
-                </div>
-              ))}
-            </div>
+            <p className="text-base leading-relaxed text-snow/90 sm:text-lg">{L(industries).map((i, n) => <span key={i}>{n > 0 && <span className="mx-2 text-signal" aria-hidden="true">·</span>}<span className="inline-block max-w-full">{i}</span></span>)}</p>
+<div className="mt-6"><LogoWall /></div>
             </div>
           </div>
         </section>
