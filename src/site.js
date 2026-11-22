@@ -9,8 +9,8 @@
    - der Lebenslauf liegt unter                            (https://<domain>/cv/)
 ------------------------------------------------------------------- */
 
-const company = "Aventiq";   // z. B. "Muster IT Consulting"
-const domain = "";    // optional; leer = aus dem Firmennamen abgeleitet (aventiq.de)
+const company = "Solvexa Consulting";   // z. B. "Muster IT Consulting"
+const domain = "";    // optional; leer = aus dem Firmennamen abgeleitet (solvexa-consulting.de)
 const live = false;   // true, sobald die Domain existiert und beide Seiten dort ausgeliefert werden
 
 const slug = s => s.toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
@@ -21,6 +21,8 @@ const legacy = "ec.immofuchs.info"; // bisherige Adresse des Portfolios
 
 /* Aufbau: Startseite (/) = Freelance, Lebenslauf/Portfolio unter /cv/ (gleiche Domain). */
 const origin = `https://${host || legacy}`;
+
+export const slogan = "Connect. Secure. Manage. Engineer.";
 
 export const site = {
   company: company.trim(),
