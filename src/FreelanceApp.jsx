@@ -61,7 +61,7 @@ function Page() {
             {site.hasCompany
               ? <h1 className="text-[2.2rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-7xl">{site.company}<span className="mt-3 block text-[1.25rem] font-medium leading-snug tracking-[-0.02em] text-signal sm:text-3xl">{slogan}</span></h1>
               : <h1 className="mt-5 max-w-[20ch] text-[2.3rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-6xl">{T.h1a} <span className="text-signal">{T.h1b}</span></h1>}
-            {site.hasCompany && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{T.h1a} {T.h1b}</p>}
+            {site.hasCompany && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{T.heroLead}</p>}
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a href="#request" className="btn-primary">{T.cta} <ArrowUpRight size={16} /></a>
               <div className="flex items-center gap-3 rounded-full border border-white/10 bg-ink/60 py-1.5 pl-1.5 pr-4 backdrop-blur">
@@ -69,6 +69,7 @@ function Page() {
                 <span className="text-sm">{site.hasCompany ? <>{person.name}, {person.degree} <span className="text-mist">· {T.owner}</span></> : <>{person.name}, {person.degree}</>}</span>
               </div>
             </div>
+            {site.hasCompany && <p className="mt-6 flex max-w-2xl items-start gap-3 text-sm text-mist"><span className="mt-2 h-px w-6 flex-none bg-signal" />{T.proof}</p>}
           </div>
         </section>
 
