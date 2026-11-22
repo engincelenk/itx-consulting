@@ -73,8 +73,8 @@ const brand = site.hasCompany ? site.company : "Engin Celenk";
 
 export const fl = {
   en: {
-    title: `${brand} · Freelance`, desc: "Freelance: IT architecture, cyber security and IT management, with AI as the vertical.",
-    back: "Portfolio", owner: "Owner", kicker: "Freelance", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
+    title: brand, desc: "IT architecture, cyber security and IT management, with AI as the vertical.",
+    back: "Portfolio", owner: "Owner", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
     cta: "Start a request",
     mapKicker: "Service portfolio", mapTitle: "Three pillars, one vertical.", mapLead: "Tap a pillar or the AI band.",
     aiAcross: "across all three pillars", inArea: "in",
@@ -88,8 +88,8 @@ export const fl = {
     note: "Details and prices after the intro call. No newsletter, no tracking."
   },
   de: {
-    title: `${brand} · Freelance`, desc: "Freelance: IT-Architektur, Cyber Security und IT Management, mit KI als Vertikale.",
-    back: "Portfolio", owner: "Inhaber", kicker: "Freelance", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
+    title: brand, desc: "IT-Architektur, Cyber Security und IT Management, mit KI als Vertikale.",
+    back: "Portfolio", owner: "Inhaber", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
     cta: "Anfrage starten",
     mapKicker: "Leistungsportfolio", mapTitle: "Drei Säulen, eine Vertikale.", mapLead: "Säule oder KI-Band antippen.",
     aiAcross: "quer über alle drei Säulen", inArea: "in",

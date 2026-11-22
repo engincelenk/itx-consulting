@@ -7,7 +7,7 @@ import { site } from "./src/site.js";
 const owner = "Engin Celenk";
 const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const tokens = {
-  FREELANCE_TITLE: site.hasCompany ? `${esc(site.company)} · Freelance` : `${owner} · Freelance`,
+  FREELANCE_TITLE: esc(site.hasCompany ? site.company : owner),
   FREELANCE_ORIGIN: site.freelanceOrigin,
   CV_ORIGIN: site.cvOrigin,
   LEGAL_TITLE: esc(site.hasCompany ? site.company : owner),
