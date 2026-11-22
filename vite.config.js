@@ -29,6 +29,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
+        portfolio: resolve(__dirname, "cv/index.html"),
         cv: resolve(__dirname, "cv.html"),
         legal: resolve(__dirname, "legal.html"),
         link: resolve(__dirname, "link.html"),

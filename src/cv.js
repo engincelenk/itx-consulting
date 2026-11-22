@@ -78,5 +78,5 @@ document.getElementById("cv").innerHTML = `
 <nav class="tools no-print">
   <a href="?lang=${lang === "de" ? "en" : "de"}">${lang === "de" ? "English" : "Deutsch"}</a>
   <a class="dl" href="${cv.file}" download>${T.dl}</a>
-  <a href="/?lang=${lang}">${T.back}</a>
+  <a href="/cv/?lang=${lang}">${T.back}</a>
 </nav>`;

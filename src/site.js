@@ -5,8 +5,8 @@
 
    Mit Firmenname:
    - Freelance-Seite tritt unter dem Firmennamen auf (Titel, Kopf, Footer, Impressum)
-   - Freelance-Seite ist die Startseite der Firmen-Domain  (https://<domain>)
-   - der Lebenslauf liegt auf der Subdomain                (https://cv.<domain>)
+   - Freelance-Seite ist die Startseite der Firmen-Domain  (https://<domain>/)
+   - der Lebenslauf liegt unter                            (https://<domain>/cv/)
 ------------------------------------------------------------------- */
 
 const company = "Aventiq";   // z. B. "Muster IT Consulting"
@@ -19,26 +19,19 @@ const slug = s => s.toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").repl
 const host = live ? (domain.trim() || (company.trim() ? `${slug(company)}.de` : "")) : "";
 const legacy = "ec.immofuchs.info"; // bisherige Adresse des Portfolios
 
+/* Aufbau: Startseite (/) = Freelance, Lebenslauf/Portfolio unter /cv/ (gleiche Domain). */
+const origin = `https://${host || legacy}`;
+
 export const site = {
   company: company.trim(),
   hasCompany: Boolean(company.trim()),
-  /** Eigene Domains aktiv (live = true)? Sonst bleiben Links relativ auf die bisherige Adresse. */
+  /** Eigene Domain aktiv (live = true)? */
   hasDomain: Boolean(host),
-  /** Domain der Freelance-Seite (leer solange keine Firma eingetragen ist). */
-  freelanceHost: host,
-  /** Subdomain für den Lebenslauf. */
-  cvHost: host ? `cv.${host}` : legacy,
-  freelanceOrigin: host ? `https://${host}` : `https://${legacy}`,
-  cvOrigin: host ? `https://cv.${host}` : `https://${legacy}`
+  freelanceHost: host || legacy,
+  freelanceOrigin: origin,
+  cvOrigin: `${origin}/cv`
 };
 
-/* Läuft die Seite gerade auf der Freelance-Domain? (?as=freelance zum Testen auf localhost) */
-export function onFreelanceHost() {
-  if (typeof location === "undefined" || !site.hasDomain) return false;
-  const h = location.hostname.replace(/^www\./, "");
-  return h === site.freelanceHost || new URLSearchParams(location.search).get("as") === "freelance";
-}
-
-/* Links zwischen den beiden Seiten. Ohne Firma relativ wie bisher. */
-export const freelanceUrl = lang => site.hasDomain ? `${site.freelanceOrigin}/?lang=${lang}` : `/freelance.html?lang=${lang}`;
-export const cvUrl = lang => site.hasDomain ? `${site.cvOrigin}/?lang=${lang}` : `/?lang=${lang}`;
+/* Links zwischen den beiden Seiten (relativ, funktioniert auf jeder Domain). */
+export const freelanceUrl = lang => `/?lang=${lang}`;
+export const cvUrl = lang => `/cv/?lang=${lang}`;
