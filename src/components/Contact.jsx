@@ -33,7 +33,7 @@ export default function Contact() {
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
               <a className="btn-primary" href={cv.file} download><Download size={16} />{t("downloadPdf")}</a>
-              <a className="btn-ghost" href={`/cv.html?lang=${lang}`} target="_blank" rel="noopener"><ExternalLink size={16} />{t("webVersion")}</a>
+              <a className="btn-ghost" href={`/cv/print.html?lang=${lang}`} target="_blank" rel="noopener"><ExternalLink size={16} />{t("webVersion")}</a>
             </div>
           </div>
         </div>

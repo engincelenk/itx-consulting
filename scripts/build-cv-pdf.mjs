@@ -15,7 +15,7 @@ const browser = await chromium.launch();
 try {
   const page = await browser.newPage();
   for (const [lang, file] of files) {
-    await page.goto(`${base}/cv.html?lang=${lang}`, { waitUntil: "networkidle" });
+    await page.goto(`${base}/cv/print.html?lang=${lang}`, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: "print" });
     await page.pdf({ path: `public/cv/${file}`, format: "A4", printBackground: true, preferCSSPageSize: true });

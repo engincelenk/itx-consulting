@@ -30,10 +30,9 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         portfolio: resolve(__dirname, "cv/index.html"),
-        cv: resolve(__dirname, "cv.html"),
+        cvprint: resolve(__dirname, "cv/print.html"),
         legal: resolve(__dirname, "legal.html"),
         link: resolve(__dirname, "link.html"),
-        freelance: resolve(__dirname, "freelance.html"),
         techcheck: resolve(__dirname, "tech-check.html")
       }
     }
