@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import ContactForm from "./components/ContactForm.jsx";
 import { LangProvider, useLang } from "./i18n.jsx";
@@ -14,29 +14,15 @@ import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
 import { person } from "./data/profile.js";
 import { site, slogan, cvUrl } from "./site.js";
-import { pillars as rawPillars, aiVertical as rawAi, process as rawProcess, industries, timing as rawTiming, formats as rawFormats, fl } from "./data/services.js";
+import { process as rawProcess, industries, fl } from "./data/services.js";
 
 function Page() {
   const { lang, L } = useLang();
   const T = L(fl);
-  const pillars = L(rawPillars), ai = L(rawAi), steps = L(rawProcess), timing = L(rawTiming), formats = L(rawFormats);
-  const areas = [...pillars.map(p => ({ id: p.id, title: p.title })), { id: "ai", title: ai.title }];
-  const [picked, setPicked] = useState([]);
-  const [format, setFormat] = useState("advisory");
-  const [when, setWhen] = useState("q");
-  const [note, setNote] = useState("");
+  const steps = L(rawProcess);
   const [step, setStep] = useState(steps[0].id);
 
   useEffect(() => { document.title = T.title; document.querySelector('meta[name="description"]')?.setAttribute("content", T.desc); }, [T]);
-  const toggle = id => setPicked(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
-
-  const mail = useMemo(() => {
-    const names = areas.filter(a => picked.includes(a.id)).map(a => a.title);
-    const subject = T.subject(names.join(", "));
-    const body = T.body(names.map(n => `• ${n}`).join("\n"), formats[format], timing.find(t => t.id === when).label, "", note.trim());
-    return { names, subject, body };
-  }, [picked, format, when, note, lang]); // eslint-disable-line react-hooks/exhaustive-deps
-  const chip = on => `min-h-[44px] rounded-xl border px-3 text-sm font-medium transition-colors ${on ? "border-signal bg-signal/10 text-snow" : "border-mist/40 text-mist hover:text-snow"}`;
 
   return (
     <>
@@ -63,7 +49,7 @@ function Page() {
               : <h1 className="mt-5 max-w-[20ch] text-[2.3rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-6xl">{T.h1a} <span className="text-signal">{T.h1b}</span></h1>}
             {site.hasCompany && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{T.heroLead}</p>}
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#request" className="btn-primary">{T.cta} <ArrowUpRight size={16} /></a>
+              <a href="#contact" className="btn-primary">{T.cta} <ArrowUpRight size={16} /></a>
               <div className="flex items-center gap-3 rounded-full border border-white/10 bg-ink/60 py-1.5 pl-1.5 pr-4 backdrop-blur">
                 <img src="/engin.jpg" alt="" className="h-9 w-9 rounded-full object-cover" />
                 <span className="text-sm">{person.name}, {person.degree}</span>
@@ -98,42 +84,17 @@ function Page() {
           </div>
         </section>
 
-        <section id="request" className="section scroll-mt-16">
+        <section id="contact" className="section scroll-mt-16">
           <div className="wrap">
             <SectionHead no="03" kicker={T.cfgKicker} title={T.cfgTitle} lead={T.cfgLead} />
             <h3 className="label">{T.howKicker} · {T.howTitle}</h3>
             <div className="mb-12 mt-4">
               <PathMap items={steps} mode="curve" active={step} setActive={setStep} label={T.howKicker}
-              renderCard={(x, compact) => <div className={`panel ${compact ? "p-4" : "p-6"}`}><h3 className="text-lg font-semibold">{x.title}</h3><p className="mt-1 text-mist">{x.text}</p></div>} />
+                renderCard={(x, compact) => <div className={`panel ${compact ? "p-4" : "p-6"}`}><h3 className="text-lg font-semibold">{x.title}</h3><p className="mt-1 text-mist">{x.text}</p></div>} />
             </div>
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-              <div className="panel min-w-0 space-y-6 p-5 sm:p-7">
-                <fieldset>
-                  <legend className="label">{T.cfgAreas}</legend>
-                  <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {areas.map(a => <button key={a.id} type="button" aria-pressed={picked.includes(a.id)} onClick={() => toggle(a.id)} className={`${chip(picked.includes(a.id))} text-left`}>{a.title}</button>)}
-                  </div>
-                </fieldset>
-                <fieldset>
-                  <legend className="label">{T.cfgFormat}</legend>
-                  <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                    {Object.entries(formats).map(([id, label]) => <button key={id} type="button" aria-pressed={format === id} onClick={() => setFormat(id)} className={chip(format === id)}>{label}</button>)}
-                  </div>
-                </fieldset>
-                <fieldset>
-                  <legend className="label">{T.cfgTiming}</legend>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-3">
-                    {timing.map(t => <button key={t.id} type="button" aria-pressed={when === t.id} onClick={() => setWhen(t.id)} className={chip(when === t.id)}>{t.label}</button>)}
-                  </div>
-                </fieldset>
-                <label className="block"><span className="label">{T.cfgNote}</span>
-                  <textarea rows={3} value={note} onChange={e => setNote(e.target.value)} placeholder={T.cfgNotePh} className="mt-2 w-full rounded-xl border border-mist/40 bg-ink p-4 text-[16px] placeholder:text-mist/80 focus:border-signal focus:outline-none" /></label>
-              </div>
-              <div className="panel flex min-w-0 flex-col p-5 sm:p-7 lg:sticky lg:top-24 lg:self-start">
-                <p className="label">{T.preview}</p>
-                <div className="mt-4"><ContactForm initialMessage={mail.names.length ? mail.body : ""} subject={mail.names.length ? mail.subject : undefined} source="freelance" /></div>
-                <p className="mt-5 text-xs text-mist">{T.note}</p>
-              </div>
+            <div className="panel mx-auto max-w-3xl p-5 sm:p-7">
+              <ContactForm source="freelance" />
+              <p className="mt-5 text-xs text-mist">{T.note}</p>
             </div>
           </div>
         </section>

@@ -45,13 +45,6 @@ export const pillars = [
 
 export const aiVertical = { icon: "Sparkles", title: title("ai"), claim: aiV.claim };
 
-export const formats = {
-  advisory: { en: "Advisory", de: "Beratung" },
-  workshop: { en: "Workshop", de: "Workshop" },
-  project: { en: "Project", de: "Projekt" },
-  interim: { en: "Interim", de: "Interim" }
-};
-
 export const process = [
   { id: "talk", icon: "MessageSquare", year: "01", short: { en: "Intro call", de: "Erstgespräch" }, title: { en: "Intro call", de: "Erstgespräch" }, text: { en: "Your goal, your situation, the right approach.", de: "Ihr Ziel, Ihre Ausgangslage, der passende Ansatz." } },
   { id: "offer", icon: "FileText", year: "02", short: { en: "Offer", de: "Angebot" }, title: { en: "Offer", de: "Angebot" }, text: { en: "Clear scope and clear results.", de: "Klarer Umfang und klare Ergebnisse." } },
@@ -64,11 +57,6 @@ export const industries = [
   { en: "E-commerce & customer experience", de: "E-Commerce & Customer Experience" }, { en: "Industrial IoT", de: "Industrial IoT" }
 ];
 
-export const timing = [
-  { id: "asap", label: { en: "As soon as possible", de: "So bald wie möglich" } },
-  { id: "q", label: { en: "In 1–3 months", de: "In 1–3 Monaten" } },
-  { id: "later", label: { en: "Later / exploring", de: "Später / erst informieren" } }
-];
 
 import { site } from "../site.js";
 const brand = site.hasCompany ? site.company : "Engin Celenk";
@@ -77,31 +65,23 @@ export const fl = {
   en: {
     title: brand, desc: "IT architecture, cyber security and IT management, with AI as the vertical.",
     back: "Portfolio", skip: "Skip to content", aboutKicker: "Who I am", aboutTitle: "IT through and through.", aboutText: "I am the founder of Solvexa Consulting and IT through and through. I gained my professional experience as an employee at the leading companies of the Stuttgart region: as project manager, solution architect, lead architect, solution manager and cyber security engineer. My background combines software engineering with business informatics (M.Sc.): deep enough in technology for architecture and security, close enough to the business for decisions.",  heroLead: "Architecture, security and delivery from one hand. For IT leaders in enterprises and mid-sized companies who need complex programs landed safely.", proof: "1st place VDA Logistics Award 2024 · NGTM, Bosch's worldwide transport management", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
-    cta: "Start a request",
+    cta: "Get in touch",
     mapKicker: "Service portfolio", mapTitle: "Three pillars, one vertical.", mapLead: "Select a pillar or the AI band.",
     aiAcross: "across all three pillars", inArea: "in",
     howKicker: "How I work", howTitle: "Four steps, no surprises.", howLead: "Select a step.",
     expKicker: "Experience from", expTitle: "Where I have delivered",
-    cfgKicker: "Request", cfgTitle: "Put your request together.", cfgLead: "Choose areas, format and timing. Your request is prepared, you only add your details. I reply personally and offer a non-binding intro call.",
-    cfgAreas: "Areas (optional)", cfgFormat: "Format", cfgTiming: "Timing", cfgCompany: "Company (optional)", cfgNote: "Short description (optional)",
-    cfgNotePh: "What do you want to achieve?", openMail: "Open email", copyText: "Copy text", copied: "Copied", preview: "Your request",
-    none: "Choose at least one area.", subject: n => `Project request: ${n}`,
-    body: (s, f, t, c, n) => `Hello Mr Celenk,\n\nwe are interested in:\n${s}\n\nFormat: ${f}\nTiming: ${t}${c ? `\nCompany: ${c}` : ""}${n ? `\n\nAbout the project:\n${n}` : ""}\n\nPlease get in touch for an intro call.\n\nBest regards`,
+    cfgKicker: "Contact", cfgTitle: "Let's talk.", cfgLead: "Describe your project in a few lines. I reply personally and offer a non-binding intro call.", subject: n => `Project request: ${n}`,
     note: "Details and prices after the intro call. No newsletter, no tracking."
   },
   de: {
     title: brand, desc: "IT-Architektur, Cyber Security und IT Management, mit KI als Vertikale.",
     back: "Portfolio", skip: "Zum Inhalt springen", aboutKicker: "Wer ich bin", aboutTitle: "Durch und durch IT.", aboutText: "Ich bin Gründer von Solvexa Consulting und durch und durch ITler. Meine Berufserfahrung habe ich im Angestelltenverhältnis bei den führenden Unternehmen im Raum Stuttgart gesammelt: als Projektmanager, Solution Architect, Lead Architect, Solution Manager und Cyber Security Engineer. Mein Hintergrund verbindet Software Engineering mit Wirtschaftsinformatik (M.Sc.): technisch tief genug für Architektur und Security, nah genug am Geschäft für Entscheidungen.",  heroLead: "Architektur, Security und Delivery aus einer Hand. Für IT-Entscheider in Konzern und Mittelstand, die komplexe Vorhaben sicher ins Ziel bringen müssen.", proof: "1. Platz VDA Logistik-Award 2024 · NGTM, weltweites Transportmanagement bei Bosch", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
-    cta: "Anfrage starten",
+    cta: "Kontakt aufnehmen",
     mapKicker: "Leistungsportfolio", mapTitle: "Drei Säulen, eine Vertikale.", mapLead: "Säule oder KI-Band auswählen.",
     aiAcross: "quer über alle drei Säulen", inArea: "in",
     howKicker: "Arbeitsweise", howTitle: "Vier Schritte, keine Überraschungen.", howLead: "Schritt auswählen.",
     expKicker: "Erfahrung aus", expTitle: "Wo ich bereits geliefert habe",
-    cfgKicker: "Anfrage", cfgTitle: "Stellen Sie Ihre Anfrage zusammen.", cfgLead: "Bereiche, Format und Zeitraum wählen. Ihre Anfrage wird vorbereitet, Sie ergänzen nur Ihre Daten. Ich antworte persönlich und biete ein unverbindliches Erstgespräch an.",
-    cfgAreas: "Bereiche (optional)", cfgFormat: "Format", cfgTiming: "Zeitraum", cfgCompany: "Unternehmen (optional)", cfgNote: "Kurzbeschreibung (optional)",
-    cfgNotePh: "Was möchten Sie erreichen?", openMail: "E-Mail öffnen", copyText: "Text kopieren", copied: "Kopiert", preview: "Ihre Anfrage",
-    none: "Mindestens einen Bereich wählen.", subject: n => `Projektanfrage: ${n}`,
-    body: (s, f, t, c, n) => `Hallo Herr Celenk,\n\nwir interessieren uns für:\n${s}\n\nFormat: ${f}\nZeitraum: ${t}${c ? `\nUnternehmen: ${c}` : ""}${n ? `\n\nZum Vorhaben:\n${n}` : ""}\n\nBitte melden Sie sich für ein Erstgespräch.\n\nViele Grüße`,
+    cfgKicker: "Kontakt", cfgTitle: "Sprechen wir.", cfgLead: "Beschreiben Sie Ihr Vorhaben in wenigen Zeilen. Ich antworte persönlich und biete ein unverbindliches Erstgespräch an.", subject: n => `Projektanfrage: ${n}`,
     note: "Details und Preise nach dem Erstgespräch. Kein Newsletter, kein Tracking."
   }
 };
