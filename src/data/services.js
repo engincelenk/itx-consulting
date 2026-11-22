@@ -62,16 +62,6 @@ export const industries = [
   { en: "E-commerce & customer experience", de: "E-Commerce & Customer Experience" }, { en: "Industrial IoT", de: "Industrial IoT" }
 ];
 
-/* "Wer ich bin": Werdegang plakativ, Berufserfahrung im Vordergrund. */
-export const careerStart = "2012-03"; // Beginn der Berufstätigkeit (Daimler Protics)
-export const stations = [
-  { year: "2012", org: "Daimler", role: { en: "IT consulting & project management", de: "IT-Consulting & Projektmanagement" } },
-  { year: "2017", org: "TRUMPF", role: { en: "Solution architecture & digitalization", de: "Solution Architecture & Digitalisierung" } },
-  { year: "2019", org: "Bosch", role: { en: "Lead architect digital business & CX", de: "Lead Architect Digital Business & CX" } },
-  { year: "2021", org: "Bosch", role: { en: "Solution manager logistics · VDA Award", de: "Solution Manager Logistik · VDA-Award" } },
-  { year: "2024", org: "Bosch", role: { en: "Cyber security engineer", de: "Cyber Security Engineer" } }
-];
-
 /* Erfahrungsgebiete, gruppiert. */
 export const expertise = [
   { id: "digital", title: { en: "Digital business & commerce", de: "Digital Business & Commerce" },
@@ -96,7 +86,7 @@ const brand = site.hasCompany ? site.company : "Engin Celenk";
 export const fl = {
   en: {
     title: brand, desc: "IT architecture, cyber security and IT management, with AI as the vertical.",
-    back: "Portfolio", skip: "Skip to content", aboutKicker: "Who I am", aboutTitle: "IT through and through.", aboutRole: "Founder of Solvexa Consulting · principal level", aboutText: y => `Over ${y} years in corporate IT at Daimler, TRUMPF and Bosch: as project manager, solution architect, lead architect, solution manager and cyber security engineer. My background combines software engineering with business informatics (M.Sc.): deep enough in technology for architecture and security, close enough to the business for decisions. At Solvexa I work at principal level and in person, from analysis to delivery.`, aboutCv: "Full CV", expGroups: "Technology and topic experience", owner: "Founder & principal consultant", heroLead: "Architecture, security and delivery from one hand. For IT leaders in enterprises and mid-sized companies who need complex programs landed safely.", proof: "1st place VDA Logistics Award 2024 · NGTM, Bosch's worldwide transport management", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
+    back: "Portfolio", skip: "Skip to content", aboutKicker: "Who I am", aboutTitle: "IT through and through.", aboutText: "I am the founder of Solvexa Consulting and IT through and through. I gained my professional experience as an employee at the leading companies of the Stuttgart region: as project manager, solution architect, lead architect, solution manager and cyber security engineer. My background combines software engineering with business informatics (M.Sc.): deep enough in technology for architecture and security, close enough to the business for decisions.", expGroups: "Technology and topic experience",  heroLead: "Architecture, security and delivery from one hand. For IT leaders in enterprises and mid-sized companies who need complex programs landed safely.", proof: "1st place VDA Logistics Award 2024 · NGTM, Bosch's worldwide transport management", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
     cta: "Start a request",
     mapKicker: "Service portfolio", mapTitle: "Three pillars, one vertical.", mapLead: "Select a pillar or the AI band.",
     aiAcross: "across all three pillars", inArea: "in",
@@ -111,7 +101,7 @@ export const fl = {
   },
   de: {
     title: brand, desc: "IT-Architektur, Cyber Security und IT Management, mit KI als Vertikale.",
-    back: "Portfolio", skip: "Zum Inhalt springen", aboutKicker: "Wer ich bin", aboutTitle: "Durch und durch IT.", aboutRole: "Gründer von Solvexa Consulting · Principal-Level", aboutText: y => `Über ${y} Jahre in der Konzern-IT von Daimler, TRUMPF und Bosch: als Projektmanager, Solution Architect, Lead Architect, Solution Manager und Cyber Security Engineer. Mein Hintergrund verbindet Software Engineering mit Wirtschaftsinformatik (M.Sc.): technisch tief genug für Architektur und Security, nah genug am Geschäft für Entscheidungen. Bei Solvexa arbeite ich auf Principal-Level und persönlich, von der Analyse bis zur Umsetzung.`, aboutCv: "Ausführlicher Lebenslauf", expGroups: "Technologie- und Themenerfahrung", owner: "Gründer & Principal Consultant", heroLead: "Architektur, Security und Delivery aus einer Hand. Für IT-Entscheider in Konzern und Mittelstand, die komplexe Vorhaben sicher ins Ziel bringen müssen.", proof: "1. Platz VDA Logistik-Award 2024 · NGTM, weltweites Transportmanagement bei Bosch", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
+    back: "Portfolio", skip: "Zum Inhalt springen", aboutKicker: "Wer ich bin", aboutTitle: "Durch und durch IT.", aboutText: "Ich bin Gründer von Solvexa Consulting und durch und durch ITler. Meine Berufserfahrung habe ich im Angestelltenverhältnis bei den führenden Unternehmen im Raum Stuttgart gesammelt: als Projektmanager, Solution Architect, Lead Architect, Solution Manager und Cyber Security Engineer. Mein Hintergrund verbindet Software Engineering mit Wirtschaftsinformatik (M.Sc.): technisch tief genug für Architektur und Security, nah genug am Geschäft für Entscheidungen.", expGroups: "Technologie- und Themenerfahrung",  heroLead: "Architektur, Security und Delivery aus einer Hand. Für IT-Entscheider in Konzern und Mittelstand, die komplexe Vorhaben sicher ins Ziel bringen müssen.", proof: "1. Platz VDA Logistik-Award 2024 · NGTM, weltweites Transportmanagement bei Bosch", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
     cta: "Anfrage starten",
     mapKicker: "Leistungsportfolio", mapTitle: "Drei Säulen, eine Vertikale.", mapLead: "Säule oder KI-Band auswählen.",
     aiAcross: "quer über alle drei Säulen", inArea: "in",
