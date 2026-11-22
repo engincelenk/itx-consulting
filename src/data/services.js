@@ -22,7 +22,7 @@ export const pillars = [
   { id: "security", icon: "ShieldCheck", title: title("security"),
     claim: { en: "Security built into strategy, design and operations.", de: "Security in Strategie, Design und Betrieb verankert." },
     offers: [
-      { title: { en: "Security strategy & roadmap", de: "Security-Strategie & Roadmap" }, text: { en: "Business risk translated into priorities and a funded roadmap.", de: "Geschäftsrisiken in Prioritäten und eine tragfähige Roadmap übersetzt." } },
+      { title: { en: "Security strategy & roadmap", de: "Security-Strategie & Roadmap" }, text: { en: "Business risk translated into priorities and a funded roadmap.", de: "Geschäftsrisiken in Prioritäten und eine finanzierbare Roadmap übersetzt." } },
       { title: { en: "Security architecture & Zero Trust", de: "Security-Architektur & Zero Trust" }, text: { en: "Security by design for identity, cloud, platforms and products.", de: "Security by Design für Identität, Cloud, Plattformen und Produkte." } },
       { title: { en: "Threat & risk assessment", de: "Bedrohungs- & Risikoanalyse" }, text: { en: "TARA and threat modelling, risks rated and measures traceable.", de: "TARA und Threat Modeling, Risiken bewertet, Maßnahmen nachvollziehbar." } },
       { title: { en: "Governance, risk & compliance", de: "Governance, Risk & Compliance" }, text: { en: "NIST CSF, ISO 27001, NIS2 and CRA turned into concrete controls.", de: "NIST CSF, ISO 27001, NIS2 und CRA in konkrete Maßnahmen übersetzt." } },
@@ -30,10 +30,10 @@ export const pillars = [
     ],
     ai: { title: aiV.aspects.security, text: { en: "Risks of LLMs and agents: prompt injection, data leakage, OWASP LLM Top 10, EU AI Act.", de: "Risiken von LLMs und Agenten: Prompt Injection, Datenabfluss, OWASP LLM Top 10, EU AI Act." } } },
   { id: "management", icon: "Workflow", title: title("management"), subtitle: subtitle("management"),
-    claim: { en: "Complex IT delivered, end to end.", de: "Komplexe IT ins Ziel gebracht, von Ende zu Ende." },
+    claim: { en: "Complex IT delivered, end to end.", de: "Komplexe IT-Vorhaben sicher ins Ziel gebracht." },
     offers: [
       { title: { en: "Program & project leadership", de: "Programm- & Projektleitung" }, text: { en: "Leading complex IT programs across teams, partners and budgets.", de: "Führung komplexer IT-Programme über Teams, Partner und Budgets." } },
-      { title: { en: "Interim solution management", de: "Interim Solution Management" }, text: { en: "End-to-end ownership of an application or platform, for a defined time.", de: "End-to-End-Verantwortung für eine Anwendung oder Plattform, auf Zeit." } },
+      { title: { en: "Interim solution management", de: "Interim Solution Management" }, text: { en: "End-to-end ownership of an application or platform, for a defined time.", de: "Durchgängige Verantwortung für eine Anwendung oder Plattform, auf Zeit." } },
       { title: { en: "Project recovery", de: "Projekt-Recovery" }, text: { en: "Honest status, root causes and a realistic re-plan.", de: "Ehrlicher Status, Ursachen und eine realistische Neuplanung." } },
       { title: { en: "Agile & hybrid delivery, PMO", de: "Agile & hybride Delivery, PMO" }, text: { en: "Delivery models, governance and reporting that fit your organisation.", de: "Vorgehensmodelle, Steuerung und Reporting passend zur Organisation." } },
       { title: { en: "Logistics IT", de: "Logistik-IT" }, text: { en: "Transport management and logistics solutions with partners and carriers.", de: "Transportmanagement und Logistiklösungen mit Partnern und Dienstleistern." } }
