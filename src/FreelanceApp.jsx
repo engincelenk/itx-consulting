@@ -14,13 +14,16 @@ import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
 import { person } from "./data/profile.js";
 import { site, slogan, cvUrl } from "./site.js";
-import { pillars as rawPillars, aiVertical as rawAi, process as rawProcess, industries, timing as rawTiming, formats as rawFormats, fl } from "./data/services.js";
+import { pillars as rawPillars, aiVertical as rawAi, process as rawProcess, industries, stations as rawStations, expertise as rawExpertise, careerStart, timing as rawTiming, formats as rawFormats, fl } from "./data/services.js";
 
 function Page() {
   const { lang, L } = useLang();
   const T = L(fl);
   const pillars = L(rawPillars), ai = L(rawAi), steps = L(rawProcess), timing = L(rawTiming), formats = L(rawFormats);
   const areas = [...pillars.map(p => ({ id: p.id, title: p.title })), { id: "ai", title: ai.title }];
+  const stations = L(rawStations);
+  const years = Math.floor((Date.now() - new Date(careerStart + "-01")) / 3.15576e10);
+  const groups = rawExpertise.map(g => ({ id: g.id, title: L(g.title), items: g.items.map(i => (typeof i === "string" ? i : L(i))) }));
   const [picked, setPicked] = useState([]);
   const [format, setFormat] = useState("advisory");
   const [when, setWhen] = useState("q");
@@ -73,16 +76,44 @@ function Page() {
           </div>
         </section>
 
+        <section id="about" className="section scroll-mt-16">
+          <div className="wrap">
+            <SectionHead no="01" kicker={T.aboutKicker} title={T.aboutTitle} />
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
+              <div className="flex items-center gap-4 lg:items-start">
+                <img src="/engin.jpg" alt={person.name} width="96" height="96" className="h-20 w-20 flex-none rounded-2xl object-cover sm:h-24 sm:w-24" />
+                <div>
+                  <p className="text-xl font-semibold tracking-tight">{person.name}, M.Sc.</p>
+                  <p className="mt-1 text-mist">{T.aboutRole}</p>
+                  <a href={cvUrl(lang)} className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm text-signal hover:underline">{T.aboutCv} <ArrowUpRight size={16} /></a>
+                </div>
+              </div>
+              <div>
+                <p className="text-lg leading-relaxed text-snow/90">{T.aboutText(years)}</p>
+              </div>
+            </div>
+            <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {stations.map((st, i) => (
+                <li key={i} className="relative rounded-xl border border-white/[0.08] bg-navy/20 p-4">
+                  <span className="font-mono text-xs text-signal">{st.year}</span>
+                  <span className="mt-1 block font-semibold">{st.org}</span>
+                  <span className="mt-0.5 block hyphens-auto break-words text-sm leading-snug text-mist">{st.role}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
         <section id="services" className="section scroll-mt-16">
           <div className="wrap">
-            <SectionHead no="01" kicker={T.mapKicker} title={T.mapTitle} lead={T.mapLead} />
+            <SectionHead no="02" kicker={T.mapKicker} title={T.mapTitle} lead={T.mapLead} />
             <ServiceMatrix T={T} />
           </div>
         </section>
 
         <section className="section">
           <div className="wrap">
-            <SectionHead no="02" kicker={T.howKicker} title={T.howTitle} lead={T.howLead} />
+            <SectionHead no="03" kicker={T.howKicker} title={T.howTitle} lead={T.howLead} />
             <PathMap items={steps} mode="curve" active={step} setActive={setStep} label={T.howKicker}
               renderCard={(x, compact) => <div className={`panel ${compact ? "p-4" : "p-6"}`}><h3 className="text-lg font-semibold">{x.title}</h3><p className="mt-1 text-mist">{x.text}</p></div>} />
           </div>
@@ -90,15 +121,26 @@ function Page() {
 
         <section className="section">
           <div className="wrap">
-            <SectionHead no="03" kicker={T.expKicker} title={T.expTitle} />
+            <SectionHead no="04" kicker={T.expKicker} title={T.expTitle} />
             <ul aria-label={T.expTitle} className="flex flex-wrap gap-2">{L(industries).map(i => <li key={i} className="rounded-full border border-white/10 px-4 py-2 text-sm">{i}</li>)}</ul>
 <div className="mt-2"><LogoWall /></div>
+            <h3 className="label mt-12">{T.expGroups}</h3>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {groups.map(g => (
+                <div key={g.id} className="rounded-2xl border border-white/[0.08] bg-navy/20 p-5">
+                  <p className="font-semibold">{g.title}</p>
+                  <ul className="mt-3 flex flex-wrap gap-2" aria-label={g.title}>
+                    {g.items.map(it => <li key={it} className="rounded-lg bg-white/[0.06] px-2.5 py-1 text-sm text-snow/90">{it}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         <section id="request" className="section scroll-mt-16">
           <div className="wrap">
-            <SectionHead no="04" kicker={T.cfgKicker} title={T.cfgTitle} lead={T.cfgLead} />
+            <SectionHead no="05" kicker={T.cfgKicker} title={T.cfgTitle} lead={T.cfgLead} />
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
               <div className="panel min-w-0 space-y-6 p-5 sm:p-7">
                 <fieldset>
