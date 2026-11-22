@@ -9,13 +9,13 @@ permissions:
   id-token: write
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
-  deploy:
+  # Build und Deploy getrennt (Standard-Vorlage von GitHub):
+  # - der Deploy-Job startet erst, wenn das Artefakt vollständig hochgeladen ist
+  # - "Re-run failed jobs" wiederholt nur den Deploy, ohne ein zweites Artefakt zu erzeugen
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,5 +28,12 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
