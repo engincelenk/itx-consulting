@@ -5,7 +5,7 @@ export default function Footer({ company = "" }) {
   return (
     <footer className="border-t border-white/[0.06] py-10" style={{ paddingBottom: "max(2.5rem, env(safe-area-inset-bottom))" }}>
       <div className="wrap flex flex-col gap-4 text-sm text-mist sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} {company ? `${company}, ${person.name}` : `${person.name}, ${person.degree}`} · <span className="text-snow/80">{company ? "Connect. Secure. Manage. Engineer." : t("footerClaim")}</span></p>
+        <p>© {new Date().getFullYear()} {company || `${person.name}, ${person.degree}`}{!company && <> · <span className="text-snow/80">{t("footerClaim")}</span></>}</p>
         <p className="flex flex-wrap gap-x-5 gap-y-2"><a className="hover:text-snow" href={`/legal.html?lang=${lang}#imprint`}>{t("imprint")}</a><a className="hover:text-snow" href={`/legal.html?lang=${lang}#privacy`}>{t("privacy")}</a><span>{t("noCookies")}</span></p>
       </div>
     </footer>

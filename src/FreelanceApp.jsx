@@ -4,7 +4,6 @@ import ContactForm from "./components/ContactForm.jsx";
 import { LangProvider, useLang } from "./i18n.jsx";
 import LangSwitch from "./components/LangSwitch.jsx";
 import SectionHead from "./components/SectionHead.jsx";
-import PathMap from "./components/PathMap.jsx";
 import Logo from "./components/Logo.jsx";
 import NetworkCanvas from "./components/NetworkCanvas.jsx";
 import ServiceMatrix from "./components/ServiceMatrix.jsx";
@@ -14,13 +13,11 @@ import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
 import { person } from "./data/profile.js";
 import { site, slogan, cvUrl } from "./site.js";
-import { process as rawProcess, industries, fl } from "./data/services.js";
+import { industries, fl } from "./data/services.js";
 
 function Page() {
   const { lang, L } = useLang();
   const T = L(fl);
-  const steps = L(rawProcess);
-  const [step, setStep] = useState(steps[0].id);
 
   useEffect(() => { document.title = T.title; document.querySelector('meta[name="description"]')?.setAttribute("content", T.desc); }, [T]);
 
@@ -87,11 +84,6 @@ function Page() {
         <section id="contact" className="section scroll-mt-16">
           <div className="wrap">
             <SectionHead no="03" kicker={T.cfgKicker} title={T.cfgTitle} lead={T.cfgLead} />
-            <h3 className="label">{T.howKicker} · {T.howTitle}</h3>
-            <div className="mb-12 mt-4">
-              <PathMap items={steps} mode="curve" active={step} setActive={setStep} label={T.howKicker}
-                renderCard={(x, compact) => <div className={`panel ${compact ? "p-4" : "p-6"}`}><h3 className="text-lg font-semibold">{x.title}</h3><p className="mt-1 text-mist">{x.text}</p></div>} />
-            </div>
             <div className="panel mx-auto max-w-3xl p-5 sm:p-7">
               <ContactForm source="freelance" />
               <p className="mt-5 text-xs text-mist">{T.note}</p>

@@ -45,13 +45,6 @@ export const pillars = [
 
 export const aiVertical = { icon: "Sparkles", title: title("ai"), claim: aiV.claim };
 
-export const process = [
-  { id: "talk", icon: "MessageSquare", year: "01", short: { en: "Intro call", de: "Erstgespräch" }, title: { en: "Intro call", de: "Erstgespräch" }, text: { en: "Your goal, your situation, the right approach.", de: "Ihr Ziel, Ihre Ausgangslage, der passende Ansatz." } },
-  { id: "offer", icon: "FileText", year: "02", short: { en: "Offer", de: "Angebot" }, title: { en: "Offer", de: "Angebot" }, text: { en: "Clear scope and clear results.", de: "Klarer Umfang und klare Ergebnisse." } },
-  { id: "deliver", icon: "Rocket", year: "03", short: { en: "Delivery", de: "Umsetzung" }, title: { en: "Delivery", de: "Umsetzung" }, text: { en: "Remote or on site in the Stuttgart region.", de: "Remote oder vor Ort in der Region Stuttgart." } },
-  { id: "handover", icon: "Handshake", year: "04", short: { en: "Handover", de: "Übergabe" }, title: { en: "Handover", de: "Übergabe" }, text: { en: "Results your team can keep using.", de: "Ergebnisse, mit denen Ihr Team weiterarbeiten kann." } }
-];
-
 export const industries = [
   { en: "Automotive", de: "Automotive" }, { en: "Mechanical engineering", de: "Maschinenbau" }, { en: "Logistics", de: "Logistik" },
   { en: "E-commerce & customer experience", de: "E-Commerce & Customer Experience" }, { en: "Industrial IoT", de: "Industrial IoT" }
@@ -68,9 +61,8 @@ export const fl = {
     cta: "Get in touch",
     mapKicker: "Service portfolio", mapTitle: "Three pillars, one vertical.", mapLead: "Select a pillar or the AI band.",
     aiAcross: "across all three pillars", inArea: "in",
-    howKicker: "How I work", howTitle: "Four steps, no surprises.", howLead: "Select a step.",
     expKicker: "Experience from", expTitle: "Where I have delivered",
-    cfgKicker: "Contact", cfgTitle: "Let's talk.", cfgLead: "Describe your project in a few lines. I reply personally and offer a non-binding intro call.", subject: n => `Project request: ${n}`,
+    cfgKicker: "Contact", cfgTitle: "Let's talk.", cfgLead: "Tell me briefly what it is about. I will get back to you personally.", subject: n => `Project request: ${n}`,
     note: "Details and prices after the intro call. No newsletter, no tracking."
   },
   de: {
@@ -79,9 +71,8 @@ export const fl = {
     cta: "Kontakt aufnehmen",
     mapKicker: "Leistungsportfolio", mapTitle: "Drei Säulen, eine Vertikale.", mapLead: "Säule oder KI-Band auswählen.",
     aiAcross: "quer über alle drei Säulen", inArea: "in",
-    howKicker: "Arbeitsweise", howTitle: "Vier Schritte, keine Überraschungen.", howLead: "Schritt auswählen.",
     expKicker: "Erfahrung aus", expTitle: "Wo ich bereits geliefert habe",
-    cfgKicker: "Kontakt", cfgTitle: "Sprechen wir.", cfgLead: "Beschreiben Sie Ihr Vorhaben in wenigen Zeilen. Ich antworte persönlich und biete ein unverbindliches Erstgespräch an.", subject: n => `Projektanfrage: ${n}`,
+    cfgKicker: "Kontakt", cfgTitle: "Sprechen wir.", cfgLead: "Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen.", subject: n => `Projektanfrage: ${n}`,
     note: "Details und Preise nach dem Erstgespräch. Kein Newsletter, kein Tracking."
   }
 };
