@@ -34,9 +34,10 @@ export const pillars = [
   { id: "management", icon: "Workflow", title: title("management"), subtitle: subtitle("management"),
     claim: { en: "Complex IT delivered, end to end.", de: "Komplexe IT-Vorhaben sicher ins Ziel gebracht." },
     offers: [
-      { title: { en: "Program & project leadership", de: "Programm- & Projektleitung" }, text: { en: "Leading complex IT programs across teams, partners and budgets.", de: "Führung komplexer IT-Programme über Teams, Partner und Budgets." } },
-      { title: { en: "Interim solution management", de: "Interim Solution Management" }, text: { en: "End-to-end ownership of an application or platform, for a defined time.", de: "Durchgängige Verantwortung für eine Anwendung oder Plattform, auf Zeit." } },
-      { title: { en: "Project recovery", de: "Projekt-Recovery" }, text: { en: "Honest status, root causes and a realistic re-plan.", de: "Ehrlicher Status, Ursachen und eine realistische Neuplanung." } },
+      { title: { en: "Project, program & platform management", de: "Projekt-, Programm- & Plattformmanagement" }, text: { en: "Leading complex IT projects, programs and platforms across teams, partners and budgets.", de: "Führung komplexer IT-Projekte, -Programme und -Plattformen über Teams, Partner und Budgets." } },
+      { title: { en: "Product ownership across the lifecycle", de: "Product Ownership über den gesamten Lifecycle" }, text: { en: "Responsibility for an application or platform from idea to retirement: roadmap, priorities, value.", de: "Verantwortung für Anwendung oder Plattform von der Idee bis zur Ablösung: Roadmap, Prioritäten, Wertbeitrag." } },
+      { title: { en: "Migration, PoCs & rollouts", de: "Migration, PoCs & Rollouts" }, text: { en: "Proofs of concept that settle decisions, migrations and rollouts that land safely.", de: "Proofs of Concept, die Entscheidungen belegen, sowie Migrationen und Rollouts, die sicher landen." } },
+      { title: { en: "Operations", de: "Betrieb & Operations" }, text: { en: "Stable operation, incident and change handling and continuous improvement after go-live.", de: "Stabiler Betrieb, Incident- und Change-Management und stetige Verbesserung nach dem Go-live." } },
       { title: { en: "Agile & hybrid delivery, PMO", de: "Agile & hybride Delivery, PMO" }, text: { en: "Delivery models, governance and reporting that fit your organisation.", de: "Vorgehensmodelle, Steuerung und Reporting passend zur Organisation." } },
       { title: { en: "Logistics IT", de: "Logistik-IT" }, text: { en: "Transport management and logistics solutions with partners and carriers.", de: "Transportmanagement und Logistiklösungen mit Partnern und Dienstleistern." } }
     ],
