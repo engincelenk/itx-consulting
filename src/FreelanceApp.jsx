@@ -52,7 +52,6 @@ function Page() {
                 <span className="text-sm">{person.name}, {person.degree}</span>
               </div>
             </div>
-            {site.hasCompany && <p className="mt-6 flex max-w-2xl items-start gap-3 text-[15px] text-snow/80"><span className="mt-2 h-px w-6 flex-none bg-signal" />{T.proof}</p>}
           </div>
         </section>
 
