@@ -87,3 +87,12 @@ h2{font-size:8.5pt;color:var(--navy);letter-spacing:.12em}
 .lg{object-position:left center}
 .pillar:not(:has(.sub)) ul{margin-top:5.5mm}
 .job{margin-bottom:6mm}
+/* zweite Runde: keine senkrechten Linien, Headline einzeilig */
+.job{border-left:0;padding-left:0}
+.steps li{border-left:0;margin-left:0;padding-left:0}
+.steps li::before{left:12mm;top:1.7mm}
+.steps li{grid-template-columns:10mm 1fr}.steps li>div{padding-left:3mm}
+.headline{max-width:none;font-size:10.5pt;white-space:nowrap;text-wrap:nowrap}
+.steps li::before{display:none}
+.steps li{grid-template-columns:14mm 1fr}.steps li>div{padding-left:0}
+.steps{break-inside:avoid}

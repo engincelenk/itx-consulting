@@ -16,7 +16,7 @@ export const person = {
   site: site.cvOrigin,
   careerStart: "2012-03",
   languages: [
-    { name: { en: "German", de: "Deutsch" }, level: { en: "Native", de: "Muttersprache" } },
+    { name: { en: "German", de: "Deutsch" }, level: { en: "C2", de: "C2" } },
     { name: { en: "Turkish", de: "Türkisch" }, level: { en: "Native", de: "Muttersprache" } },
     { name: { en: "English", de: "Englisch" }, level: { en: "Fluent · daily working language", de: "Fließend · tägliche Arbeitssprache" } }
   ]
@@ -105,7 +105,7 @@ export const career = [
 
 /* Education staircase, bottom step first. */
 export const education = [
-  { id: "arrival", year: "1994", icon: "MapPin", short: { en: "Arrival in Germany", de: "Ankunft in Deutschland" }, title: { en: "Arrival in Germany", de: "Ankunft in Deutschland" }, text: { en: "The first step.", de: "Die erste Stufe." } },
+  { id: "arrival", year: "1994", icon: "MapPin", short: { en: "Arrival in Germany", de: "Ankunft in Deutschland" }, title: { en: "Entry into Germany", de: "Einreise nach Deutschland" }, text: { en: "The first step.", de: "Die erste Stufe." } },
   { id: "haupt", year: "", icon: "School", short: { en: "Lower secondary", de: "Hauptschule" }, title: { en: "Lower secondary school", de: "Hauptschule" }, text: { en: "Hauptschule", de: "Nächste Stufe." } },
   { id: "werkreal", year: "", icon: "School", short: { en: "Vocational secondary", de: "Werkrealschule" }, title: { en: "Vocational secondary school", de: "Werkrealschule" }, text: { en: "Werkrealschule", de: "Nächste Stufe." } },
   { id: "wg", year: "", icon: "School", short: { en: "Business high school", de: "Wirtschafts­gymnasium" }, title: { en: "Business high school", de: "Wirtschaftsgymnasium" }, text: { en: "Wirtschaftsgymnasium", de: "Schwerpunkt Wirtschaft." } },
@@ -202,7 +202,7 @@ export const values = [
 export const quote = { en: "The best solutions emerge when different perspectives come together.", de: "Die besten Lösungen entstehen, wenn unterschiedliche Perspektiven zusammenkommen." };
 
 export const certificates = [
-  { year: null, name: "Bosch Confirmed Architect", badge: "/logos/bosch-confirmed-architect.svg" },
+  { year: 2019, name: "Bosch Confirmed Architect", badge: "/logos/bosch-confirmed-architect.svg" },
   { year: 2018, name: "Professional Scrum Product Owner I", short: "PSPO I" },
   { year: 2014, name: "Professional Scrum Master I", short: "PSM I" },
   { year: 2014, name: "IPMA Level D (GPM)", short: "IPMA D" },

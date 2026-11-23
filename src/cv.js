@@ -33,21 +33,6 @@ document.getElementById("cv").innerHTML = `
   <p class="contact"><span>${esc(person.location)}</span><span>${esc(person.site.replace("https://", ""))}</span>${person.linkedin ? `<span>${esc(person.linkedin.replace(/^https:\/\/(de\.)?/, ""))}</span>` : ""}</p>
   <section class="profile"><p>${esc(cv.profile)}</p></section>
 
-  <h2>${T.pillars}</h2>
-  <div class="pillars">
-    ${pillars.map(p => `
-      <div class="pillar">
-        <h3>${esc(p.title)}</h3>${p.subtitle ? `<p class="sub">${esc(p.subtitle)}</p>` : ""}
-        <ul>${p.evidence.slice(0, 4).map(e => `<li>${esc(e)}</li>`).join("")}</ul>
-      </div>`).join("")}
-  </div>
-  <div class="aiband">
-    <p><b>${esc(ai.title)}</b> · ${esc(aiVertical.claim)}</p>
-    <div class="aicells">${pillars.map(p => `<span>${esc(aiVertical.aspects[p.id])}</span>`).join("")}</div>
-  </div>
-
-  <p class="sapline"><b>${esc(sap.title)}</b> · ${sap.modules.map(m => esc(m.id)).join(" · ")}</p>
-
   <h2>${T.exp}</h2>
   ${[...career].reverse().map(c => `
     <div class="job">${logo(c.logo)}
@@ -69,8 +54,21 @@ document.getElementById("cv").innerHTML = `
   <h2>${T.langs}</h2>
   <ul class="plain two">${person.languages.map(l => `<li>${esc(l.name)} · ${esc(l.level)}</li>`).join("")}</ul>
 
-  <h2>${T.kw}</h2>
-  ${[...pillars, ai].map(d => `<p class="dom"><b>${esc(d.title)}:</b> ${esc(d.keywords.join(" · "))}</p>`).join("")}
+
+  <h2>${T.pillars}</h2>
+  <div class="pillars">
+    ${pillars.map(p => `
+      <div class="pillar">
+        <h3>${esc(p.title)}</h3>${p.subtitle ? `<p class="sub">${esc(p.subtitle)}</p>` : ""}
+        <ul>${p.evidence.slice(0, 4).map(e => `<li>${esc(e)}</li>`).join("")}</ul>
+      </div>`).join("")}
+  </div>
+  <div class="aiband">
+    <p><b>${esc(ai.title)}</b> · ${esc(aiVertical.claim)}</p>
+    <div class="aicells">${pillars.map(p => `<span>${esc(aiVertical.aspects[p.id])}</span>`).join("")}</div>
+  </div>
+
+  <p class="sapline"><b>${esc(sap.title)}</b> · ${sap.modules.map(m => esc(m.id)).join(" · ")}</p>
 </article>
 <nav class="tools no-print">
   <a href="?lang=${lang === "de" ? "en" : "de"}">${lang === "de" ? "English" : "Deutsch"}</a>
