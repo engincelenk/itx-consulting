@@ -95,4 +95,3 @@ h2{font-size:8.5pt;color:var(--navy);letter-spacing:.12em}
 .headline{max-width:none;font-size:10.5pt;white-space:nowrap;text-wrap:nowrap}
 .steps li::before{display:none}
 .steps li{grid-template-columns:14mm 1fr}.steps li>div{padding-left:0}
-.steps{break-inside:avoid}
