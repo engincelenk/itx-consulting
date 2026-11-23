@@ -4,12 +4,13 @@ import "./cv.css";
 import * as raw from "./data/profile.js";
 import { localize } from "./i18n.jsx";
 import { period } from "./lib/dates.js";
+import { bindCvDownload } from "./lib/downloadCv.js";
 
 const lang = new URLSearchParams(location.search).get("lang") === "de" ? "de" : "en";
 const { person, cv, domains, aiVertical, career, education, certificates, trainings, logos, successStory, sap } = localize({ ...raw }, lang);
 const T = {
-  en: { cv: "Curriculum vitae", pillars: "Competence profile", exp: "Experience", edu: "Education", certs: "Certificates & training", langs: "Languages", projects: "Projects", school: "School path", kw: "Keywords", interactive: "Interactive portfolio", dl: "Download PDF", back: "Back to portfolio" },
-  de: { cv: "Lebenslauf", pillars: "Kompetenzprofil", exp: "Berufserfahrung", edu: "Bildung", certs: "Zertifikate & Weiterbildung", langs: "Sprachen", projects: "Projekte", school: "Schulweg", kw: "Schlagworte", interactive: "Interaktives Portfolio", dl: "PDF laden", back: "Zum Portfolio" }
+  en: { cv: "Curriculum vitae", pillars: "Competence profile", exp: "Experience", edu: "Education", certs: "Certificates & training", langs: "Languages", projects: "Projects", school: "School path", kw: "Keywords", step: "Step by step to M.Sc.", dl: "Download PDF", back: "Back to portfolio" },
+  de: { cv: "Lebenslauf", pillars: "Kompetenzprofil", exp: "Berufserfahrung", edu: "Bildung", certs: "Zertifikate & Weiterbildung", langs: "Sprachen", projects: "Projekte", school: "Schulweg", kw: "Schlagworte", step: "Stufe für Stufe zum M.Sc.", dl: "PDF laden", back: "Zum Portfolio" }
 }[lang];
 document.documentElement.lang = lang;
 document.title = `Engin Celenk · ${T.cv}`;
@@ -18,8 +19,6 @@ const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 const logo = id => logos[id]?.src ? `<img class="lg" src="${logos[id].src}" alt="${esc(logos[id].name)}">` : "";
 const pillars = domains.filter(d => d.id !== "ai");
 const ai = domains.find(d => d.id === "ai");
-const studies = education.filter(e => e.logo).reverse();
-const schools = education.filter(e => !e.logo);
 
 document.getElementById("cv").innerHTML = `
 <article class="page">
@@ -49,34 +48,34 @@ document.getElementById("cv").innerHTML = `
 
   <p class="sapline"><b>${esc(sap.title)}</b> · ${sap.modules.map(m => esc(m.id)).join(" · ")}</p>
 
-  <div class="cols">
-    <div class="main">
-      <h2>${T.exp}</h2>
-      ${[...career].reverse().map(c => `
-        <div class="job">${logo(c.logo)}
-          <div>
-            <p class="when">${esc(period(c.from, c.to, lang))} · ${esc(c.place)}</p>
-            <h3>${esc(c.role)}</h3><p class="org">${esc(c.org)}</p>
-            <ul>${c.points.map(r => `<li>${esc(r)}</li>`).join("")}${c.story ? `<li><b>${esc(successStory.short)}</b></li>` : ""}${c.projects ? `<li>${T.projects}: ${esc(c.projects.join(", "))}</li>` : ""}</ul>
-          </div>
-        </div>`).join("")}
-    </div>
-    <aside class="side">
-      <h2>${T.certs}</h2>
-      <ul class="plain">${[...certificates, ...trainings].map(c => `<li>${c.year ? `<b>${c.year}</b> ` : ""}${esc(c.name)}</li>`).join("")}</ul>
-      <h2>${T.edu}</h2>
-      ${studies.map(e => `<div class="edu ${e.id === "msc" ? "key" : ""}"><h3>${esc(e.title)}${e.grade ? ` · ${esc(e.grade)}` : ""}</h3><p>${esc(e.text)}</p>${e.extra && !["msc"].includes(e.id) ? `<p>${esc(e.extra.text)}</p>` : ""}</div>`).join("")}
-      <div class="edu"><h3>${T.school}</h3><p>${schools.map(s => `${s.year ? `${esc(s.year)} ` : ""}${esc(s.title)}`).join(" → ")}</p></div>
-      <h2>${T.langs}</h2>
-      <ul class="plain">${person.languages.map(l => `<li>${esc(l.name)} · ${esc(l.level)}</li>`).join("")}</ul>
-      <h2>${T.kw}</h2>
-      ${[...pillars, ai].map(d => `<div class="dom"><h3>${esc(d.title)}</h3><p>${esc(d.keywords.join(" · "))}</p></div>`).join("")}
-    </aside>
-  </div>
-  <footer class="foot">${T.interactive}: ${esc(person.site.replace("https://", ""))}</footer>
+  <h2>${T.exp}</h2>
+  ${[...career].reverse().map(c => `
+    <div class="job">${logo(c.logo)}
+      <div>
+        <p class="when">${esc(period(c.from, c.to, lang))} · ${esc(c.place)}</p>
+        <h3>${esc(c.role)}</h3><p class="org">${esc(c.org)}</p>
+        <ul>${c.points.map(r => `<li>${esc(r)}</li>`).join("")}${c.story ? `<li><b>${esc(successStory.short)}</b></li>` : ""}${c.projects ? `<li>${T.projects}: ${esc(c.projects.join(", "))}</li>` : ""}</ul>
+      </div>
+    </div>`).join("")}
+
+  <h2>${T.step}</h2>
+  <ol class="steps">
+    ${education.map(e => `<li class="${e.id === "msc" ? "key" : ""}"><span class="yr">${e.year ? esc(e.year) : ""}</span><div><h3>${esc(e.title)}${e.grade ? ` · ${esc(e.grade)}` : ""}</h3>${e.logo ? `<p>${esc(e.text)}</p>` : ""}${e.extra ? `<p>${esc(e.extra.text)}</p>` : ""}</div></li>`).join("")}
+  </ol>
+
+  <h2>${T.certs}</h2>
+  <ul class="plain two">${[...certificates, ...trainings].map(c => `<li>${c.year ? `<b>${c.year}</b> ` : ""}${esc(c.name)}</li>`).join("")}</ul>
+
+  <h2>${T.langs}</h2>
+  <ul class="plain two">${person.languages.map(l => `<li>${esc(l.name)} · ${esc(l.level)}</li>`).join("")}</ul>
+
+  <h2>${T.kw}</h2>
+  ${[...pillars, ai].map(d => `<p class="dom"><b>${esc(d.title)}:</b> ${esc(d.keywords.join(" · "))}</p>`).join("")}
 </article>
 <nav class="tools no-print">
   <a href="?lang=${lang === "de" ? "en" : "de"}">${lang === "de" ? "English" : "Deutsch"}</a>
-  <a class="dl" href="${cv.file}" download>${T.dl}</a>
+  <a class="dl" href="${cv.file}" data-cv-download>${T.dl}</a>
   <a href="/cv/?lang=${lang}">${T.back}</a>
 </nav>`;
+
+bindCvDownload(lang);

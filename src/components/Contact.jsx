@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { bindCvDownload } from "../lib/downloadCv.js";
 import { Download, ExternalLink, Linkedin } from "lucide-react";
 import SectionHead from "./SectionHead.jsx";
 import ContactForm from "./ContactForm.jsx";
@@ -6,6 +8,7 @@ import { useLang } from "../i18n.jsx";
 
 export default function Contact() {
   const { t, L, lang } = useLang();
+  useEffect(() => bindCvDownload(lang), [lang]);
   const cv = L(rawCv), domains = L(rawDomains);
 
   return (
@@ -32,7 +35,7 @@ export default function Contact() {
               </ul>
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
-              <a className="btn-primary" href={cv.file} download><Download size={16} />{t("downloadPdf")}</a>
+              <a className="btn-primary" href={cv.file} data-cv-download download><Download size={16} />{t("downloadPdf")}</a>
               <a className="btn-ghost" href={`/cv/print.html?lang=${lang}`} target="_blank" rel="noopener"><ExternalLink size={16} />{t("webVersion")}</a>
             </div>
           </div>

@@ -1,31 +1,22 @@
-/* Renders the tailored CVs to PDF and the social preview image.
-   Usage: npm run build && npm run cv:pdf && npm run build   (PDFs land in public/cv) */
-import { spawn } from "node:child_process";
-import { mkdirSync } from "node:fs";
-import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
-const { chromium } = require("playwright");
+/* Rendert die CV-PDFs (und das Social-Preview-Bild) mit dem lokal installierten Chrome.
+   Aufruf: npm run build && npm run cv:pdf   (PDFs landen in public/cv; danach npm run build)
+   Chrome-Pfad bei Bedarf über CHROME_PATH setzen. Das Download-Datum wird erst beim Herunterladen eingestempelt. */
+import { spawn, spawnSync } from "node:child_process";
+import { mkdirSync, existsSync } from "node:fs";
+import { resolve } from "node:path";
 
 const PORT = 4179, base = `http://localhost:${PORT}`;
-const server = spawn("npx", ["vite", "preview", "--port", String(PORT), "--strictPort"], { stdio: "ignore" });
-await new Promise(r => setTimeout(r, 2500));
+const chrome = [process.env.CHROME_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe", "/usr/bin/google-chrome", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"].find(p => p && existsSync(p));
+if (!chrome) throw new Error("Chrome nicht gefunden: CHROME_PATH setzen");
+const server = spawn("npx", ["vite", "preview", "--port", String(PORT), "--strictPort"], { stdio: "ignore", shell: true });
+await new Promise(r => setTimeout(r, 3000));
 mkdirSync("public/cv", { recursive: true });
-const files = [["en", "Engin-Celenk-CV.pdf"], ["de", "Engin-Celenk-Lebenslauf.pdf"]];
-const browser = await chromium.launch();
+const run = args => spawnSync(chrome, ["--headless=new", "--disable-gpu", "--no-sandbox", "--virtual-time-budget=8000", ...args], { stdio: "ignore" });
 try {
-  const page = await browser.newPage();
-  for (const [lang, file] of files) {
-    await page.goto(`${base}/cv/print.html?lang=${lang}`, { waitUntil: "networkidle" });
-    await page.evaluate(() => document.fonts.ready);
-    await page.emulateMedia({ media: "print" });
-    await page.pdf({ path: `public/cv/${file}`, format: "A4", printBackground: true, preferCSSPageSize: true });
-    await page.emulateMedia({ media: "screen" });
+  for (const [lang, file] of [["en", "Engin-Celenk-CV.pdf"], ["de", "Engin-Celenk-Lebenslauf.pdf"]]) {
+    run(["--no-pdf-header-footer", `--print-to-pdf=${resolve("public/cv", file)}`, `${base}/cv/print.html?lang=${lang}`]);
     console.log("pdf", file);
   }
-  const og = await browser.newPage({ viewport: { width: 1200, height: 630 }, reducedMotion: "reduce" });
-  await og.goto(`${base}/?lang=en`, { waitUntil: "networkidle" });
-  await og.evaluate(() => document.fonts.ready);
-  await og.waitForTimeout(500);
-  await og.screenshot({ path: "public/og.png" });
+  run(["--window-size=1200,630", `--screenshot=${resolve("public/og.png")}`, `${base}/?lang=en`]);
   console.log("og.png");
-} finally { await browser.close(); server.kill(); }
+} finally { if (process.platform === "win32") spawnSync("taskkill", ["/pid", String(server.pid), "/t", "/f"], { stdio: "ignore" }); else server.kill(); }
