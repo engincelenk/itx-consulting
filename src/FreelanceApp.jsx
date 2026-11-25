@@ -27,7 +27,7 @@ function Page() {
       <ScrollProgress />
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-ink/85 backdrop-blur-xl" style={{ paddingTop: "env(safe-area-inset-top)" }}>
         <div className="wrap flex h-16 items-center justify-between gap-3">
-          <a href={`/?lang=${lang}`} className="flex h-11 min-w-0 items-center" aria-label={site.company}><><img src="/solvexa-logo-dark.png" alt={site.company} width="900" height="162" loading="lazy" className="brand-dark h-8 w-auto sm:h-10" /><img src="/solvexa-logo-light.png" alt={site.company} width="900" height="159" loading="lazy" className="brand-light h-8 w-auto sm:h-10" /></></a>
+          <a href={`/?lang=${lang}`} className="flex h-14 min-w-0 items-center" aria-label={site.company}><><img src="/itx-logo-dark.png" alt={site.company} width="900" height="436" loading="lazy" className="brand-dark h-12 w-auto sm:h-14" /><img src="/itx-logo-light.png" alt={site.company} width="900" height="436" loading="lazy" className="brand-light h-12 w-auto sm:h-14" /></></a>
           <div className="flex items-center gap-4">
             <a href={cvUrl(lang)} className="hidden items-center gap-1.5 text-sm text-mist hover:text-snow sm:inline-flex"><ArrowLeft size={16} />{T.back}: {person.name}</a>
             <ThemeToggle />

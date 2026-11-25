@@ -9,8 +9,8 @@
    - der Lebenslauf liegt unter                            (https://<domain>/cv/)
 ------------------------------------------------------------------- */
 
-const company = "Solvexa Consulting";   // z. B. "Muster IT Consulting"
-const domain = "";    // optional; leer = aus dem Firmennamen abgeleitet (solvexa-consulting.de)
+const company = "ITX Consulting";   // z. B. "Muster IT Consulting"
+const domain = "";    // optional; leer = aus dem Firmennamen abgeleitet (itx-consulting.de)
 const live = false;   // true, sobald die Domain existiert und beide Seiten dort ausgeliefert werden
 
 const slug = s => s.toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
