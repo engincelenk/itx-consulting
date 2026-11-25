@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import ContactForm from "./components/ContactForm.jsx";
 import { LangProvider, useLang } from "./i18n.jsx";
 import LangSwitch from "./components/LangSwitch.jsx";
@@ -12,7 +12,7 @@ import ThemeToggle from "./components/ThemeToggle.jsx";
 import ScrollProgress from "./components/ScrollProgress.jsx";
 import LogoWall from "./components/LogoWall.jsx";
 import { person } from "./data/profile.js";
-import { site, slogan, cvUrl } from "./site.js";
+import { site, slogan } from "./site.js";
 import { industries, fl } from "./data/services.js";
 
 function Page() {
@@ -41,7 +41,6 @@ function Page() {
             {links.map(([id, label]) => <a key={id} href={`#${id}`} className="inline-flex min-h-[44px] items-center rounded-full px-3 text-sm text-snow/80 hover:text-signal">{label}</a>)}
           </nav>
           <div className="flex items-center gap-2 sm:gap-4">
-            <a href={cvUrl(lang)} className="hidden items-center gap-1.5 text-sm text-mist hover:text-snow lg:inline-flex"><ArrowLeft size={16} />{T.back}: {person.name}</a>
             <ThemeToggle />
             <LangSwitch />
             <button type="button" onClick={() => setMenu(v => !v)} aria-expanded={menu} aria-controls="mobile-menu" aria-label={T.navLabel} className="grid h-11 w-11 place-items-center rounded-full border border-mist/40 md:hidden">{menu ? <X size={18} /> : <Menu size={18} />}</button>
@@ -50,7 +49,6 @@ function Page() {
         {menu && (
           <nav id="mobile-menu" aria-label={T.navLabel} className="wrap flex flex-col border-t border-white/[0.06] bg-ink py-2 md:hidden">
             {links.map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenu(false)} className="flex min-h-[48px] items-center text-base">{label}</a>)}
-            <a href={cvUrl(lang)} className="flex min-h-[48px] items-center gap-1.5 text-base text-mist"><ArrowLeft size={16} />{T.back}: {person.name}</a>
           </nav>
         )}
       </header>
