@@ -68,6 +68,11 @@ export default function ShieldCloud({ labels = true }) {
         };
       }
 
+      // Linienpunkte ohne Knoten immer exakt auf ihrer Kante halten, sonst entstehen Knicke
+      for (const [key, from, to, f] of [["p", "a", "b", 0.555], ["q", "a", "c", 0.545], ["r", "c", "j", 0.572]]) {
+        pos[key] = { x: pos[from].x + (pos[to].x - pos[from].x) * f, y: pos[from].y + (pos[to].y - pos[from].y) * f };
+      }
+
       ctx.clearRect(0, 0, w, h);
 
       // umgebende Wolke mit Begriffen, schwach mit dem Schild verbunden
