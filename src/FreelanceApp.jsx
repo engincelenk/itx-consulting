@@ -61,7 +61,6 @@ function Page() {
           </div>
         </div>
         <section className="relative isolate overflow-hidden pb-10 pt-28 md:pt-36">
-          <div className="absolute inset-0 -z-10 opacity-25 md:opacity-50 lg:hidden"><ShieldCloud labels={false} /></div>
           <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-ink" />
           <div className="wrap">
             {site.hasCompany

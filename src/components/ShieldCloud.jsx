@@ -20,7 +20,7 @@ const WORDS = ["MICROSERVICES", "ZERO TRUST", "CLOUD", "TARA", "API", "ISO 27001
 const ease = t => (t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3));
 const rand = (a, b) => a + Math.random() * (b - a);
 
-export default function ShieldCloud({ labels = true }) {
+export default function ShieldCloud() {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function ShieldCloud({ labels = true }) {
           ctx.strokeStyle = `rgba(${MIST},${0.12 * form})`; line(p, best);
         }
         ctx.fillStyle = `rgba(${MIST},0.55)`; disc(p, 1.5);
-        if (labels && p.word && w > 380) {
+        if (p.word && w > 380) {
           ctx.font = "500 10px 'Geist Mono Variable', ui-monospace, monospace";
           ctx.fillStyle = `rgba(${MIST},0.65)`;
           const txt = Array.isArray(p.word) ? p.word[de ? 0 : 1] : p.word;
@@ -145,7 +145,7 @@ export default function ShieldCloud({ labels = true }) {
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "lang"] });
     if (!reduce) window.addEventListener("pointermove", onMove, { passive: true });
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); mo.disconnect(); window.removeEventListener("pointermove", onMove); };
-  }, [labels]);
+  }, []);
 
   return <canvas ref={ref} aria-hidden="true" className="absolute inset-0 h-full w-full" />;
 }
