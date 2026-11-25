@@ -80,7 +80,7 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
       <label className="block"><span className="label">{t.message} *</span><textarea name="message" required aria-required="true" aria-invalid={!!errs.message} aria-describedby={errs.message ? "err-message" : undefined} rows={6} value={f.message} onChange={set("message")} className={`${field} py-3 leading-relaxed`} />{errs.message && <span id="err-message" className="mt-1 block text-sm text-signal">{errs.message}</span>}</label>
       <input type="text" tabIndex={-1} autoComplete="off" value={f.hp} onChange={set("hp")} className="hidden" aria-hidden="true" />
       <label className="flex min-h-[44px] items-start gap-3 py-1 text-sm text-mist">
-        <input name="consent" type="checkbox" required aria-required="true" aria-invalid={!!errs.consent} checked={f.consent} onChange={set("consent")} className="mt-0.5 h-6 w-6 flex-none accent-[#E8650A]" />
+        <input name="consent" type="checkbox" required aria-required="true" aria-invalid={!!errs.consent} checked={f.consent} onChange={set("consent")} className="mt-0.5 h-6 w-6 flex-none accent-[rgb(var(--c-signal))]" />
         <span>{t.consent} *{errs.consent && <span className="block text-signal">{errs.consent}</span>} <a className="text-snow underline decoration-signal" href={`/legal.html?lang=${lang}#privacy`}>{t.privacy}</a></span>
       </label>
       {hint && <p className="text-sm text-signal" role="alert">{hint}</p>}

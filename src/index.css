@@ -13,9 +13,9 @@
   .brand-light { display: none; }
   :root[data-theme="light"] .brand-light { display: block; }
   :root[data-theme="light"] .brand-dark { display: none; }
-  ::selection { background: #E8650A; color: #101827; }
+  ::selection { background: rgb(var(--c-signal)); color: #101827; }
   :root[data-theme="light"] .btn-primary:hover { background: #a94600; }
-  :focus-visible { outline: 2px solid #E8650A; outline-offset: 3px; border-radius: 6px; }
+  :focus-visible { outline: 2px solid rgb(var(--c-signal)); outline-offset: 3px; border-radius: 6px; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
@@ -38,7 +38,7 @@
 
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
-.caret::after { content: "▍"; color: #E8650A; animation: blink 1s steps(2) infinite; }
+.caret::after { content: "▍"; color: rgb(var(--c-signal)); animation: blink 1s steps(2) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes sweep { 0% { transform: translateX(0); } 60%, 100% { transform: translateX(450%); } }
 
@@ -48,11 +48,17 @@
 /* sections: soft colour bands and a glowing hairline between them */
 main > .section::after {
   content: ""; position: absolute; top: 0; left: 50%; width: min(720px, 70%); height: 1px; transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, rgba(232,101,10,.45), transparent); pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(var(--c-signal) / .45), transparent); pointer-events: none;
 }
 main > .section:nth-of-type(even) { background: linear-gradient(180deg, transparent, rgb(var(--c-navy) / .20) 35%, rgb(var(--c-navy) / .20) 65%, transparent); }
 main > .section:nth-of-type(3n)::before {
   content: ""; position: absolute; z-index: -1; right: -10%; top: 10%; width: 520px; height: 520px; max-width: 80vw; border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,101,10,.09), transparent 65%); pointer-events: none;
+  background: radial-gradient(circle, rgb(var(--c-signal) / .09), transparent 65%); pointer-events: none;
 }
 main > .section { overflow-x: clip; isolation: isolate; }
+
+/* ITX Consulting: Gold aus dem Logo, nur Firmen- und Rechtsseite (der Lebenslauf bleibt orange). */
+:root[data-brand="itx"] { --c-signal: 201 170 110; }
+:root[data-brand="itx"][data-theme="light"] { --c-signal: 133 101 32; }
+:root[data-brand="itx"] .btn-primary:hover { background: #dcc08a; }
+:root[data-brand="itx"][data-theme="light"] .btn-primary:hover { background: #6f5319; }

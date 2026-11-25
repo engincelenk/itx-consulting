@@ -12,7 +12,7 @@
   :root[data-theme="light"] .icon-sun { display: none; }
   html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 }
-@layer base { body{@apply bg-ink text-snow font-sans antialiased} :focus-visible{outline:2px solid #E8650A;outline-offset:3px;border-radius:6px} }
+@layer base { body{@apply bg-ink text-snow font-sans antialiased} :focus-visible{outline:2px solid rgb(var(--c-signal));outline-offset:3px;border-radius:6px} }
 @layer components {
   .wrap-wide{@apply mx-auto w-full max-w-page;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
   .panel{@apply rounded-2xl border border-white/[0.08] bg-navy/20}
@@ -20,3 +20,7 @@
   .label{@apply font-mono text-[11px] uppercase tracking-label text-mist}
   .field{@apply mt-2 min-h-[48px] w-full rounded-xl border border-white/10 bg-deep px-4 text-[16px] text-snow placeholder:text-mist/50 focus:border-signal focus:outline-none}
 }
+
+/* ITX Consulting: Gold aus dem Logo, nur Firmen- und Rechtsseite (der Lebenslauf bleibt orange). */
+:root[data-brand="itx"] { --c-signal: 201 170 110; }
+:root[data-brand="itx"][data-theme="light"] { --c-signal: 133 101 32; }

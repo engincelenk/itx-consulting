@@ -48,7 +48,7 @@ export default function ServiceMatrix({ T }) {
       {/* AI band across all three */}
       <button type="button" onClick={() => toggle("ai")} aria-pressed={sel === "ai"}
         className={`group relative mt-3 block w-full overflow-hidden rounded-2xl border p-4 text-left transition-colors sm:p-5 ${sel === "ai" ? "border-signal" : "border-signal/40 hover:border-signal/80"}`}>
-        <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(232,101,10,.22),rgba(232,101,10,.08)_50%,rgba(232,101,10,.22))]" />
+        <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgb(var(--c-signal)/.22),rgb(var(--c-signal)/.08)_50%,rgb(var(--c-signal)/.22))]" />
         {!reduce && <span aria-hidden="true" className="absolute inset-y-0 -left-1/3 w-1/3 animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />}
         <span className="relative flex flex-wrap items-center gap-x-3 gap-y-1">
           <span className="grid h-9 w-9 place-items-center rounded-lg bg-signal text-ink"><Icon name={ai.icon} size={18} /></span>

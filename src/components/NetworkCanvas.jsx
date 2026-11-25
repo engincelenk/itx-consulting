@@ -60,7 +60,7 @@ export default function NetworkCanvas() {
 
       ctx.clearRect(0, 0, w, h);
       const light = document.documentElement.dataset.theme === "light";
-      const SIG = light ? "176,70,0" : "232,101,10", MIST = light ? "74,88,108" : "169,180,194", DOT = light ? "30,58,95" : "248,249,250";
+      const SIG = document.documentElement.dataset.brand === "itx" ? (light ? "133,101,32" : "201,170,110") : light ? "176,70,0" : "232,101,10", MIST = light ? "74,88,108" : "169,180,194", DOT = light ? "30,58,95" : "248,249,250";
       const maxD = scale * 0.42;
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
