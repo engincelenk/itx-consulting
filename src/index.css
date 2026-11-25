@@ -62,3 +62,6 @@ main > .section { overflow-x: clip; isolation: isolate; }
 :root[data-brand="itx"][data-theme="light"] { --c-signal: 133 101 32; }
 :root[data-brand="itx"] .btn-primary:hover { background: #dcc08a; }
 :root[data-brand="itx"][data-theme="light"] .btn-primary:hover { background: #6f5319; }
+/* Firmenseite: etwas breiterer Inhalt; Sprungziele knapp unter dem Kopf */
+:root[data-brand="itx"] .wrap { max-width: 1360px; }
+html[data-brand="itx"] { scroll-padding-top: 40px; }

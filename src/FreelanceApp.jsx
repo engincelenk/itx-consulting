@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Menu, X } from "lucide-react";
 import ContactForm from "./components/ContactForm.jsx";
 import { LangProvider, useLang } from "./i18n.jsx";
 import LangSwitch from "./components/LangSwitch.jsx";
@@ -18,6 +18,15 @@ import { industries, fl } from "./data/services.js";
 function Page() {
   const { lang, L } = useLang();
   const T = L(fl);
+  const [menu, setMenu] = useState(false);
+  const links = [["services", T.navServices], ["about", T.navAbout], ["contact", T.navContact]];
+
+  useEffect(() => {
+    if (!menu) return;
+    const esc = e => e.key === "Escape" && setMenu(false);
+    window.addEventListener("keydown", esc);
+    return () => window.removeEventListener("keydown", esc);
+  }, [menu]);
 
   useEffect(() => { document.title = T.title; document.querySelector('meta[name="description"]')?.setAttribute("content", T.desc); }, [T]);
 
@@ -28,12 +37,22 @@ function Page() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-ink/85 backdrop-blur-xl" style={{ paddingTop: "env(safe-area-inset-top)" }}>
         <div className="wrap flex h-16 items-center justify-between gap-3">
           <a href={`/?lang=${lang}`} className="flex h-14 min-w-0 items-center" aria-label={site.company}><><img src="/itx-logo-dark.png" alt={site.company} width="900" height="436" loading="lazy" className="brand-dark h-12 w-auto sm:h-14" /><img src="/itx-logo-light.png" alt={site.company} width="900" height="436" loading="lazy" className="brand-light h-12 w-auto sm:h-14" /></></a>
-          <div className="flex items-center gap-4">
-            <a href={cvUrl(lang)} className="hidden items-center gap-1.5 text-sm text-mist hover:text-snow sm:inline-flex"><ArrowLeft size={16} />{T.back}: {person.name}</a>
+          <nav aria-label={T.navLabel} className="hidden items-center gap-1 md:flex">
+            {links.map(([id, label]) => <a key={id} href={`#${id}`} className="inline-flex min-h-[44px] items-center rounded-full px-3 text-sm text-snow/80 hover:text-signal">{label}</a>)}
+          </nav>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <a href={cvUrl(lang)} className="hidden items-center gap-1.5 text-sm text-mist hover:text-snow lg:inline-flex"><ArrowLeft size={16} />{T.back}: {person.name}</a>
             <ThemeToggle />
             <LangSwitch />
+            <button type="button" onClick={() => setMenu(v => !v)} aria-expanded={menu} aria-controls="mobile-menu" aria-label={T.navLabel} className="grid h-11 w-11 place-items-center rounded-full border border-mist/40 md:hidden">{menu ? <X size={18} /> : <Menu size={18} />}</button>
           </div>
         </div>
+        {menu && (
+          <nav id="mobile-menu" aria-label={T.navLabel} className="wrap flex flex-col border-t border-white/[0.06] bg-ink py-2 md:hidden">
+            {links.map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenu(false)} className="flex min-h-[48px] items-center text-base">{label}</a>)}
+            <a href={cvUrl(lang)} className="flex min-h-[48px] items-center gap-1.5 text-base text-mist"><ArrowLeft size={16} />{T.back}: {person.name}</a>
+          </nav>
+        )}
       </header>
 
       <main id="main">
@@ -55,14 +74,14 @@ function Page() {
           </div>
         </section>
 
-        <section id="services" className="section scroll-mt-16">
+        <section id="services" className="section">
           <div className="wrap">
             <SectionHead no="01" kicker={T.mapKicker} title={T.mapTitle} lead={T.mapLead} />
             <ServiceMatrix T={T} />
           </div>
         </section>
 
-        <section id="about" className="section scroll-mt-16">
+        <section id="about" className="section">
           <div className="wrap">
             <SectionHead no="02" kicker={T.aboutKicker} title={T.aboutTitle} />
             <div className="grid gap-8 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-12">
@@ -80,10 +99,10 @@ function Page() {
           </div>
         </section>
 
-        <section id="contact" className="section scroll-mt-16">
+        <section id="contact" className="section">
           <div className="wrap">
             <SectionHead no="03" kicker={T.cfgKicker} title={T.cfgTitle} lead={T.cfgLead} />
-            <div className="panel mx-auto max-w-3xl p-5 sm:p-7">
+            <div className="panel max-w-3xl p-5 sm:p-7">
               <ContactForm source="freelance" />
               <p className="mt-5 text-xs text-mist">{T.note}</p>
             </div>

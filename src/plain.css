@@ -24,3 +24,4 @@
 /* ITX Consulting: Gold aus dem Logo, nur Firmen- und Rechtsseite (der Lebenslauf bleibt orange). */
 :root[data-brand="itx"] { --c-signal: 201 170 110; }
 :root[data-brand="itx"][data-theme="light"] { --c-signal: 133 101 32; }
+:root[data-brand="itx"] .wrap-wide { max-width: 1360px; }
