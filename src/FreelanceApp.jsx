@@ -5,7 +5,7 @@ import { LangProvider, useLang } from "./i18n.jsx";
 import LangSwitch from "./components/LangSwitch.jsx";
 import SectionHead from "./components/SectionHead.jsx";
 import Logo from "./components/Logo.jsx";
-import NetworkCanvas from "./components/NetworkCanvas.jsx";
+import ShieldCloud from "./components/ShieldCloud.jsx";
 import ServiceMatrix from "./components/ServiceMatrix.jsx";
 import Footer from "./components/Footer.jsx";
 import ThemeToggle from "./components/ThemeToggle.jsx";
@@ -53,9 +53,15 @@ function Page() {
         )}
       </header>
 
-      <main id="main">
+      <main id="main" className="relative">
+        {/* Ab Desktop: Wolke und Schild rechts neben Hero und Leistungs-Überschrift */}
+        <div className="pointer-events-none absolute inset-x-0 top-[72px] z-10 hidden lg:block">
+          <div className="wrap flex justify-end">
+            <div className="relative h-[620px] w-[46%] xl:w-[52%]"><ShieldCloud /></div>
+          </div>
+        </div>
         <section className="relative isolate overflow-hidden pb-10 pt-28 md:pt-36">
-          <div className="absolute inset-0 -z-10 opacity-40 md:opacity-80 md:[mask-image:linear-gradient(to_right,rgba(0,0,0,.2),black_60%)]"><NetworkCanvas /></div>
+          <div className="absolute inset-0 -z-10 opacity-25 md:opacity-50 lg:hidden"><ShieldCloud labels={false} /></div>
           <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-ink" />
           <div className="wrap">
             {site.hasCompany
