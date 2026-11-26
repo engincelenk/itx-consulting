@@ -21,7 +21,7 @@ Danach gilt automatisch:
 - `https://<domain>/` zeigt die Freelance-Seite, `https://cv.<domain>/` den Lebenslauf (gleiche Auslieferung, die Seite erkennt den Host; lokal testen mit `?as=freelance`)
 - Links zwischen beiden Seiten und die Signatur in Anschreiben zeigen auf die neuen Adressen
 
-Von Hand bleiben: DNS und Hosting für beide Domains (GitHub Pages erlaubt nur eine Domain pro Site, daher Cloudflare Pages, Netlify oder IONOS), `public/CNAME`, `server/ionos/contact.php` (`$COMPANY`, `$SITE`, `$ORIGINS`) und im Impressum Steuerhinweise (Kleinunternehmer, ggf. USt-IdNr.).
+Von Hand bleiben: DNS und Hosting für beide Domains (GitHub Pages erlaubt nur eine Domain pro Site, daher Cloudflare Pages, Netlify oder IONOS), `public/CNAME`, `server/webhosting/contact.php` (`$COMPANY`, `$SITE`, `$ORIGINS`) und im Impressum Steuerhinweise (Kleinunternehmer, ggf. USt-IdNr.).
 
 ## Small projects under `/<name>/`
 

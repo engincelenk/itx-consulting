@@ -2,12 +2,12 @@
 
 Die Seite (GitHub Pages, `www.itx-consulting.de`) kann kein PHP ausführen. Das Formular schickt deshalb an `https://itx-consulting.de/api/contact.php` (ohne `www`, siehe `src/data/profile.js`, `contactForm.endpoints`). Das ist der All-inkl-Webspace. Das Skript sendet die Nachricht per `mail()` an `info@itx-consulting.de`.
 
-(Der Ordnername `server/ionos` ist historisch; die Datei läuft auf All-inkl.)
+(Der Ordner hieß früher `server/ionos` und heißt jetzt `server/webhosting`. Nur der Pfad zum Herunterladen hat sich geändert: Eine bereits hochgeladene `contact.php` auf dem Webspace läuft unverändert weiter und muss nicht neu hochgeladen werden.)
 
 Voraussetzung: `www.itx-consulting.de` zeigt per DNS auf GitHub Pages, `itx-consulting.de` (ohne www) auf den All-inkl-Webspace. Das Skript erlaubt Anfragen von beiden Adressen (CORS).
 
 ## 1. Hochladen
-`server/ionos/contact.php` per FTP oder KAS-Dateimanager in das Hauptverzeichnis der Domain `itx-consulting.de` hochladen, und zwar nach `api/contact.php` (Ordner `api` anlegen, falls nötig).
+`server/webhosting/contact.php` per FTP oder KAS-Dateimanager in das Hauptverzeichnis der Domain `itx-consulting.de` hochladen, und zwar nach `api/contact.php` (Ordner `api` anlegen, falls nötig).
 
 ## 2. Prüfen
 `https://itx-consulting.de/api/contact.php` im Browser öffnen. Richtig ist eine Zeile wie:
