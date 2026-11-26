@@ -7,6 +7,9 @@ import LangSwitch from "./LangSwitch.jsx";
 
 const ids = ["home", "journey", "education", "expertise", "lab", "about", "contact"];
 
+/* Gold "x" im Schriftzug ITx; beim Hover (Gold-Hintergrund) wird es dunkel. */
+const Brand = ({ name }) => name.startsWith("ITx") ? <>IT<span className="text-signal group-hover:text-ink">x</span>{name.slice(3)}</> : name;
+
 export default function Nav({ showFreelance = true }) {
   const { t, lang } = useLang();
   const [active, setActive] = useState("home");
@@ -39,7 +42,7 @@ export default function Nav({ showFreelance = true }) {
                   </a>
                 </li>
               ))}
-              {showFreelance && <li><a href={freelanceUrl(lang)} className="ml-1 rounded-full border border-signal/50 px-3 py-1.5 text-sm text-signal transition-colors hover:bg-signal hover:text-ink">{site.company || "Freelance"}</a></li>}
+              {showFreelance && <li><a href={freelanceUrl(lang)} className="group ml-1 rounded-full border border-signal/50 px-3 py-1.5 text-sm text-snow transition-colors hover:bg-signal hover:text-ink"><Brand name={site.company || "Freelance"} /></a></li>}
             </ul>
           </nav>
           <LangSwitch />
@@ -60,8 +63,8 @@ export default function Nav({ showFreelance = true }) {
               </li>
             ))}
             {showFreelance && (
-              <li><a href={freelanceUrl(lang)} className="flex items-baseline gap-4 border-b border-white/[0.06] py-4 text-2xl font-medium tracking-tight text-signal">
-                <span className="font-mono text-xs">→</span>{site.company || "Freelance"}</a></li>
+              <li><a href={freelanceUrl(lang)} className="flex items-baseline gap-4 border-b border-white/[0.06] py-4 text-2xl font-medium tracking-tight text-snow">
+                <span className="font-mono text-xs text-signal">→</span><Brand name={site.company || "Freelance"} /></a></li>
             )}
           </ul>
         </nav>

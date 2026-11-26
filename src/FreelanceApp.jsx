@@ -64,7 +64,7 @@ function Page() {
           <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-ink" />
           <div className="wrap">
             {site.hasCompany
-              ? <h1 className="text-[2.2rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-7xl">{site.company}<span className="mt-3 block text-[1.25rem] font-medium leading-snug tracking-[-0.02em] text-signal sm:text-3xl">{slogan}</span></h1>
+              ? <h1 className="text-[2.2rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-7xl">{site.company.startsWith("ITx") ? <>IT<span className="text-signal">x</span>{site.company.slice(3)}</> : site.company}<span className="mt-3 block text-[1.25rem] font-medium leading-snug tracking-[-0.02em] text-signal sm:text-3xl">{slogan}</span></h1>
               : <h1 className="mt-5 max-w-[20ch] text-[2.3rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-6xl">{T.h1a} <span className="text-signal">{T.h1b}</span></h1>}
             {site.hasCompany && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{T.heroLead}</p>}
             <div className="mt-8 flex flex-wrap items-center gap-3">
