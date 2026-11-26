@@ -65,3 +65,5 @@ main > .section { overflow-x: clip; isolation: isolate; }
 /* Firmenseite: etwas breiterer Inhalt; Sprungziele knapp unter dem Kopf */
 :root[data-brand="itx"] .wrap { max-width: 1360px; }
 html[data-brand="itx"] { scroll-padding-top: 40px; }
+/* Kein Trennstrich zwischen Hero und Leistungen */
+html[data-brand="itx"] main > #services::after { content: none; }
