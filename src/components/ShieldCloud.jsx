@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 
-/* Die Wolke aus Fachbegriffen setzt sich beim Laden zum Netz-Schild aus dem ITx-Logo zusammen.
-   Danach schwebt das Schild leicht, Datenimpulse laufen zum goldenen Kern. */
+/* Das Netz-Schild aus dem ITx-Logo setzt sich beim Laden zusammen. Danach wächst von innen nach außen
+   ein Spinnennetz in Schildform mit den Fachbegriffen. Mit jedem Pulsschlag des Kerns läuft eine Welle
+   nach außen, Impulse tragen die Begriffe über die Fäden zum Kern. */
 
 // Knoten und Kanten nach dem Logo (Koordinaten aus der Vorlage). dot: 0 = reiner Linienpunkt
 const N = {
@@ -16,6 +17,34 @@ const MID = [193.5, 599], SPAN_W = 330, SPAN_H = 392;
 
 const WORDS = ["MICROSERVICES", "ZERO TRUST", "CLOUD", "TARA", "API", "ISO 27001", ["KI", "AI"], "SAP",
   ["LOGISTIK", "LOGISTICS"], "OWASP", "NIST", "DEVSECOPS", "LLM", "INTEGRATION", "SCRUM", "CX"];
+
+// Netz: zwei größere Schildumrisse um das Logo, Fäden von jedem Randknoten nach außen
+const OUTLINE = "acjnomigb".split("");
+const R1 = 1.2, R2 = 1.38;
+const grow = (key, f) => [MID[0] + (N[key][0] - MID[0]) * f, MID[1] + (N[key][1] - MID[1]) * f];
+// Begriffe sitzen außen: auf den Ecken und Kantenmitten des äußeren Umrisses (zwei Mitten bleiben frei)
+const OUTER = OUTLINE.flatMap((k, i) => {
+  const a = grow(k, R2), b = grow(OUTLINE[(i + 1) % OUTLINE.length], R2);
+  return [{ at: a, spoke: i }, { at: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], spoke: i, mid: true }];
+});
+const FREE = [5, 13];
+const LABELED = OUTER.map((_, i) => i).filter(i => !FREE.includes(i));
+
+// kürzester Weg vom Randknoten zum Kern, entlang der Schildkanten
+const toCore = start => {
+  const prev = { [start]: null }, queue = [start];
+  while (queue.length) {
+    const k = queue.shift();
+    for (const [a, b] of EDGES) {
+      const n = a === k ? b : b === k ? a : null;
+      if (n && !(n in prev)) { prev[n] = k; queue.push(n); }
+    }
+  }
+  const path = [];
+  for (let k = CORE; k; k = prev[k]) path.unshift(k);
+  return path;
+};
+const ROUTES = OUTLINE.map(toCore);
 
 const ease = t => (t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3));
 const rand = (a, b) => a + Math.random() * (b - a);
@@ -32,11 +61,8 @@ export default function ShieldCloud() {
     const keys = Object.keys(N);
     // Startlage: irgendwo in der Wolke
     const start = Object.fromEntries(keys.map((k, i) => [k, { x: rand(0.02, 0.98), y: rand(0.02, 0.98), delay: rand(0, 0.7), ph: i * 1.7 }]));
-    const dust = Array.from({ length: 46 }, (_, i) => {
-      const a = (i / 46) * Math.PI * 2 + rand(-0.12, 0.12), r = rand(0.34, 0.5);
-      return { x: 0.5 + Math.cos(a) * r, y: 0.5 + Math.sin(a) * r * 0.96, ph: rand(0, 6.28), word: i % 3 === 0 && i / 3 < WORDS.length ? WORDS[i / 3] : null };
-    });
     const pulses = Array.from({ length: 5 }, (_, i) => ({ edge: (i * 7) % EDGES.length, off: i / 5 }));
+    const inbound = Array.from({ length: 3 }, (_, i) => ({ off: i / 3 }));
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -55,7 +81,8 @@ export default function ShieldCloud() {
       const de = document.documentElement.lang === "de";
       pointer.x += (pointer.tx - pointer.x) * 0.05; pointer.y += (pointer.ty - pointer.y) * 0.05;
 
-      const s = Math.min(w * 0.68 / SPAN_W, h * 0.7 / SPAN_H);
+      // auch bei schmaler Fläche muss neben dem Netz Platz für die Begriffe bleiben
+      const s = Math.min(w * 0.68 / SPAN_W, h * 0.7 / SPAN_H, (w - 160) / (SPAN_W * R2));
       const form = ease((t - 0.35) / 2.2);
       const pos = {};
       for (const key of keys) {
@@ -75,29 +102,62 @@ export default function ShieldCloud() {
 
       ctx.clearRect(0, 0, w, h);
 
-      // umgebende Wolke mit Begriffen, schwach mit dem Schild verbunden
-      const cloud = dust.map(d => ({
-        x: d.x * w + (reduce ? 0 : Math.sin(t * 0.25 + d.ph) * 9) - pointer.x * 22,
-        y: d.y * h + (reduce ? 0 : Math.cos(t * 0.22 + d.ph) * 9) - pointer.y * 16, word: d.word
-      }));
-      ctx.lineWidth = 0.7;
-      cloud.forEach((p, i) => {
-        const q = cloud[(i + 1) % cloud.length];
-        ctx.strokeStyle = `rgba(${MIST},0.16)`; line(p, q);
-        if (i % 4 === 0) {
-          let best = null, bd = Infinity;
-          for (const key of keys) { const dist = Math.hypot(pos[key].x - p.x, pos[key].y - p.y); if (dist < bd) { bd = dist; best = pos[key]; } }
-          ctx.strokeStyle = `rgba(${MIST},${0.12 * form})`; line(p, best);
-        }
-        ctx.fillStyle = `rgba(${MIST},0.55)`; disc(p, 1.5);
-        if (p.word && w > 380) {
-          ctx.font = "500 10px 'Geist Mono Variable', ui-monospace, monospace";
-          ctx.fillStyle = `rgba(${MIST},0.65)`;
-          const txt = Array.isArray(p.word) ? p.word[de ? 0 : 1] : p.word;
-          const left = p.x + 8 + ctx.measureText(txt).width > w;
-          ctx.fillText(txt, left ? p.x - 8 - ctx.measureText(txt).width : p.x + 8, p.y + 3);
-        }
+      // Spinnennetz in Schildform: erst nach dem Schild, von innen nach außen
+      const g1 = ease((t - 2.2) / 0.9), g2 = ease((t - 2.8) / 1.1);
+      const place = ([x, y], depth, ph) => ({
+        x: w / 2 + (x - MID[0]) * s + pointer.x * depth + (reduce ? 0 : Math.sin(t * 0.7 + ph) * 1.8),
+        y: h / 2 + (y - MID[1]) * s + pointer.y * depth * 0.7 + (reduce ? 0 : Math.cos(t * 0.6 + ph) * 1.8)
       });
+      const mix = (a, b, k) => ({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k });
+      const ring1 = OUTLINE.map((k, i) => mix(pos[k], place(grow(k, R1), 11, i * 1.3), g1));
+      const ring2 = OUTLINE.map((k, i) => mix(ring1[i], place(grow(k, R2), 8, i * 2.1), g2));
+      const outer = OUTER.map(o => (o.mid ? mix(ring2[o.spoke], ring2[(o.spoke + 1) % OUTLINE.length], 0.5) : ring2[o.spoke]));
+
+      // Puls-Welle: startet mit jedem Herzschlag am Kern; f ist ihre Größe im Verhältnis zum Schild
+      const waveOn = !reduce && t > 3.9;
+      const phase = ((t * 1.8) / (Math.PI * 2) + 0.25) % 1, f = 0.15 + phase * 1.6;
+      const lit = r => (waveOn && f >= r ? Math.exp(-(f - r) * 7) : 0);
+
+      ctx.lineWidth = 0.8;
+      for (const [ring, r, g] of [[ring1, R1, g1], [ring2, R2, g2]]) {
+        ring.forEach((p, i) => {
+          const q = ring[(i + 1) % ring.length];
+          ctx.strokeStyle = `rgba(${MIST},${0.26 * g})`; line(p, q);
+          if (lit(r) > 0.02) { ctx.strokeStyle = `rgba(${GOLD},${0.6 * lit(r) * g})`; line(p, q); }
+        });
+      }
+      OUTLINE.forEach((k, i) => {
+        ctx.strokeStyle = `rgba(${MIST},${0.26 * g1})`; line(pos[k], ring1[i]);
+        ctx.strokeStyle = `rgba(${MIST},${0.26 * g2})`; line(ring1[i], ring2[i]);
+        ctx.fillStyle = `rgba(${MIST},${0.55 * g1})`; disc(ring1[i], 1.4);
+      });
+
+      outer.forEach((p, i) => {
+        const glow = lit(R2);
+        const n = LABELED.indexOf(i);
+        ctx.fillStyle = `rgba(${MIST},${0.65 * g2})`; disc(p, 1.7);
+        if (glow > 0.02) { ctx.fillStyle = `rgba(${GOLD},${glow})`; disc(p, 1.7 + 1.6 * glow); }
+        if (n < 0 || w <= 380) return;
+        const word = WORDS[n], txt = Array.isArray(word) ? word[de ? 0 : 1] : word;
+        ctx.font = "500 10px 'Geist Mono Variable', ui-monospace, monospace";
+        const tw = ctx.measureText(txt).width, dx = OUTER[i].at[0] - MID[0], dy = OUTER[i].at[1] - MID[1];
+        let x = Math.abs(dx) < 45 ? p.x - tw / 2 : dx > 0 ? p.x + 8 : p.x - 8 - tw;
+        const y = Math.abs(dx) < 45 ? p.y + (dy < 0 ? -9 : 16) : p.y + 3;
+        x = Math.max(2, Math.min(w - tw - 2, x));
+        ctx.fillStyle = `rgba(${MIST},${0.7 * g2})`; ctx.fillText(txt, x, y);
+        if (glow > 0.02) { ctx.fillStyle = `rgba(${GOLD},${glow})`; ctx.fillText(txt, x, y); }
+      });
+
+      // die Welle selbst, in Schildform
+      if (waveOn) {
+        ctx.beginPath();
+        OUTLINE.forEach((k, i) => {
+          const x = w / 2 + (N[k][0] - MID[0]) * s * f + pointer.x * 11, y = h / 2 + (N[k][1] - MID[1]) * s * f + pointer.y * 8;
+          if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+        });
+        ctx.closePath();
+        ctx.strokeStyle = `rgba(${GOLD},${0.35 * (1 - phase) * Math.min(1, phase * 8)})`; ctx.lineWidth = 1.4; ctx.stroke();
+      }
 
       // Schild
       const core = pos[CORE];
@@ -121,6 +181,22 @@ export default function ShieldCloud() {
           ctx.fillStyle = `rgba(${GOLD},${0.25 * Math.sin(k * Math.PI)})`; disc(p, 9 * s);
           ctx.fillStyle = `rgba(${GOLD},${Math.sin(k * Math.PI)})`; disc(p, 3.5 * s);
         }
+      }
+
+      // Impulse von den Begriffen über die Fäden ins Schild bis zum Kern
+      if (!reduce && t > 4) {
+        inbound.forEach((pu, j) => {
+          const raw = (t - 4) * 0.26 + pu.off, k = raw % 1;
+          const from = LABELED[(Math.floor(raw) * 7 + j * 5) % LABELED.length], o = OUTER[from];
+          const path = [outer[from], ...(o.mid ? [ring2[o.spoke]] : []), ring1[o.spoke], ...ROUTES[o.spoke].map(key => pos[key])];
+          const len = path.slice(1).map((p, i) => Math.hypot(p.x - path[i].x, p.y - path[i].y));
+          let d = k * len.reduce((a, b) => a + b, 0), i = 0;
+          while (i < len.length - 1 && d > len[i]) d -= len[i++];
+          const p = mix(path[i], path[i + 1], len[i] ? Math.min(1, d / len[i]) : 0);
+          const a = Math.min(1, Math.sin(k * Math.PI) * 2.5);
+          ctx.fillStyle = `rgba(${GOLD},${0.25 * a})`; disc(p, 7);
+          ctx.fillStyle = `rgba(${GOLD},${a})`; disc(p, 2.6);
+        });
       }
 
       for (const key of keys) {
