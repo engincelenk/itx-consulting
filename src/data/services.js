@@ -62,8 +62,7 @@ export const pillars = [
 
 export const aiVertical = { icon: "Sparkles", title: title("ai"),
   claim: { en: "Introducing AI that withstands an audit.", de: "KI einführen, die einer Prüfung standhält." },
-  message: { en: "Many teams already use AI, often without overview, rules and evidence. We help use AI where it pays off, build it securely and steer it traceably. Vendor-neutral and with an auditor's eye.", de: "Viele Teams nutzen KI schon, oft ohne Überblick, Regeln und Nachweise. Wir helfen, KI dort einzusetzen, wo sie sich lohnt, sicher aufzubauen und nachvollziehbar zu steuern. Herstellerneutral und mit Prüferblick." },
-  note: { en: "We advise and prepare. Certification to ISO/IEC 42001 is carried out by an independent certification body.", de: "Wir beraten und bereiten vor. Eine Zertifizierung nach ISO/IEC 42001 führt eine unabhängige Zertifizierungsstelle durch." } };
+  message: { en: "Many teams already use AI, often without overview, rules and evidence. We help use AI where it pays off, build it securely and steer it traceably. Vendor-neutral and with an auditor's eye.", de: "Viele Teams nutzen KI schon, oft ohne Überblick, Regeln und Nachweise. Wir helfen, KI dort einzusetzen, wo sie sich lohnt, sicher aufzubauen und nachvollziehbar zu steuern. Herstellerneutral und mit Prüferblick." } };
 
 export const industries = [
   { en: "Automotive", de: "Automotive" }, { en: "Mechanical engineering", de: "Maschinenbau" }, { en: "Logistics", de: "Logistik" },

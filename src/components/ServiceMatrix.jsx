@@ -87,7 +87,6 @@ export default function ServiceMatrix({ T }) {
                     </div>
                   ))}
                 </div>
-                <p className="mt-5 text-xs leading-relaxed text-mist">{ai.note}</p>
               </>
             ) : (
               <>
