@@ -1,20 +1,25 @@
 # Kontaktformular über All-inkl
 
-Die Seite (GitHub Pages, `www.itx-consulting.de`) kann kein PHP ausführen. Das Formular schickt deshalb an `https://itx-consulting.de/api/contact.php` (ohne `www`, siehe `src/data/profile.js`, `contactForm.endpoints`). Das ist der All-inkl-Webspace. Das Skript sendet die Nachricht per `mail()` an `info@itx-consulting.de`.
+Die Seite (GitHub Pages, `www.itx-consulting.de`) kann kein PHP ausführen. Das Formular schickt deshalb an `https://api.itx-consulting.de/contact.php` (siehe `src/data/profile.js`, `contactForm.endpoints`). Das ist der All-inkl-Webspace. Das Skript sendet die Nachricht per `mail()` an `info@itx-consulting.de`.
 
-(Der Ordner hieß früher `server/ionos` und heißt jetzt `server/webhosting`. Nur der Pfad zum Herunterladen hat sich geändert: Eine bereits hochgeladene `contact.php` auf dem Webspace läuft unverändert weiter und muss nicht neu hochgeladen werden.)
+Der Ordner hieß früher `server/ionos` und heißt jetzt `server/webhosting`.
 
-Voraussetzung: `www.itx-consulting.de` zeigt per DNS auf GitHub Pages, `itx-consulting.de` (ohne www) auf den All-inkl-Webspace. Das Skript erlaubt Anfragen von beiden Adressen (CORS).
+## 1. Cloudflare (DNS)
+Neuer Eintrag: Typ `A`, Name `api`, Ziel = IP-Adresse des All-inkl-Webspace (steht im KAS bei den Server-Daten), Proxy aus (nur DNS, graue Wolke). Die Einträge für `www` und den Apex nicht ändern.
 
-## 1. Hochladen
-`server/webhosting/contact.php` per FTP oder KAS-Dateimanager in das Hauptverzeichnis der Domain `itx-consulting.de` hochladen, und zwar nach `api/contact.php` (Ordner `api` anlegen, falls nötig).
+## 2. All-inkl KAS
+Domain → Subdomain: `api.itx-consulting.de` anlegen und auf einen eigenen Ordner zeigen lassen (z. B. `/api`).
 
-## 2. Prüfen
-`https://itx-consulting.de/api/contact.php` im Browser öffnen. Richtig ist eine Zeile wie:
+## 3. Hochladen
+`server/webhosting/contact.php` per FTP oder KAS-Dateimanager in diesen Ordner hochladen, also `/api/contact.php` (liegt direkt als `contact.php` im Subdomain-Ordner).
+
+## 4. Prüfen
+`https://api.itx-consulting.de/contact.php` im Browser öffnen. Richtig ist eine Zeile wie:
 `{"success":"false","message":"Contact endpoint is running. POST only.", ... "to":"info@itx-consulting.de"}`
+(Falls HTTPS noch nicht geht: im KAS für die Subdomain ein kostenloses SSL-Zertifikat aktivieren.)
 
-## 3. Absender
+## 5. Absender
 `$FROM` ist `info@itx-consulting.de` (Postfach bei All-inkl). `$FROM2` (web.de) ist nur der Ersatz, falls der erste Absender abgelehnt wird.
 
-## 4. Fehlersuche
-Schlägt das Senden fehl, zeigt das Formular unter der Fehlermeldung einen „Technischen Hinweis“ (z. B. `HTTP 404`, `HTTP 500 · Mail could not be sent`). Diesen Text an Claude schicken.
+## 6. Fehlersuche
+Schlägt das Senden fehl, zeigt das Formular unter der Fehlermeldung einen „Technischen Hinweis“ (z. B. `Failed to fetch`, `HTTP 500 · Mail could not be sent`). Diesen Text an Claude schicken.
