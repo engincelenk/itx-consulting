@@ -31,6 +31,7 @@ Each project lives in its own public repository and is copied into the site by `
 |---|---|---|
 | `/gr/` | `engincelenk/gr` | `docs/` |
 | `/jms/` | `engincelenk/jms` | `index.html`, `jms-assets/` |
+| `/oq/` | `engincelenk/oq` | `index.html` |
 
 Changes there go live with the next run of this workflow (daily, on every push here, or by hand via *Run workflow*). The project repositories need no GitHub Pages of their own. They are not part of `npm run dev` / `preview`. GitHub pauses scheduled workflows after 60 days without commits in this repository.
 
