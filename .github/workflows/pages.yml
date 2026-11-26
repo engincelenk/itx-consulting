@@ -37,11 +37,16 @@ jobs:
         with:
           repository: engincelenk/jms
           path: ext/jms
+      - uses: actions/checkout@v4
+        with:
+          repository: engincelenk/oq
+          path: ext/oq
       - name: Projekte in die Website kopieren
         run: |
-          mkdir -p dist/gr dist/jms
+          mkdir -p dist/gr dist/jms dist/oq
           cp -r ext/gr/docs/. dist/gr/
           cp -r ext/jms/index.html ext/jms/jms-assets dist/jms/
+          cp ext/oq/index.html dist/oq/
           rm -f dist/gr/CNAME
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
