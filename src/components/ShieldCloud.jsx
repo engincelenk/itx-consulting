@@ -82,7 +82,7 @@ export default function ShieldCloud() {
       pointer.x += (pointer.tx - pointer.x) * 0.05; pointer.y += (pointer.ty - pointer.y) * 0.05;
 
       // auch bei schmaler Fläche muss neben dem Netz Platz für die Begriffe bleiben
-      const s = Math.min(w * 0.68 / SPAN_W, h * 0.7 / SPAN_H, (w - 160) / (SPAN_W * R2));
+      const s = 0.7 * Math.min(w * 0.68 / SPAN_W, h * 0.7 / SPAN_H, (w - 160) / (SPAN_W * R2)); // Gesamtgröße um 30 % reduziert, Schrift bleibt 10px
       const form = ease((t - 0.35) / 2.2);
       const pos = {};
       for (const key of keys) {
