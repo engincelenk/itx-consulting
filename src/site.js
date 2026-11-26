@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------
    Zentrale Firmen- und Domain-Einstellungen.
    Sobald das Kleingewerbe angemeldet ist, reicht es, `company` einzutragen.
-   Leer = Seite bleibt wie bisher (persönliches Portfolio, ec.immofuchs.info).
+   Leer = persönliches Portfolio ohne Firmennamen.
 
    Mit Firmenname:
    - Freelance-Seite tritt unter dem Firmennamen auf (Titel, Kopf, Footer, Impressum)
@@ -17,10 +17,10 @@ const slug = s => s.toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").repl
   .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 const host = live ? (domain.trim() || (company.trim() ? `${slug(company)}.de` : "")) : "";
-const legacy = "ec.immofuchs.info"; // bisherige Adresse des Portfolios
+const fallback = "www.itx-consulting.de"; // gilt, wenn host leer ist
 
 /* Aufbau: Startseite (/) = Freelance, Lebenslauf/Portfolio unter /cv/ (gleiche Domain). */
-const origin = `https://${host || legacy}`;
+const origin = `https://${host || fallback}`;
 
 export const slogan = "Connect. Secure. Manage. Engineer.";
 
@@ -29,7 +29,7 @@ export const site = {
   hasCompany: Boolean(company.trim()),
   /** Eigene Domain aktiv (live = true)? */
   hasDomain: Boolean(host),
-  freelanceHost: host || legacy,
+  freelanceHost: host || fallback,
   freelanceOrigin: origin,
   cvOrigin: `${origin}/cv`
 };

@@ -1,6 +1,6 @@
 # Kontaktformular über IONOS
 
-Die Seite (GitHub Pages, `ec.immofuchs.info`) kann kein PHP ausführen. Das Formular schickt deshalb an `https://kontakt.immofuchs.info/api/contact.php` (siehe `src/data/profile.js`, `contactForm.endpoints`).
+Die Seite (GitHub Pages, `www.itx-consulting.de`) kann kein PHP ausführen. Das Formular schickt deshalb an `https://kontakt.immofuchs.info/api/contact.php` (siehe `src/data/profile.js`, `contactForm.endpoints`).
 
 Einrichtung bei IONOS:
 1. Subdomain `kontakt.immofuchs.info` anlegen, Ziel-Ordner `/ec` (nicht `/immofuchs`: der ImmoFuchs-Deploy löscht dort Dateien).
