@@ -4,7 +4,7 @@ import { contactForm } from "../data/profile.js";
 import { useLang } from "../i18n.jsx";
 
 /* Contact form without a visible address. Messages go to FormSubmit by default; set
-   contactForm.endpoints in data/profile.js to use the IONOS script instead. Freelance
+   contactForm.endpoints in data/profile.js to use the webhosting script instead. Freelance
    requests also get an automatic confirmation email from that script. */
 const endpoints = () => (contactForm.endpoints && contactForm.endpoints.length ? contactForm.endpoints : [`https://formsubmit.co/ajax/${contactForm.alias || [contactForm.user, contactForm.domain].join("@")}`]);
 

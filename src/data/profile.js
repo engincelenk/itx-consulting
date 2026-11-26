@@ -22,7 +22,7 @@ export const person = {
   ]
 };
 
-/* Contact form. `endpoints` = places where the uploaded PHP script (server/ionos/contact.php) may live; tried in order on 404/network errors. Empty = FormSubmit fallback. */
+/* Contact form. `endpoints` = places where the uploaded PHP script (server/webhosting/contact.php) may live; tried in order on 404/network errors. Empty = FormSubmit fallback. */
 export const contactForm = { endpoints: ["https://itx-consulting.de/api/contact.php"], user: "info", domain: "itx-consulting.de", alias: "" };
 
 export const hero = {
