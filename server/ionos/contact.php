@@ -9,7 +9,7 @@
 $TO      = 'engincelenk@web.de';          // where messages go
 $FROM    = 'kontakt@immofuchs.info';      // sender: an address on YOUR domain (IONOS only sends reliably from its own domains)
 $FROM2   = 'engincelenk@web.de';          // fallback sender if the first one is refused
-$COMPANY = 'ITX Consulting';                     // company name once registered (used in mails), empty = personal name
+$COMPANY = 'ITx Consulting';                     // company name once registered (used in mails), empty = personal name
 $SITE    = 'ec.immofuchs.info';                // domain named in the mails (freelance domain once live)
 $ORIGINS = ['https://ec.immofuchs.info']; // eigene Domain ergänzen, sobald sie existiert // sites allowed to use this form
 $SIGN    = $COMPANY !== '' ? $COMPANY : 'Engin Celenk';

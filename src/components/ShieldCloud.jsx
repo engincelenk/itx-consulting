@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-/* Die Wolke aus Fachbegriffen setzt sich beim Laden zum Netz-Schild aus dem ITX-Logo zusammen.
+/* Die Wolke aus Fachbegriffen setzt sich beim Laden zum Netz-Schild aus dem ITx-Logo zusammen.
    Danach schwebt das Schild leicht, Datenimpulse laufen zum goldenen Kern. */
 
 // Knoten und Kanten nach dem Logo (Koordinaten aus der Vorlage). dot: 0 = reiner Linienpunkt

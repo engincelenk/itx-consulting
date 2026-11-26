@@ -9,7 +9,7 @@
    - der Lebenslauf liegt unter                            (https://<domain>/cv/)
 ------------------------------------------------------------------- */
 
-const company = "ITX Consulting";   // z. B. "Muster IT Consulting"
+const company = "ITx Consulting";   // z. B. "Muster IT Consulting"
 const domain = "";    // optional; leer = aus dem Firmennamen abgeleitet (itx-consulting.de)
 const live = false;   // true, sobald die Domain existiert und beide Seiten dort ausgeliefert werden
 
