@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ContactForm from "./components/ContactForm.jsx";
 import { LangProvider, useLang } from "./i18n.jsx";
 import LangSwitch from "./components/LangSwitch.jsx";
@@ -67,13 +67,6 @@ function Page() {
               ? <h1 className="text-[2.2rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-7xl">{site.company.startsWith("ITx") ? <>IT<span className="text-signal">x</span>{site.company.slice(3)}</> : site.company}<span className="mt-3 block text-[1.25rem] font-medium leading-snug tracking-[-0.02em] text-signal sm:text-3xl">{slogan}</span></h1>
               : <h1 className="mt-5 max-w-[20ch] text-[2.3rem] font-semibold leading-[1.04] tracking-[-0.04em] sm:text-6xl">{T.h1a} <span className="text-signal">{T.h1b}</span></h1>}
             {site.hasCompany && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{T.heroLead}</p>}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#contact" className="btn-primary">{T.cta} <ArrowUpRight size={16} /></a>
-              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-ink/60 py-1.5 pl-1.5 pr-4 backdrop-blur">
-                <img src="/engin.jpg" alt="" className="h-9 w-9 rounded-full object-cover" />
-                <span className="text-sm">{person.name}, {person.degree}</span>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -81,7 +74,6 @@ function Page() {
           <div className="wrap">
             <SectionHead no="01" kicker={T.mapKicker} title={T.mapTitle} lead={T.mapLead} />
             <ServiceMatrix T={T} />
-            <a href="#contact" className="btn-primary mt-8 text-center">{T.cta} <ArrowUpRight size={16} className="flex-none" /></a>
           </div>
         </section>
 
