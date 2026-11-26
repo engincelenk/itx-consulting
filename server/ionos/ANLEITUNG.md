@@ -11,11 +11,11 @@ Einrichtung bei IONOS:
 
 ## 2. Prüfen
 `https://kontakt.immofuchs.info/api/contact.php` im Browser öffnen. Richtig ist eine Zeile wie:
-`{"success":"false","message":"Contact endpoint is running. POST only.","php":"8.x","mail":true,"from":"kontakt@immofuchs.info","to":"**gincelenk@web.de"}`
+`{"success":"false","message":"Contact endpoint is running. POST only.","php":"8.x","mail":true,"from":"kontakt@immofuchs.info","to":"info@itx-consulting.de"}`
 
 ## 3. Absender
 `$FROM` muss eine Adresse auf deiner Domain sein (IONOS verschickt nur von eigenen Domains zuverlässig). Existiert `kontakt@immofuchs.info` nicht,
-im IONOS Control Center unter E-Mail eine Adresse anlegen (eine Weiterleitung auf engincelenk@web.de genügt) oder `$FROM` anpassen.
+im IONOS Control Center unter E-Mail eine Adresse anlegen (eine Weiterleitung auf info@itx-consulting.de genügt) oder `$FROM` anpassen.
 `$FROM2` (web.de) ist nur der Ersatz, falls der erste Absender abgelehnt wird.
 
 ## 4. Fehlersuche

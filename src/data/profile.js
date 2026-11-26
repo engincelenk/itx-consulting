@@ -23,7 +23,7 @@ export const person = {
 };
 
 /* Contact form. `endpoints` = places where the uploaded IONOS script (server/ionos/contact.php) may live; tried in order on 404/network errors. Empty = FormSubmit fallback. */
-export const contactForm = { endpoints: [], user: "engincelenk", domain: "web.de", alias: "" };
+export const contactForm = { endpoints: [], user: "info", domain: "itx-consulting.de", alias: "" };
 
 export const hero = {
   title: [{ en: "I connect technology,", de: "Ich verbinde Technologie," }, { en: "security & business.", de: "Security & Business." }],

@@ -6,7 +6,7 @@
 ---------------------------------------------------------------- */
 
 // ---- Settings -------------------------------------------------
-$TO      = 'engincelenk@web.de';          // where messages go
+$TO      = 'info@itx-consulting.de';          // where messages go
 $FROM    = 'kontakt@immofuchs.info';      // sender: an address on YOUR domain (IONOS only sends reliably from its own domains)
 $FROM2   = 'engincelenk@web.de';          // fallback sender if the first one is refused
 $COMPANY = 'ITx Consulting';                     // company name once registered (used in mails), empty = personal name
