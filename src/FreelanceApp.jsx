@@ -81,6 +81,7 @@ function Page() {
           <div className="wrap">
             <SectionHead no="01" kicker={T.mapKicker} title={T.mapTitle} lead={T.mapLead} />
             <ServiceMatrix T={T} />
+            <a href="#contact" className="btn-primary mt-8 text-center">{T.cta} <ArrowUpRight size={16} className="flex-none" /></a>
           </div>
         </section>
 

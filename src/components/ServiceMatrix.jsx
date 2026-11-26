@@ -4,7 +4,6 @@ import { Check, ChevronDown } from "lucide-react";
 import Icon from "./Icon.jsx";
 
 import { pillars as rawPillars, aiVertical as rawAi } from "../data/services.js";
-import { corpNote as rawCorp } from "../data/profile.js";
 import { useLang } from "../i18n.jsx";
 
 /* Three equal pillars with AI as the band across all three.
@@ -12,7 +11,7 @@ import { useLang } from "../i18n.jsx";
 export default function ServiceMatrix({ T }) {
   const { L, lang } = useLang();
   const reduce = useReducedMotion();
-  const pillars = L(rawPillars), ai = L(rawAi), corp = L(rawCorp);
+  const pillars = L(rawPillars), ai = L(rawAi);
   const [sel, setSel] = useState(null);
   const toggle = id => setSel(s => (s === id ? null : id));
   const dimCol = id => sel && sel !== "ai" && sel !== id;
@@ -23,6 +22,7 @@ export default function ServiceMatrix({ T }) {
 
   return (
     <div>
+      <p className="mb-3 text-sm text-mist">{T.mapHint}</p>
       {/* Pillars */}
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {pillars.map(p => (
@@ -41,6 +41,7 @@ export default function ServiceMatrix({ T }) {
                 <li key={o.title} className="flex gap-2.5 text-[15px] text-snow/90"><span className="mt-[0.6em] h-1.5 w-1.5 flex-none rounded-full bg-mist/60" />{o.title}</li>
               ))}
             </ul>
+            {p.note && <p className="mt-auto border-t border-white/[0.08] px-5 py-4 text-xs leading-relaxed text-mist">{p.note}</p>}
           </div>
         ))}
       </div>
@@ -81,7 +82,7 @@ export default function ServiceMatrix({ T }) {
             ) : (
               <>
                 <p className="text-lg font-semibold">{cur.title}</p>
-                <p className="mt-3 flex items-start gap-2.5 rounded-xl border border-signal/30 bg-signal/10 px-4 py-3 text-snow"><Check size={16} className="mt-1 flex-none text-signal" />{corp}</p>
+                <p className="mt-3 flex items-start gap-2.5 rounded-xl border border-signal/30 bg-signal/10 px-4 py-3 text-snow"><Check size={16} className="mt-1 flex-none text-signal" />{cur.message}</p>
                 <ul className="mt-4 grid gap-x-6 gap-y-3 md:grid-cols-2">
                   {cur.offers.map(o => <li key={o.title} className="flex gap-2.5"><Check size={16} className="mt-1 flex-none text-signal" /><span><span className="block text-sm font-semibold">{o.title}</span><span className="block text-sm text-mist">{o.text}</span></span></li>)}
                   <li className="flex gap-2.5"><Icon name="Sparkles" size={16} className="mt-1 flex-none text-signal" /><span><span className="block text-sm font-semibold">{cur.ai.title}</span><span className="block text-sm text-mist">{cur.ai.text}</span></span></li>
