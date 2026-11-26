@@ -36,7 +36,7 @@ export const pillars = [
       { title: { en: "Architecture management", de: "Architekturmanagement" }, text: { en: "Roles, decisions and documentation following recognised standards, traceable for auditors too.", de: "Rollen, Entscheidungen und Dokumentation nach anerkannten Standards, nachvollziehbar auch für Prüfer." } },
       { title: { en: "Security by design", de: "Security by Design" }, text: { en: "Zero Trust and authorisation concepts, with reference to ISO 27001 and BSI IT-Grundschutz.", de: "Zero Trust und Berechtigungskonzepte, mit Bezug zu ISO 27001 und BSI IT-Grundschutz." } }
     ],
-    ai: { title: aiV.aspects.architecture, offers: [
+    ai: { title: { en: "AI architecture", de: "KI-Architektur" }, offers: [
       { title: { en: "AI readiness check", de: "KI-Readiness-Check" }, text: { en: "Assess data, systems, processes and skills, name gaps and prerequisites.", de: "Daten, Systeme, Prozesse und Kompetenzen bewerten, Lücken und Voraussetzungen benennen." } },
       { title: { en: "Target architecture for AI & agents", de: "Zielarchitektur für KI & Agenten" }, text: { en: "Integrate LLM applications and agents into your system landscape: data access, interfaces, MCP, guardrails.", de: "LLM-Anwendungen und Agenten in die Systemlandschaft einbinden: Datenzugriffe, Schnittstellen, MCP, Leitplanken." } },
       { title: { en: "Platform & vendor selection", de: "Plattform- & Anbieterauswahl" }, text: { en: "Cloud, own operation or service: a decision based on criteria such as data protection, cost and dependency.", de: "Cloud, eigener Betrieb oder Dienst: Entscheidung nach Kriterien wie Datenschutz, Kosten und Abhängigkeit." } }
@@ -60,7 +60,7 @@ export const pillars = [
     ] } }
 ];
 
-export const aiVertical = { icon: "Sparkles", title: title("ai"),
+export const aiVertical = { icon: "Sparkles", title: { en: "AI", de: "KI" },
   claim: { en: "Introducing AI that withstands an audit.", de: "KI einführen, die einer Prüfung standhält." },
   message: { en: "Many teams already use AI, often without overview, rules and evidence. We help use AI where it pays off, build it securely and steer it traceably. Vendor-neutral and with an auditor's eye.", de: "Viele Teams nutzen KI schon, oft ohne Überblick, Regeln und Nachweise. Wir helfen, KI dort einzusetzen, wo sie sich lohnt, sicher aufzubauen und nachvollziehbar zu steuern. Herstellerneutral und mit Prüferblick." } };
 
@@ -78,7 +78,7 @@ export const fl = {
     title: brand, desc: "IT architecture, cyber security and IT management, with AI as the vertical.",
     back: "Portfolio", skip: "Skip to content", navLabel: "Menu", navServices: "Services", navAbout: "About me", navContact: "Contact", aboutKicker: "Who I am", aboutTitle: "IT through and through.", aboutText: "I am the founder of ITX Consulting and IT through and through. I gained my professional experience as an employee at the leading companies of the Stuttgart region: as project manager, solution architect, lead architect, solution manager and cyber security engineer. My background combines software engineering with business informatics (M.Sc.): deep enough in technology for architecture and security, close enough to the business for decisions.",  heroLead: "Architecture, security and delivery from one hand.", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
     cta: "Arrange a non-binding intro call",
-    mapKicker: "Service portfolio", mapTitle: "Built to withstand audits.", mapLead: "We build, steer and secure IT in mid-sized companies so that it withstands an audit. We know both sides: building it and auditing it.", mapHint: "Select a pillar or the AI band.",
+    mapKicker: "Service portfolio", mapTitle: "Built to withstand audits.", mapLead: "We build, steer and secure IT in mid-sized companies so that it withstands an audit. We know both sides: building it and auditing it.", mapHint: "Select a pillar or AI.",
     aiAcross: "across all three pillars", inArea: "in",
     expKicker: "Experience from", expTitle: "Where I have delivered",
     cfgKicker: "Contact", cfgTitle: "Let's talk.", cfgLead: "Tell me briefly what it is about. I will get back to you personally.", subject: n => `Project request: ${n}`,
@@ -88,7 +88,7 @@ export const fl = {
     title: brand, desc: "IT-Architektur, Cyber Security und IT Management, mit KI als Vertikale.",
     back: "Portfolio", skip: "Zum Inhalt springen", navLabel: "Menü", navServices: "Leistungen", navAbout: "Über mich", navContact: "Kontakt", aboutKicker: "Wer ich bin", aboutTitle: "Durch und durch IT.", aboutText: "Ich bin Gründer von ITX Consulting und durch und durch ITler. Meine Berufserfahrung habe ich im Angestelltenverhältnis bei den führenden Unternehmen im Raum Stuttgart gesammelt: als Projektmanager, Solution Architect, Lead Architect, Solution Manager und Cyber Security Engineer. Mein Hintergrund verbindet Software Engineering mit Wirtschaftsinformatik (M.Sc.): technisch tief genug für Architektur und Security, nah genug am Geschäft für Entscheidungen.",  heroLead: "Architektur, Security und Delivery aus einer Hand.", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
     cta: "Unverbindliches Erstgespräch vereinbaren",
-    mapKicker: "Leistungsportfolio", mapTitle: "Prüfungsfest aufgebaut.", mapLead: "Wir bauen, steuern und sichern IT im Mittelstand so auf, dass sie einer Prüfung standhält. Wir kennen beide Seiten: den Aufbau und die Prüfung.", mapHint: "Säule oder KI-Band auswählen.",
+    mapKicker: "Leistungsportfolio", mapTitle: "Prüfungsfest aufgebaut.", mapLead: "Wir bauen, steuern und sichern IT im Mittelstand so auf, dass sie einer Prüfung standhält. Wir kennen beide Seiten: den Aufbau und die Prüfung.", mapHint: "Säule oder KI auswählen.",
     aiAcross: "quer über alle drei Säulen", inArea: "in",
     expKicker: "Erfahrung aus", expTitle: "Wo ich bereits geliefert habe",
     cfgKicker: "Kontakt", cfgTitle: "Sprechen wir.", cfgLead: "Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen.", subject: n => `Projektanfrage: ${n}`,

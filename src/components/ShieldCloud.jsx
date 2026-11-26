@@ -14,7 +14,7 @@ const EDGES = ("ap pb aq qc bg gi im mo on nj jr rc be pe ea ad af qd de df fc f
 const CORE = "h";
 const MID = [193.5, 599], SPAN_W = 330, SPAN_H = 392;
 
-const WORDS = ["MICROSERVICES", "ZERO TRUST", "CLOUD", "TARA", "API", "ISO 27001", "AGENTIC", "SAP",
+const WORDS = ["MICROSERVICES", "ZERO TRUST", "CLOUD", "TARA", "API", "ISO 27001", ["KI", "AI"], "SAP",
   ["LOGISTIK", "LOGISTICS"], "OWASP", "NIST", "DEVSECOPS", "LLM", "INTEGRATION", "SCRUM", "CX"];
 
 const ease = t => (t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3));
