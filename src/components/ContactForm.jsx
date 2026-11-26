@@ -84,7 +84,7 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
         <span>{t.consent} *{errs.consent && <span className="block text-signal">{errs.consent}</span>} <a className="text-snow underline decoration-signal" href={`/legal.html?lang=${lang}#privacy`}>{t.privacy}</a></span>
       </label>
       {hint && <p className="text-sm text-signal" role="alert">{hint}</p>}
-      {state === "err" && <div role="alert"><p className="text-sm text-signal">{t.err}</p>{import.meta.env.DEV && detail && <p className="mt-1 break-words font-mono text-[11px] text-mist">{t.tech}: {detail}</p>}</div>}
+      {state === "err" && <div role="alert"><p className="text-sm text-signal">{t.err}</p>{detail && <p className="mt-1 break-words font-mono text-[11px] text-mist">{t.tech}: {detail}</p>}</div>}
       {state === "activate" && <p className="text-sm text-signal" role="alert">{t.activate}</p>}
       <button type="submit" disabled={state === "sending"} className="btn-primary disabled:opacity-60">
         {state === "sending" ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}{state === "sending" ? t.sending : t.send}
