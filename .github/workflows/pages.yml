@@ -3,6 +3,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # einmal am Tag, damit Änderungen aus den Projekt-Repos online gehen (sofort: Actions → Run workflow)
+  schedule:
+    - cron: "17 3 * * *"
 permissions:
   contents: read
   pages: write
@@ -24,6 +27,22 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # Kleine Projekte mit eigenem Repo, erreichbar unter /<name>/.
+      # Neues Projekt: hier einen checkout-Schritt und eine Zeile zum Kopieren ergänzen.
+      - uses: actions/checkout@v4
+        with:
+          repository: engincelenk/gr
+          path: ext/gr
+      - uses: actions/checkout@v4
+        with:
+          repository: engincelenk/jms
+          path: ext/jms
+      - name: Projekte in die Website kopieren
+        run: |
+          mkdir -p dist/gr dist/jms
+          cp -r ext/gr/docs/. dist/gr/
+          cp -r ext/jms/index.html ext/jms/jms-assets dist/jms/
+          rm -f dist/gr/CNAME
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

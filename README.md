@@ -23,6 +23,17 @@ Danach gilt automatisch:
 
 Von Hand bleiben: DNS und Hosting für beide Domains (GitHub Pages erlaubt nur eine Domain pro Site, daher Cloudflare Pages, Netlify oder IONOS), `public/CNAME`, `server/ionos/contact.php` (`$COMPANY`, `$SITE`, `$ORIGINS`) und im Impressum Steuerhinweise (Kleinunternehmer, ggf. USt-IdNr.).
 
+## Small projects under `/<name>/`
+
+Each project lives in its own public repository and is copied into the site by `.github/workflows/pages.yml`:
+
+| Address | Repository | Copied from |
+|---|---|---|
+| `/gr/` | `engincelenk/gr` | `docs/` |
+| `/jms/` | `engincelenk/jms` | `index.html`, `jms-assets/` |
+
+Changes there go live with the next run of this workflow (daily, on every push here, or by hand via *Run workflow*). The project repositories need no GitHub Pages of their own. They are not part of `npm run dev` / `preview`. GitHub pauses scheduled workflows after 60 days without commits in this repository.
+
 ## Edit content
 - `src/data/profile.js` – person, journey, expertise, case studies, values, CV focuses
 - `src/data/knowledge.js` – answers for “Ask my portfolio”, skill terms for “Challenge me”
