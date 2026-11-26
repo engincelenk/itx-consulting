@@ -10,8 +10,8 @@
 ------------------------------------------------------------------- */
 
 const company = "ITx Consulting";   // z. B. "Muster IT Consulting"
-const domain = "";    // optional; leer = aus dem Firmennamen abgeleitet (itx-consulting.de)
-const live = false;   // true, sobald die Domain existiert und beide Seiten dort ausgeliefert werden
+const domain = "www.itx-consulting.de";  // leer = aus dem Firmennamen abgeleitet
+const live = true;    // eigene Domain seit 26.11.2026
 
 const slug = s => s.toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
   .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");

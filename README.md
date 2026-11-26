@@ -1,6 +1,6 @@
 # Beyond the CV · Engin Celenk
 
-Personal technology & cyber security portfolio. Live: https://ec.immofuchs.info
+Personal technology & cyber security portfolio. Live: https://www.itx-consulting.de
 
 Stack: React + Vite, Tailwind CSS, Motion, Lucide icons, self-hosted Geist fonts. Deployed to GitHub Pages by `.github/workflows` on every push to `main`.
 
