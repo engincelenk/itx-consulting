@@ -6,12 +6,12 @@
 ---------------------------------------------------------------- */
 
 // ---- Settings -------------------------------------------------
-$TO      = 'engincelenk@web.de';          // where messages go
-$FROM    = 'kontakt@immofuchs.info';      // sender: an address on YOUR domain (IONOS only sends reliably from its own domains)
+$TO      = 'info@itx-consulting.de';          // where messages go
+$FROM    = 'info@itx-consulting.de';      // sender: mailbox on your own domain (All-inkl sends reliably only from its own domains/mailboxes)
 $FROM2   = 'engincelenk@web.de';          // fallback sender if the first one is refused
 $COMPANY = 'ITx Consulting';                     // company name once registered (used in mails), empty = personal name
 $SITE    = 'www.itx-consulting.de';          // domain named in the mails
-$ORIGINS = ['https://www.itx-consulting.de']; // sites allowed to use this form
+$ORIGINS = ['https://www.itx-consulting.de', 'https://itx-consulting.de']; // sites allowed to use this form
 $SIGN    = $COMPANY !== '' ? $COMPANY : 'Engin Celenk';
 $LIMIT   = 5;                             // max messages per IP per hour
 $CONFIRM = ['freelance'];                 // form sources whose sender gets a confirmation email
