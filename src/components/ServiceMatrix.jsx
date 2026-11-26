@@ -56,6 +56,7 @@ export default function ServiceMatrix({ T }) {
           <span className="text-lg font-semibold">{ai.title}</span>
           <span className="font-mono text-[11px] uppercase tracking-wider text-signal">{T.aiAcross}</span>
         </span>
+        <span className="relative mt-2 block text-sm text-snow/90">{ai.claim}</span>
         <span className="relative mt-3 grid grid-cols-1 gap-2 md:grid-cols-3">
           {pillars.map(p => (
             <span key={p.id} className={`rounded-xl border px-4 py-3 transition-all ${sel === "ai" || sel === p.id ? "border-signal/60 bg-ink/80" : "border-mist/30 bg-ink/50"} ${dimCol(p.id) ? "opacity-60" : ""}`}>
@@ -74,10 +75,19 @@ export default function ServiceMatrix({ T }) {
             {sel === "ai" ? (
               <>
                 <p className="text-lg font-semibold">{ai.title}</p>
-                <p className="mt-1 text-mist">{ai.claim}</p>
-                <ul className="mt-4 grid gap-3 md:grid-cols-3">
-                  {pillars.map(p => <li key={p.id}><p className="text-sm font-semibold">{p.ai.title}</p><p className="mt-0.5 text-sm text-mist">{p.ai.text}</p></li>)}
-                </ul>
+                <p className="mt-3 flex items-start gap-2.5 rounded-xl border border-signal/30 bg-signal/10 px-4 py-3 text-snow"><Check size={16} className="mt-1 flex-none text-signal" />{ai.message}</p>
+                <div className="mt-5 grid gap-6 md:grid-cols-3">
+                  {pillars.map(p => (
+                    <div key={p.id}>
+                      <p className="text-sm font-semibold">{p.ai.title}</p>
+                      <p className="font-mono text-[11px] uppercase tracking-wider text-mist">{T.inArea} {p.title}</p>
+                      <ul className="mt-3 space-y-3">
+                        {p.ai.offers.map(o => <li key={o.title} className="flex gap-2.5"><Check size={16} className="mt-1 flex-none text-signal" /><span><span className="block text-sm font-semibold">{o.title}</span><span className="block text-sm text-mist">{o.text}</span></span></li>)}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-5 text-xs leading-relaxed text-mist">{ai.note}</p>
               </>
             ) : (
               <>
@@ -85,7 +95,7 @@ export default function ServiceMatrix({ T }) {
                 <p className="mt-3 flex items-start gap-2.5 rounded-xl border border-signal/30 bg-signal/10 px-4 py-3 text-snow"><Check size={16} className="mt-1 flex-none text-signal" />{cur.message}</p>
                 <ul className="mt-4 grid gap-x-6 gap-y-3 md:grid-cols-2">
                   {cur.offers.map(o => <li key={o.title} className="flex gap-2.5"><Check size={16} className="mt-1 flex-none text-signal" /><span><span className="block text-sm font-semibold">{o.title}</span><span className="block text-sm text-mist">{o.text}</span></span></li>)}
-                  <li className="flex gap-2.5"><Icon name="Sparkles" size={16} className="mt-1 flex-none text-signal" /><span><span className="block text-sm font-semibold">{cur.ai.title}</span><span className="block text-sm text-mist">{cur.ai.text}</span></span></li>
+                  <li className="flex gap-2.5"><Icon name="Sparkles" size={16} className="mt-1 flex-none text-signal" /><span><span className="block text-sm font-semibold">{cur.ai.title}</span><span className="block text-sm text-mist">{cur.ai.offers.map(o => o.title).join(" · ")}</span></span></li>
                 </ul>
               </>
             )}

@@ -21,7 +21,11 @@ export const pillars = [
       { title: { en: "External information security officer", de: "Externer ISB" }, text: { en: "Information security officer for a limited period or permanently, including ISMS operation and reporting to management.", de: "Informationssicherheitsbeauftragter auf Zeit oder dauerhaft, inklusive ISMS-Betrieb und Reporting an die Geschäftsführung." } },
       { title: { en: "Awareness & workshops", de: "Awareness & Workshops" }, text: { en: "Training that starts from everyday work, for staff, IT and management.", de: "Schulungen, die am Arbeitsalltag ansetzen, für Belegschaft, IT und Leitung." } }
     ],
-    ai: { title: aiV.aspects.security, text: { en: "Risks of LLMs and agents: prompt injection, data leakage, OWASP LLM Top 10, EU AI Act.", de: "Risiken von LLMs und Agenten: Prompt Injection, Datenabfluss, OWASP LLM Top 10, EU AI Act." } } },
+    ai: { title: aiV.aspects.security, offers: [
+      { title: { en: "EU AI Act check", de: "EU-AI-Act-Check" }, text: { en: "Record AI applications, classify role and risk class, capture open obligations and next steps. No legal advice.", de: "KI-Anwendungen erfassen, Rolle und Risikoklasse einordnen, offene Pflichten und nächste Schritte festhalten. Keine Rechtsberatung." } },
+      { title: { en: "AI governance following ISO/IEC 42001", de: "KI-Governance nach ISO/IEC 42001" }, text: { en: "Policies, roles, risk assessment and evidence, built on your existing ISMS where possible.", de: "Richtlinien, Rollen, Risikobewertung und Nachweise, möglichst auf dem vorhandenen ISMS aufgebaut." } },
+      { title: { en: "Security assessment for LLMs & agents", de: "Security-Assessment für LLMs & Agenten" }, text: { en: "Threat modeling and review against the OWASP Top 10 for LLM and agentic applications: for example prompt injection, data leakage and excessive permissions.", de: "Threat Modeling und Prüfung gegen die OWASP-Top-10 für LLM- und Agenten-Anwendungen: etwa Prompt Injection, Datenabfluss und zu weit reichende Rechte." } }
+    ] } },
   { id: "architecture", icon: "Boxes", title: title("architecture"),
     claim: { en: "Order for grown system landscapes", de: "Ordnung in gewachsene Systemlandschaften" },
     message: { en: "Systems that have grown over years are hard to see through. We make them transparent, put them in order and secure the data flow along the value chain. Modules can be booked individually or combined, vendor-neutral.", de: "Historisch gewachsene Systeme sind schwer zu durchschauen. Wir machen sie transparent, ordnen sie und sichern den Datenfluss entlang der Wertschöpfungskette. Bausteine einzeln oder kombiniert buchbar, herstellerneutral." },
@@ -32,7 +36,11 @@ export const pillars = [
       { title: { en: "Architecture management", de: "Architekturmanagement" }, text: { en: "Roles, decisions and documentation following recognised standards, traceable for auditors too.", de: "Rollen, Entscheidungen und Dokumentation nach anerkannten Standards, nachvollziehbar auch für Prüfer." } },
       { title: { en: "Security by design", de: "Security by Design" }, text: { en: "Zero Trust and authorisation concepts, with reference to ISO 27001 and BSI IT-Grundschutz.", de: "Zero Trust und Berechtigungskonzepte, mit Bezug zu ISO 27001 und BSI IT-Grundschutz." } }
     ],
-    ai: { title: aiV.aspects.architecture, text: { en: "Architectures for LLM apps and AI agents: tools, data access, MCP, guardrails.", de: "Architekturen für LLM-Anwendungen und KI-Agenten: Tools, Datenzugriffe, MCP, Leitplanken." } } },
+    ai: { title: aiV.aspects.architecture, offers: [
+      { title: { en: "AI readiness check", de: "KI-Readiness-Check" }, text: { en: "Assess data, systems, processes and skills, name gaps and prerequisites.", de: "Daten, Systeme, Prozesse und Kompetenzen bewerten, Lücken und Voraussetzungen benennen." } },
+      { title: { en: "Target architecture for AI & agents", de: "Zielarchitektur für KI & Agenten" }, text: { en: "Integrate LLM applications and agents into your system landscape: data access, interfaces, MCP, guardrails.", de: "LLM-Anwendungen und Agenten in die Systemlandschaft einbinden: Datenzugriffe, Schnittstellen, MCP, Leitplanken." } },
+      { title: { en: "Platform & vendor selection", de: "Plattform- & Anbieterauswahl" }, text: { en: "Cloud, own operation or service: a decision based on criteria such as data protection, cost and dependency.", de: "Cloud, eigener Betrieb oder Dienst: Entscheidung nach Kriterien wie Datenschutz, Kosten und Abhängigkeit." } }
+    ] } },
   { id: "management", icon: "Workflow", title: title("management"),
     claim: { en: "Steering initiatives reliably", de: "Vorhaben verlässlich steuern" },
     message: { en: "When responsibility is unclear or vendors set the pace, projects tip over. We take responsibility with a clear mandate and no self-interest, and lead vendors independently of manufacturers. The result: clear governance, reduced risk and a reliable basis for project success.", de: "Wenn Verantwortung unklar ist oder Dienstleister den Takt vorgeben, kippen Vorhaben. Wir übernehmen mit klarem Mandat und ohne Eigeninteresse Verantwortung und führen Dienstleister herstellerunabhängig. Ergebnis: klare Governance, reduzierte Risiken, eine verlässliche Grundlage für den Projekterfolg." },
@@ -45,10 +53,17 @@ export const pillars = [
       { title: { en: "IT & project governance", de: "IT- & Projekt-Governance" }, text: { en: "Define decision paths, roles and evidence.", de: "Entscheidungswege, Rollen und Nachweise festlegen." } },
       { title: { en: "Vendor management", de: "Dienstleistersteuerung" }, text: { en: "Binding control of external partners' services, deadlines and quality.", de: "Leistungen, Termine und Qualität externer Partner verbindlich führen." } }
     ],
-    ai: { title: aiV.aspects.management, text: { en: "Use case portfolio, pilots and rollout of AI, plus AI-assisted delivery.", de: "Use-Case-Portfolio, Pilote und Rollout von KI, dazu KI-gestützte Projektarbeit." } } }
+    ai: { title: aiV.aspects.management, offers: [
+      { title: { en: "Use case workshop", de: "Use-Case-Workshop" }, text: { en: "Collect use cases, prioritise by value, effort and risk, set the roadmap.", de: "Anwendungsfälle sammeln, nach Nutzen, Aufwand und Risiko priorisieren, Fahrplan festlegen." } },
+      { title: { en: "Pilot with a clear goal", de: "Pilot mit klarem Ziel" }, text: { en: "One use case, measurable criteria and a decision at the end: expand, change or stop.", de: "Ein Anwendungsfall, messbare Kriterien und am Ende eine Entscheidung: ausbauen, ändern oder stoppen." } },
+      { title: { en: "Rollout & training", de: "Rollout & Schulung" }, text: { en: "Support the introduction and train staff to use AI safely, matched to their role.", de: "Einführung begleiten und Mitarbeitende im sicheren Umgang mit KI schulen, passend zu ihrer Rolle." } }
+    ] } }
 ];
 
-export const aiVertical = { icon: "Sparkles", title: title("ai"), claim: aiV.claim };
+export const aiVertical = { icon: "Sparkles", title: title("ai"),
+  claim: { en: "Introducing AI that withstands an audit.", de: "KI einführen, die einer Prüfung standhält." },
+  message: { en: "Many teams already use AI, often without overview, rules and evidence. We help use AI where it pays off, build it securely and steer it traceably. Vendor-neutral and with an auditor's eye.", de: "Viele Teams nutzen KI schon, oft ohne Überblick, Regeln und Nachweise. Wir helfen, KI dort einzusetzen, wo sie sich lohnt, sicher aufzubauen und nachvollziehbar zu steuern. Herstellerneutral und mit Prüferblick." },
+  note: { en: "We advise and prepare. Certification to ISO/IEC 42001 is carried out by an independent certification body.", de: "Wir beraten und bereiten vor. Eine Zertifizierung nach ISO/IEC 42001 führt eine unabhängige Zertifizierungsstelle durch." } };
 
 export const industries = [
   { en: "Automotive", de: "Automotive" }, { en: "Mechanical engineering", de: "Maschinenbau" }, { en: "Logistics", de: "Logistik" },
