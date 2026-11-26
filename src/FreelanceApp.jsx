@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ContactForm from "./components/ContactForm.jsx";
 import { LangProvider, useLang } from "./i18n.jsx";
 import LangSwitch from "./components/LangSwitch.jsx";
@@ -74,7 +74,6 @@ function Page() {
           <div className="wrap">
             <SectionHead no="01" kicker={T.mapKicker} title={T.mapTitle} lead={T.mapLead} />
             <ServiceMatrix T={T} />
-            <a href="#contact" className="btn-primary mt-8 text-center">{T.cta} <ArrowUpRight size={16} className="flex-none" /></a>
           </div>
         </section>
 
