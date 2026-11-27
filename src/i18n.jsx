@@ -18,14 +18,16 @@ export function initialLang() {
 }
 
 const Ctx = createContext(null);
-export function LangProvider({ children }) {
+/* meta=false: the page sets its own title and description (start page). */
+export function LangProvider({ children, meta = true }) {
   const [lang, setLangState] = useState(initialLang);
   const setLang = useCallback(l => { setLangState(l); try { localStorage.setItem("lang", l); } catch { /* ignore */ } }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
+    if (!meta) return;
     document.title = strings[lang].metaTitle;
     document.querySelector('meta[name="description"]')?.setAttribute("content", strings[lang].metaDesc);
-  }, [lang]);
+  }, [lang, meta]);
   const value = useMemo(() => ({
     lang, setLang,
     t: (k, ...a) => { const s = strings[lang][k] ?? strings.en[k] ?? k; return typeof s === "function" ? s(...a) : s; },
