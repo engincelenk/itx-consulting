@@ -13,9 +13,9 @@ $COMPANY = 'ITx Consulting';                     // company name once registered
 $SITE    = 'www.itx-consulting.de';          // domain named in the mails
 $ORIGINS = ['https://www.itx-consulting.de', 'https://itx-consulting.de']; // sites allowed to use this form
 $SIGN    = $COMPANY !== '' ? $COMPANY : 'Engin Celenk';
-$LIMIT   = 5;                             // max messages per IP per hour
+$LIMIT   = 20;                            // max successfully sent messages per IP per hour (failed attempts are not counted)
 $CONFIRM = ['freelance'];                 // form sources whose sender gets a confirmation email
-$EXCERPT = false;                         // true = confirmation mail also shows an excerpt of the sender's message (off: abuse protection)
+$EXCERPT = true;                          // true = confirmation mail also shows an excerpt (max 300 chars, HTML-escaped) of the sender's message
 // ---------------------------------------------------------------
 
 header('Content-Type: application/json; charset=utf-8');
@@ -55,7 +55,6 @@ if ($name === '') $name = '-';
 $key  = sys_get_temp_dir() . '/ecform_' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . date('YmdH'));
 $hits = (int)@file_get_contents($key);
 if ($hits >= $LIMIT) { http_response_code(429); echo json_encode(['success' => 'false', 'message' => 'Too many requests']); exit; }
-@file_put_contents($key, (string)($hits + 1));
 
 $h = function ($v) { return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); };
 $nl = function ($v) use ($h) { return nl2br($h($v), false); };
@@ -119,6 +118,7 @@ if (!$ok && $FROM2 && $FROM2 !== $FROM) { $usedFrom = $FROM2; $ok = $send($TO, $
 /* ---- 2) Confirmation to the sender. Only for requests coming from the site itself
    (Origin header present and allowed). Fixed texts; the sender's own subject (and, if
    $EXCERPT is on, a short excerpt) is HTML-escaped and length-limited. ---- */
+if ($ok) @file_put_contents($key, (string)($hits + 1)); // count only messages that were really sent
 if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true)) {
   $en = $lang === 'en';
   $t = $en ? [
@@ -135,6 +135,7 @@ if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true
     'imp' => 'Impressum & Datenschutz', 'pre' => 'Ihre Nachricht ist bei ' . $SIGN . ' angekommen. Wir melden uns zeitnah.'
   ];
   $shortSubj = mb_substr($subject, 0, 120);
+  $customSubj = !preg_match('/^(Neue Nachricht über|New message via)\b/u', $subject); // the site form sends a generic default subject, not worth echoing
   $excerpt = $EXCERPT ? mb_substr($message, 0, 300) . (mb_strlen($message) > 300 ? ' …' : '') : '';
   $r = function ($k, $v, $last = false) use ($FONT) {
     return '<tr><td class="k mu" valign="top" style="width:96px;padding:0 0 ' . ($last ? '0' : '10px') . ';color:#6b7686">' . $k . '</td><td class="fg" style="padding:0 0 ' . ($last ? '0' : '10px') . ';color:#101827">' . $v . '</td></tr>';
@@ -146,7 +147,7 @@ if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true
     . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="box ln" style="background:#f6f3ec;border:1px solid #e6dfcf;border-radius:10px;margin:0 0 30px"><tr><td style="padding:22px 24px">'
     . '<div class="gd" style="' . $FONT . 'font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a6a1f;margin:0 0 14px">' . $h($t['sum']) . '</div>'
     . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="st" style="' . $FONT . 'font-size:14px;line-height:21px">'
-    . $r($t['lSub'], '<strong>' . $h($shortSubj) . '</strong>') . $r($t['lTs'], $h($when), $excerpt === '')
+    . ($customSubj ? $r($t['lSub'], '<strong>' . $h($shortSubj) . '</strong>') : '') . $r($t['lTs'], $h($when), $excerpt === '')
     . ($excerpt !== '' ? $r($t['lMsg'], '<div class="mu" style="border-left:3px solid #c9aa6e;padding:2px 0 2px 14px;color:#4a586c">' . $nl($excerpt) . '</div>', true) : '')
     . '</table></td></tr></table>'
     . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="ln" style="border-top:1px solid #e6e1d6"><tr><td style="padding:24px 0 26px;' . $FONT . '">'
@@ -156,7 +157,7 @@ if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true
     . '<div style="font-size:14px;line-height:22px"><a class="gd" href="mailto:' . $h($TO) . '" style="color:#8a6a1f;text-decoration:none;font-weight:600">' . $h($TO) . '</a><span class="mu" style="color:#6b7686"> &nbsp;&middot;&nbsp; </span><a class="gd" href="https://' . $h($SITE) . '/" style="color:#8a6a1f;text-decoration:none;font-weight:600">' . $h($SITE) . '</a></div>'
     . '</td></tr></table>',
     '<p class="mu" style="margin:0 0 8px;color:#6b7686">' . $h($t['ft']) . '</p><p style="margin:0 0 4px"><a class="mu" href="https://' . $h($SITE) . '/legal.html" style="color:#6b7686;text-decoration:underline">' . $h($t['imp']) . '</a></p><p class="mu" style="margin:0;color:#8a93a1">&copy; ' . date('Y') . ' ' . $h($SIGN) . '</p>');
-  $confText = $t['hi'] . "\n\n" . $t['p1'] . "\n\n" . $t['lSub'] . ': ' . $shortSubj . "\n" . $t['lTs'] . ': ' . $when . "\n" . ($excerpt !== '' ? $t['lMsg'] . ":\n" . $excerpt . "\n" : '') . "\n" . $t['sig'] . "\nEngin Celenk\n" . $SIGN . "\nhttps://" . $SITE . "/\n\n" . $t['ft'] . "\n";
+  $confText = $t['hi'] . "\n\n" . $t['p1'] . "\n\n" . ($customSubj ? $t['lSub'] . ': ' . $shortSubj . "\n" : '') . $t['lTs'] . ': ' . $when . "\n" . ($excerpt !== '' ? $t['lMsg'] . ":\n" . $excerpt . "\n" : '') . "\n" . $t['sig'] . "\nEngin Celenk\n" . $SIGN . "\nhttps://" . $SITE . "/\n\n" . $t['ft'] . "\n";
   $send($email, $t['subj'], $confText, $confHtml, $usedFrom);
 }
 
