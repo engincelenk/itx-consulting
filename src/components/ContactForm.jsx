@@ -11,17 +11,29 @@ const endpoints = () => (contactForm.endpoints && contactForm.endpoints.length ?
 const T = {
   en: { name: "Name", email: "Your email", company: "Company (optional)", message: "Message", send: "Send message", sending: "Sending…",
     ok: "Thank you. Your message has been sent, I will get back to you soon.", confirmSent: "You will receive a confirmation by email.", err: "Sending failed. Please try again later or write via LinkedIn.",
+    captcha: "Please wait for the security check to finish.", captchaFail: "The security check failed. Please reload the page and try again, or write via LinkedIn.",
     tech: "Technical note", rate: "Too many messages in a short time. Please try again in a little while or write via LinkedIn.",
     activate: "The contact form is being set up right now. Please try again in a few hours or write via LinkedIn.",
     consent: "I agree that my details are used to answer my request.", privacy: "Privacy", required: "Please fill in the marked fields and confirm the consent.", fName: "Please enter your name.", fEmail: "Please enter a valid email address.", fMessage: "Please enter a message.", fConsent: "Please confirm the consent.",
     subject: `New message via ${location.hostname}` },
   de: { name: "Name", email: "Ihre E-Mail", company: "Unternehmen (optional)", message: "Nachricht", send: "Nachricht senden", sending: "Wird gesendet…",
     ok: "Vielen Dank. Ihre Nachricht ist angekommen, ich melde mich zeitnah.", confirmSent: "Sie erhalten eine Bestätigung per E-Mail.", err: "Senden fehlgeschlagen. Bitte später erneut versuchen oder über LinkedIn schreiben.",
+    captcha: "Bitte kurz warten, bis die Sicherheitsprüfung abgeschlossen ist.", captchaFail: "Die Sicherheitsprüfung ist fehlgeschlagen. Bitte Seite neu laden und erneut versuchen oder über LinkedIn schreiben.",
     tech: "Technischer Hinweis", rate: "Zu viele Nachrichten in kurzer Zeit. Bitte in einer Weile erneut versuchen oder über LinkedIn schreiben.",
     activate: "Das Kontaktformular wird gerade eingerichtet. Bitte in einigen Stunden erneut versuchen oder über LinkedIn schreiben.",
     consent: "Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden.", privacy: "Datenschutz", required: "Bitte die markierten Felder ausfüllen und die Einwilligung bestätigen.", fName: "Bitte Namen angeben.", fEmail: "Bitte eine gültige E-Mail-Adresse angeben.", fMessage: "Bitte eine Nachricht eingeben.", fConsent: "Bitte die Einwilligung bestätigen.",
     subject: `Neue Nachricht über ${location.hostname}` }
 };
+
+/* Cloudflare Turnstile (Bot-Schutz). Aktiv, sobald contactForm.turnstileSiteKey gesetzt ist. Das Skript wird erst beim Anzeigen des Formulars geladen. */
+let tsLoader;
+const loadTurnstile = () => tsLoader || (tsLoader = new Promise((res, rej) => {
+  if (window.turnstile) return res(window.turnstile);
+  const sc = document.createElement("script");
+  sc.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  sc.async = true; sc.onload = () => res(window.turnstile); sc.onerror = () => { tsLoader = null; rej(new Error("turnstile")); };
+  document.head.appendChild(sc);
+}));
 
 export default function ContactForm({ initialMessage = "", subject, source = "portfolio" }) {
   const { lang } = useLang();
@@ -32,7 +44,17 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
   const [detail, setDetail] = useState("");
   const [errs, setErrs] = useState({});
   const dirty = useRef(false);   // Nachricht von Hand geändert: Vorschlag aus dem Konfigurator überschreibt sie nicht mehr
-  const okRef = useRef(null), formRef = useRef(null);
+  const okRef = useRef(null), formRef = useRef(null), tsBox = useRef(null), tsId = useRef(null), tsToken = useRef("");
+  const siteKey = contactForm.turnstileSiteKey || "";
+  useEffect(() => {
+    if (!siteKey || state === "ok" || !tsBox.current) return;
+    let gone = false;
+    loadTurnstile().then(ts => {
+      if (gone || !tsBox.current) return;
+      tsId.current = ts.render(tsBox.current, { sitekey: siteKey, language: lang, theme: "auto", callback: tk => { tsToken.current = tk; }, "expired-callback": () => { tsToken.current = ""; }, "error-callback": () => { tsToken.current = ""; } });
+    }).catch(() => {});
+    return () => { gone = true; try { if (tsId.current != null) window.turnstile?.remove(tsId.current); } catch (e) {} tsId.current = null; tsToken.current = ""; };
+  }, [siteKey, state === "ok", lang]);
   useEffect(() => { if (!dirty.current) setF(x => ({ ...x, message: initialMessage })); }, [initialMessage]);
   useEffect(() => { if (state === "ok") okRef.current?.focus(); }, [state]);
   const set = k => e => { if (k === "message") dirty.current = true; setF(x => ({ ...x, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value })); setErrs(x => ({ ...x, [k]: undefined })); };
@@ -46,10 +68,11 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
     if (!f.message.trim()) er.message = t.fMessage;
     if (!f.consent) er.consent = t.fConsent;
     if (Object.keys(er).length) { setErrs(er); setHint(t.required); formRef.current?.querySelector(`[name="${Object.keys(er)[0]}"]`)?.focus(); return; }
+    if (siteKey && !tsToken.current) { setHint(t.captcha); return; }
     setErrs({}); setHint(""); setState("sending");
     try {
       // Try each location in order. A 404 or a network/CORS error means the script is not there, so nothing was delivered yet.
-      const payload = JSON.stringify({ name: f.name, email: f.email, company: f.company, message: f.message, source, lang, _subject: subject || t.subject, _template: "table", _captcha: "false", _replyto: f.email, _honey: f.hp });
+      const payload = JSON.stringify({ name: f.name, email: f.email, company: f.company, message: f.message, source, lang, _subject: subject || t.subject, _template: "table", _captcha: "false", _replyto: f.email, _honey: f.hp, "cf-turnstile-response": tsToken.current });
       let r = null, lastErr = "";
       for (const url of endpoints()) {
         try {
@@ -60,10 +83,11 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
       }
       if (!r) { console.warn("Contact form:", lastErr); setDetail(lastErr); setState("err"); return; }
       const j = await r.json().catch(() => ({}));
+      if (siteKey) { tsToken.current = ""; try { window.turnstile?.reset(tsId.current); } catch (e) {} } // Token ist einmalig
       if (r.ok && String(j.success) === "true") { setState("ok"); dirty.current = false; setF(x => ({ ...x, message: "", consent: false })); return; }
       console.warn("Contact form:", r.status, j.message);
       setDetail([`HTTP ${r.status}`, j.message, j.detail].filter(Boolean).join(" · "));
-      setState(r.status === 429 ? "rate" : /activat/i.test(j.message || "") ? "activate" : "err");
+      setState(r.status === 429 ? "rate" : r.status === 403 && /captcha/i.test(j.message || "") ? "captcha" : /activat/i.test(j.message || "") ? "activate" : "err");
     } catch (err) { console.warn("Contact form:", err); setDetail(String(err && err.message || err)); setState("err"); }
   };
 
@@ -83,8 +107,10 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
         <input name="consent" type="checkbox" required aria-required="true" aria-invalid={!!errs.consent} checked={f.consent} onChange={set("consent")} className="mt-0.5 h-6 w-6 flex-none accent-[rgb(var(--c-signal))]" />
         <span>{t.consent} *{errs.consent && <span className="block text-signal">{errs.consent}</span>} <a className="text-snow underline decoration-signal" href={`/legal.html?lang=${lang}#privacy`}>{t.privacy}</a></span>
       </label>
+      {siteKey && <div ref={tsBox} className="min-h-[65px]" />}
       {hint && <p className="text-sm text-signal" role="alert">{hint}</p>}
       {state === "err" && <div role="alert"><p className="text-sm text-signal">{t.err}</p>{detail && <p className="mt-1 break-words font-mono text-[11px] text-mist">{t.tech}: {detail}</p>}</div>}
+      {state === "captcha" && <p className="text-sm text-signal" role="alert">{t.captchaFail}</p>}
       {state === "rate" && <p className="text-sm text-signal" role="alert">{t.rate}</p>}
       {state === "activate" && <p className="text-sm text-signal" role="alert">{t.activate}</p>}
       <button type="submit" disabled={state === "sending"} className="btn-primary disabled:opacity-60">
