@@ -28,7 +28,14 @@ function Page() {
     return () => window.removeEventListener("keydown", esc);
   }, [menu]);
 
-  useEffect(() => { document.title = T.title; document.querySelector('meta[name="description"]')?.setAttribute("content", T.desc); }, [T]);
+  useEffect(() => {
+    document.title = T.title;
+    const set = (sel, v) => document.querySelector(sel)?.setAttribute("content", v);
+    set('meta[name="description"]', T.desc);
+    set('meta[property="og:title"]', T.title); set('meta[name="twitter:title"]', T.title);
+    set('meta[property="og:description"]', T.desc); set('meta[name="twitter:description"]', T.desc);
+    set('meta[property="og:locale"]', lang === "de" ? "de_DE" : "en_US");
+  }, [T, lang]);
 
   return (
     <>
@@ -110,4 +117,4 @@ function Page() {
   );
 }
 
-export default function FreelanceApp() { return <LangProvider><Page /></LangProvider>; }
+export default function FreelanceApp() { return <LangProvider meta={false}><Page /></LangProvider>; }

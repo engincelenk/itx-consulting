@@ -27,7 +27,7 @@ if (in_array($origin, $ORIGINS, true)) {
   header('Access-Control-Allow-Headers: Content-Type, Accept');
 }
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') { echo json_encode(['success' => 'false', 'message' => 'Contact endpoint is running. POST only.', 'php' => PHP_VERSION, 'mail' => function_exists('mail'), 'from' => $FROM, 'to' => preg_replace('/^.{2}/', '**', $TO)]); exit; }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); echo json_encode(['success' => 'false', 'message' => 'POST only.']); exit; }
 if ($origin && !in_array($origin, $ORIGINS, true)) { http_response_code(403); echo json_encode(['success' => 'false', 'message' => 'Origin not allowed']); exit; }
 
 $in = json_decode(file_get_contents('php://input'), true);
@@ -162,4 +162,4 @@ if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true
 }
 
 if ($ok) { echo json_encode(['success' => 'true']); }
-else { $err = error_get_last(); http_response_code(500); echo json_encode(['success' => 'false', 'message' => 'Mail could not be sent', 'detail' => $err['message'] ?? 'mail() returned false', 'from' => $usedFrom]); }
+else { $err = error_get_last(); error_log('contact.php: mail failed: ' . ($err['message'] ?? 'mail() returned false')); http_response_code(500); echo json_encode(['success' => 'false', 'message' => 'Mail could not be sent']); }
