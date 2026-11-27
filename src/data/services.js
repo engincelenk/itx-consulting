@@ -75,7 +75,7 @@ const brand = site.hasCompany ? site.company : "Engin Celenk";
 
 export const fl = {
   en: {
-    title: `${brand} | IT Architecture, Cyber Security & IT Management`, desc: "ITx Consulting: IT architecture, cyber security and IT management with AI as the vertical. ISO 27001, NIS2, AI governance, project leadership for mid-sized firms.",
+    title: brand, desc: "ITx Consulting: IT architecture, cyber security and IT management with AI as the vertical. ISO 27001, NIS2, AI governance, project leadership for mid-sized firms.",
     back: "Portfolio", skip: "Skip to content", navLabel: "Menu", navServices: "Services", navAbout: "About me", navContact: "Contact", aboutKicker: "Who I am", aboutTitle: "IT through and through.", aboutText: "I am the founder of ITx Consulting and IT through and through. I gained my professional experience as an employee at the leading companies of the Stuttgart region: as project manager, solution architect, lead architect, solution manager and cyber security engineer. My background combines software engineering with business informatics (M.Sc.): deep enough in technology for architecture and security, close enough to the business for decisions.",  heroLead: "Architecture, security and delivery from one hand.", h1a: "IT Architecture. Cyber Security. IT Management.", h1b: "With AI as the vertical.",
     cta: "Arrange a non-binding intro call",
     mapKicker: "Service portfolio", mapTitle: "Built to withstand audits.", mapLead: "We build, steer and secure IT in mid-sized companies so that it withstands an audit. We know both sides: building it and auditing it.", mapHint: "Select a pillar or AI.",
@@ -85,7 +85,7 @@ export const fl = {
     note: "Details and prices after the intro call. No newsletter, no tracking."
   },
   de: {
-    title: `${brand} | IT-Architektur, Cyber Security & IT Management`, desc: "ITx Consulting: IT-Architektur, Cyber Security und IT Management mit KI als Vertikale. ISO 27001, NIS2, KI-Governance, Projektsteuerung für den Mittelstand.",
+    title: brand, desc: "ITx Consulting: IT-Architektur, Cyber Security und IT Management mit KI als Vertikale. ISO 27001, NIS2, KI-Governance, Projektsteuerung für den Mittelstand.",
     back: "Portfolio", skip: "Zum Inhalt springen", navLabel: "Menü", navServices: "Leistungen", navAbout: "Über mich", navContact: "Kontakt", aboutKicker: "Wer ich bin", aboutTitle: "Durch und durch IT.", aboutText: "Ich bin Gründer von ITx Consulting und durch und durch ITler. Meine Berufserfahrung habe ich im Angestelltenverhältnis bei den führenden Unternehmen im Raum Stuttgart gesammelt: als Projektmanager, Solution Architect, Lead Architect, Solution Manager und Cyber Security Engineer. Mein Hintergrund verbindet Software Engineering mit Wirtschaftsinformatik (M.Sc.): technisch tief genug für Architektur und Security, nah genug am Geschäft für Entscheidungen.",  heroLead: "Architektur, Security und Delivery aus einer Hand.", h1a: "IT-Architektur. Cyber Security. IT Management.", h1b: "Mit KI als Vertikale.",
     cta: "Unverbindliches Erstgespräch vereinbaren",
     mapKicker: "Leistungsportfolio", mapTitle: "Prüfungsfest aufgebaut.", mapLead: "Wir bauen, steuern und sichern IT im Mittelstand so auf, dass sie einer Prüfung standhält. Wir kennen beide Seiten: den Aufbau und die Prüfung.", mapHint: "Säule oder KI auswählen.",
