@@ -67,7 +67,7 @@ export default function ContactForm({ initialMessage = "", subject, source = "po
     } catch (err) { console.warn("Contact form:", err); setDetail(String(err && err.message || err)); setState("err"); }
   };
 
-  const field = "mt-2 min-h-[48px] w-full rounded-xl border border-mist/40 bg-ink px-4 text-[16px] text-snow placeholder:text-mist/80 focus:border-signal focus:outline-none";
+  const field = "mt-2 min-h-[48px] w-full rounded-xl border border-mist/40 bg-ink px-4 text-[16px] text-snow placeholder:text-mist focus:border-signal";
   if (state === "ok") return <p ref={okRef} tabIndex={-1} className="flex items-start gap-3 rounded-xl border border-signal/40 bg-signal/10 p-5 focus:outline-none" role="status"><Check size={20} className="mt-0.5 flex-none text-signal" />{t.ok}{source === "freelance" && contactForm.endpoints ? ` ${t.confirmSent}` : ""}</p>;
 
   return (

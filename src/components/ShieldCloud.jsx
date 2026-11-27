@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLang } from "../i18n.jsx";
 
 /* Das Netz-Schild aus dem ITx-Logo setzt sich beim Laden zusammen. Danach wächst von innen nach außen
    ein Spinnennetz in Schildform mit den Fachbegriffen. Mit jedem Pulsschlag des Kerns läuft eine Welle
@@ -220,5 +221,8 @@ export default function ShieldCloud() {
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); mo.disconnect(); window.removeEventListener("pointermove", onMove); };
   }, []);
 
-  return <canvas ref={ref} aria-hidden="true" className="absolute inset-0 h-full w-full" />;
+  const { lang } = useLang();
+  const topics = WORDS.map(w => (Array.isArray(w) ? w[lang === "de" ? 0 : 1] : w)).join(", ");
+  const label = lang === "de" ? `Netz in Schildform mit den Kompetenzfeldern: ${topics}` : `Shield-shaped network of competence areas: ${topics}`;
+  return <canvas ref={ref} role="img" aria-label={label} className="absolute inset-0 h-full w-full" />;
 }

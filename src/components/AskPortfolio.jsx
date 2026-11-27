@@ -47,7 +47,7 @@ export default function AskPortfolio() {
       <form className="mt-3 flex gap-2" onSubmit={e => { e.preventDefault(); ask(q); }}>
         <label htmlFor="ask" className="sr-only">{t("yourQuestion")}</label>
         <input id="ask" value={q} onChange={e => setQ(e.target.value)} autoComplete="off" placeholder={t("askPh")}
-          className="min-h-[48px] min-w-0 flex-1 rounded-full border border-white/10 bg-ink px-5 text-[16px] text-snow placeholder:text-mist/60 focus:border-signal focus:outline-none" />
+          className="min-h-[48px] min-w-0 flex-1 rounded-full border border-white/10 bg-ink px-5 text-[16px] text-snow placeholder:text-mist focus:border-signal" />
         <button type="submit" aria-label={t("ask")} className="grid h-12 w-12 flex-none place-items-center rounded-full bg-signal text-ink transition-colors hover:bg-[#ff7a1f] disabled:opacity-50" disabled={busy}><ArrowUp size={18} /></button>
       </form>
     </div>
