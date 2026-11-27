@@ -106,7 +106,7 @@ $send = function ($to, $subj, $text, $htmlBody, $from, $replyTo = null) use ($SI
   $part = function ($type, $content) { return 'Content-Type: ' . $type . "; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n" . chunk_split(base64_encode($content), 76, "\r\n"); };
   $msg = "This is a multi-part message in MIME format.\r\n\r\n--$bd\r\n" . $part('text/plain', $text) . "--$bd\r\n" . $part('text/html', $htmlBody) . "--$bd--\r\n";
   $from = $oneLine($from);
-  $hd = ['From: ' . $SITE . ' <' . $from . '>', 'MIME-Version: 1.0', 'Content-Type: multipart/alternative; boundary="' . $bd . '"'];
+  $hd = ['From: "ITx-Consulting" <' . $from . '>', 'MIME-Version: 1.0', 'Content-Type: multipart/alternative; boundary="' . $bd . '"'];
   if ($replyTo && filter_var($replyTo, FILTER_VALIDATE_EMAIL) && !preg_match('/[\r\n]/', $replyTo)) $hd[] = 'Reply-To: ' . $replyTo;
   $s = '=?UTF-8?B?' . base64_encode($oneLine($subj)) . '?=';
   return @mail($to, $s, $msg, implode("\r\n", $hd), '-f' . $from) || @mail($to, $s, $msg, implode("\r\n", $hd));
