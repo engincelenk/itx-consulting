@@ -97,7 +97,7 @@ function Page() {
             <h3 className="label mt-12">{T.expTitle}</h3>
             <div className="mt-4">
             <p className="text-base leading-relaxed text-snow/90 sm:text-lg">{L(industries).map((i, n) => <span key={i}>{n > 0 && <span className="mx-2 text-signal" aria-hidden="true">·</span>}<span className="inline-block max-w-full">{i}</span></span>)}</p>
-<div className="mt-6"><LogoWall /></div>
+<div className="mt-6"><LogoWall flat /></div>
             </div>
           </div>
         </section>
