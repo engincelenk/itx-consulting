@@ -1,0 +1,51 @@
+name: Deploy contact.php (all-inkl)
+
+# Lädt NUR server/webhosting/contact.php als <Zielordner>/contact.php hoch.
+# contact.secret.php auf dem Server wird nie angefasst (kein Mirror, kein Löschen).
+on:
+  push:
+    branches: [main]
+    paths:
+      - server/webhosting/contact.php
+      - .github/workflows/deploy-contact.yml
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-contact
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP-Syntax prüfen
+        run: php -l server/webhosting/contact.php
+
+      - name: Per SFTP hochladen
+        env:
+          SFTP_HOST: ${{ secrets.FTP_HOST }}
+          SFTP_USER: ${{ secrets.FTP_USER }}
+          SFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SFTP_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+          SFTP_HOST_KEY: ${{ secrets.FTP_HOST_KEY }}
+        run: |
+          set -euo pipefail
+          for v in SFTP_HOST SFTP_USER SFTP_PASSWORD SFTP_DIR; do
+            [ -n "${!v}" ] || { echo "::error::Secret für $v fehlt"; exit 1; }
+          done
+          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass >/dev/null
+          mkdir -p ~/.ssh
+          if [ -n "$SFTP_HOST_KEY" ]; then
+            echo "$SFTP_HOST_KEY" > ~/.ssh/known_hosts
+          else
+            ssh-keyscan -T 10 "$SFTP_HOST" > ~/.ssh/known_hosts
+          fi
+          printf 'put server/webhosting/contact.php %s/contact.php\n' "${SFTP_DIR%/}" > batch.txt
+          SSHPASS="$SFTP_PASSWORD" sshpass -e sftp -oStrictHostKeyChecking=yes \
+            -oPreferredAuthentications=password -b batch.txt "$SFTP_USER@$SFTP_HOST"
+          echo "contact.php hochgeladen."
