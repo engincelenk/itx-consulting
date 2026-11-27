@@ -15,7 +15,10 @@ $ORIGINS = ['https://www.itx-consulting.de', 'https://itx-consulting.de']; // si
 $SIGN    = $COMPANY !== '' ? $COMPANY : 'Engin Celenk';
 $LIMIT   = 20;                            // max successfully sent messages per IP per hour (failed attempts are not counted)
 $CONFIRM = ['freelance'];                 // form sources whose sender gets a confirmation email
-$EXCERPT = true;                          // true = confirmation mail also shows an excerpt (max 300 chars, HTML-escaped) of the sender's message
+$EXCERPT = true;                          // true = confirmation mail also shows an excerpt (max 300 chars, HTML-escaped) of the sender's message. Only used when Turnstile is active.
+$GLOBAL_LIMIT = 150;                      // max successfully sent messages per day for the whole form (protects the inbox against distributed bots)
+// Cloudflare Turnstile secret key: NOT in this repo. Put it in contact.secret.php next to this file (see ANLEITUNG.md).
+$TS_SECRET = is_file(__DIR__ . '/contact.secret.php') ? trim((string)(include __DIR__ . '/contact.secret.php')) : '';
 // ---------------------------------------------------------------
 
 header('Content-Type: application/json; charset=utf-8');
@@ -30,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); echo json_encode(['success' => 'false', 'message' => 'POST only.']); exit; }
 if ($origin && !in_array($origin, $ORIGINS, true)) { http_response_code(403); echo json_encode(['success' => 'false', 'message' => 'Origin not allowed']); exit; }
 
-$in = json_decode(file_get_contents('php://input'), true);
+if ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 20000) { http_response_code(413); echo json_encode(['success' => 'false', 'message' => 'Request too large']); exit; }
+$in = json_decode(file_get_contents('php://input', false, null, 0, 20001), true);
 if (!is_array($in)) $in = $_POST;
 $clean = function ($v, $max) { $v = trim((string)($v ?? '')); $v = str_replace(["\r", "\0"], '', $v); return mb_substr($v, 0, $max); };
 $name    = $clean($in['name'] ?? '', 120);
@@ -51,10 +55,25 @@ $oneLine = function ($v) { return trim(preg_replace('/[\x00-\x1F\x7F]+/u', ' ', 
 $name = $oneLine($name); $subject = $oneLine($subject); $company = $oneLine($company); $source = $oneLine($source);
 if ($name === '') $name = '-';
 
+// Cloudflare Turnstile: server-side check of the token the form sends. Active as soon as the secret key file exists.
+$tsOk = false;
+if ($TS_SECRET !== '') {
+  $tok = (string)($in['cf-turnstile-response'] ?? '');
+  if ($tok !== '' && strlen($tok) <= 2048) {
+    $ctx = stream_context_create(['http' => ['method' => 'POST', 'timeout' => 6, 'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+      'content' => http_build_query(['secret' => $TS_SECRET, 'response' => $tok, 'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''])]]);
+    $res = json_decode((string)@file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, $ctx), true);
+    $tsOk = is_array($res) && !empty($res['success']);
+  }
+  if (!$tsOk) { http_response_code(403); echo json_encode(['success' => 'false', 'message' => 'Captcha failed']); exit; }
+}
+
 // Simple rate limit per IP (stored in the system temp folder, no personal data kept longer than an hour).
 $key  = sys_get_temp_dir() . '/ecform_' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . date('YmdH'));
 $hits = (int)@file_get_contents($key);
-if ($hits >= $LIMIT) { http_response_code(429); echo json_encode(['success' => 'false', 'message' => 'Too many requests']); exit; }
+$gkey = sys_get_temp_dir() . '/ecform_g_' . hash('sha256', date('Ymd'));
+$ghits = (int)@file_get_contents($gkey);
+if ($hits >= $LIMIT || $ghits >= $GLOBAL_LIMIT) { http_response_code(429); echo json_encode(['success' => 'false', 'message' => 'Too many requests']); exit; }
 
 $h = function ($v) { return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); };
 $nl = function ($v) use ($h) { return nl2br($h($v), false); };
@@ -118,8 +137,11 @@ if (!$ok && $FROM2 && $FROM2 !== $FROM) { $usedFrom = $FROM2; $ok = $send($TO, $
 /* ---- 2) Confirmation to the sender. Only for requests coming from the site itself
    (Origin header present and allowed). Fixed texts; the sender's own subject (and, if
    $EXCERPT is on, a short excerpt) is HTML-escaped and length-limited. ---- */
-if ($ok) @file_put_contents($key, (string)($hits + 1)); // count only messages that were really sent
-if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true)) {
+if ($ok) { // count only messages that were really sent (LOCK_EX against parallel requests)
+  @file_put_contents($key, (string)($hits + 1), LOCK_EX);
+  @file_put_contents($gkey, (string)($ghits + 1), LOCK_EX);
+}
+if ($ok && $tsOk && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true)) { // confirmation mails only after a passed Turnstile check
   $en = $lang === 'en';
   $t = $en ? [
     'subj' => 'Your request via ' . $SITE, 'tag' => 'Your enquiry', 'h1' => 'Thank you for your enquiry', 'hi' => 'Hello ' . $name . ',',
@@ -136,7 +158,7 @@ if ($ok && in_array($source, $CONFIRM, true) && in_array($origin, $ORIGINS, true
   ];
   $shortSubj = mb_substr($subject, 0, 120);
   $customSubj = !preg_match('/^(Neue Nachricht über|New message via)\b/u', $subject); // the site form sends a generic default subject, not worth echoing
-  $excerpt = $EXCERPT ? mb_substr($message, 0, 300) . (mb_strlen($message) > 300 ? ' …' : '') : '';
+  $excerpt = ($EXCERPT && $tsOk) ? mb_substr($message, 0, 300) . (mb_strlen($message) > 300 ? ' …' : '') : '';
   $r = function ($k, $v, $last = false) use ($FONT) {
     return '<tr><td class="k mu" valign="top" style="width:96px;padding:0 0 ' . ($last ? '0' : '10px') . ';color:#6b7686">' . $k . '</td><td class="fg" style="padding:0 0 ' . ($last ? '0' : '10px') . ';color:#101827">' . $v . '</td></tr>';
   };

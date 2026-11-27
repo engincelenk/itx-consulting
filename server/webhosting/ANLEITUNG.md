@@ -23,3 +23,9 @@ Domain → Subdomain: `api.itx-consulting.de` anlegen und auf einen eigenen Ordn
 
 ## 6. Fehlersuche
 Schlägt das Senden fehl, zeigt das Formular unter der Fehlermeldung einen „Technischen Hinweis“ (z. B. `Failed to fetch`, `HTTP 500 · Mail could not be sent`). Diesen Text an Claude schicken.
+
+## 7. Bot-Schutz (Cloudflare Turnstile)
+1. Cloudflare Dashboard → **Turnstile** → **Add widget**. Name z. B. `itx-contact`, Hostnames `www.itx-consulting.de` und `itx-consulting.de`, Widget Mode **Managed**. Cloudflare zeigt danach **Site Key** (öffentlich) und **Secret Key** (geheim).
+2. **Site Key** in `src/data/profile.js` bei `contactForm.turnstileSiteKey` eintragen (darf im Repo stehen).
+3. **Secret Key** NICHT ins Repo. Datei `contact.secret.example.php` kopieren als `contact.secret.php`, Key eintragen und per FTP/KAS neben `contact.php` hochladen (`/api/contact.secret.php`).
+4. Reihenfolge: zuerst Frontend mit Site Key deployen (Merge), dann `contact.php` und `contact.secret.php` hochladen. Ab dann verlangt der Server das Captcha, und Bestätigungsmails (inkl. Textauszug) werden nur nach bestandener Prüfung verschickt.
