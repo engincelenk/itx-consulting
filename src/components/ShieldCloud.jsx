@@ -161,9 +161,6 @@ export default function ShieldCloud() {
 
       // Schild
       const core = pos[CORE];
-      const glow = ctx.createRadialGradient(core.x, core.y, 0, core.x, core.y, 190 * s);
-      glow.addColorStop(0, `rgba(${GOLD},${0.2 * form})`); glow.addColorStop(1, `rgba(${GOLD},0)`);
-      ctx.fillStyle = glow; disc(core, 190 * s);
 
       ctx.lineCap = "round";
       ctx.lineWidth = Math.max(1.2, 4.2 * s);
