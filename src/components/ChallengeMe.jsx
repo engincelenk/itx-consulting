@@ -30,7 +30,7 @@ export default function ChallengeMe({ guest }) {
   return (
     <div>
       <textarea id="role" rows={6} value={text} onChange={e => setText(e.target.value)} aria-label={t("jobPost")} placeholder={t("jobPh")}
-        className="w-full resize-y rounded-xl border border-white/10 bg-ink p-4 text-[16px] leading-relaxed text-snow placeholder:text-mist/60 focus:border-signal focus:outline-none" />
+        className="w-full resize-y rounded-xl border border-white/10 bg-ink p-4 text-[16px] leading-relaxed text-snow placeholder:text-mist focus:border-signal" />
       <div className="mt-3 flex flex-wrap gap-2">
         <button type="button" className="btn-primary" onClick={() => run()}>{t("tabChallenge")}</button>
         <button type="button" className="btn-ghost" onClick={() => run(sampleRoles.security[lang])}>{t("tryA")}</button>
